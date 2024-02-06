@@ -1,4 +1,4 @@
-## Drake: B-Spline轨迹类（bspline_trajectory）
+## Drake B-Spline轨迹类（bspline_trajectory）
 
 
 # 背景
