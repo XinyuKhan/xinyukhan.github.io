@@ -40,8 +40,8 @@ Actor-Critic算法中有一个价值网络$q(s, a; \boldsymbol{\omega})$和一�
 
 $$
 \begin{aligned}
-   \hat g(s, a; \boldsymbol{\theta}) &\triangleq \frac{\partial \ln \pi(a \mid s; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot q(s, a; \boldsymbol{\omega}) \tag{1.1.1}
-\end{aligned}
+   \hat g(s, a; \boldsymbol{\theta}) &\triangleq \frac{\partial \ln \pi(a \mid s; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot q(s, a; \boldsymbol{\omega})
+\end{aligned}  \tag{1.1.1}
 $$
 
 </div>
