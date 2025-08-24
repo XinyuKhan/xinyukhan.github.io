@@ -7,7 +7,7 @@
 
 $$
 \begin{aligned}
-  \frac{\partial J(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} &= \frac{1 - \gamma^n}{1 - \gamma} \mathbb{E}_{S \sim d(\cdot)} \left [\mathbb{E}_{A \sim \pi(\cdot | S; \boldsymbol{\theta})} \left[ \frac{\partial \ln \pi(A | S; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot Q_{\pi}(S, A) \right]\right]
+  \frac{\partial J(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} &= \frac{1 - \gamma^n}{1 - \gamma} \mathbb{E}_{S \sim d(\cdot)} \left [\mathbb{E}_{A \sim \pi(\cdot \mid S; \boldsymbol{\theta})} \left[ \frac{\partial \ln \pi(A \mid S; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot Q_{\pi}(S, A) \right]\right]
 \end{aligned} \tag {0.1}
 $$
 
@@ -19,7 +19,7 @@ $$
 
 $$
 \begin{aligned}
-   \boldsymbol{g}(s, a; \boldsymbol{\theta}) &\triangleq \frac{\partial \ln \pi(a | s; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot Q_{\pi}(s, a)
+   \boldsymbol{g}(s, a; \boldsymbol{\theta}) &\triangleq \frac{\partial \ln \pi(a \mid s; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot Q_{\pi}(s, a)
 \end{aligned} \tag{0.2}
 $$
 
@@ -30,7 +30,7 @@ $$
 
 ## 1. 推导
 
-Actor-Critic算法中有一个价值网络$q(s, a; \boldsymbol{\omega})$和一个策略网络$\pi(a | s; \boldsymbol{\theta})$，其中价值网络$q(s, a; \boldsymbol{\omega})$用来近似随机策略梯度中的$Q_{\pi}(s, a)$，来解决$Q_{\pi}(s, a)$无法被直接观测到的问题。策略网络$\pi(a | s; \boldsymbol{\theta})$用来生成动作。Actor-Critic算法可以翻译成“演员-评委”算法，策略网络$\pi(a | s; \boldsymbol{\theta})$充当“演员”，生成动作；而价值网络$q(s, a; \boldsymbol{\omega})$充当“评委”，评估动作的价值。
+Actor-Critic算法中有一个价值网络$q(s, a; \boldsymbol{\omega})$和一个策略网络$\pi(a \mid s; \boldsymbol{\theta})$，其中价值网络$q(s, a; \boldsymbol{\omega})$用来近似随机策略梯度中的$Q_{\pi}(s, a)$，来解决$Q_{\pi}(s, a)$无法被直接观测到的问题。策略网络$\pi(a \mid s; \boldsymbol{\theta})$用来生成动作。Actor-Critic算法可以翻译成“演员-评委”算法，策略网络$\pi(a \mid s; \boldsymbol{\theta})$充当“演员”，生成动作；而价值网络$q(s, a; \boldsymbol{\omega})$充当“评委”，评估动作的价值。
 
 ### 1.1 训练策略网络
 
@@ -40,7 +40,7 @@ Actor-Critic算法中有一个价值网络$q(s, a; \boldsymbol{\omega})$和一�
 
 $$
 \begin{aligned}
-   \hat g(s, a; \boldsymbol{\theta}) &\triangleq \frac{\partial \ln \pi(a | s; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot q(s, a; \boldsymbol{\omega}) \tag{1.1.1}
+   \hat g(s, a; \boldsymbol{\theta}) &\triangleq \frac{\partial \ln \pi(a \mid s; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot q(s, a; \boldsymbol{\omega}) \tag{1.1.1}
 \end{aligned}
 $$
 
