@@ -90,11 +90,11 @@ $$
 
 ## 2. 训练流程
 
-我们假定当前的策略网络的参数是 $\boldsymbol{\theta}_{now}$ ，当前的价值网络的参数是 $\boldsymbol{\omega}_{now}$ ，通过以下步骤更新这些参数
+我们假定当前的策略网络的参数是 $\boldsymbol \theta_{now}$ ，当前的价值网络的参数是 $\boldsymbol \omega_{now}$ ，通过以下步骤更新这些参数
 
 - 观测到当前状态 $s_t$ ，根据当前策略做随机抽样： $a_t \sim \pi(\cdot \mid s_t)$ ，并让智能体执行该动作 $a_t$ 。
 - 从环境中观测到下一个状态 $s_{t+1}$ 和奖励 $r_t$ 。
-- 在状态 $s_{t+1}$ 下，根据当前策略 $\pi(a \mid s; \boldsymbol{\theta}_{now})$ （模拟）选择动作 $\tilde a_{t+1}$ 。
+- 在状态 $s_{t+1}$ 下，根据当前策略 $\pi(a \mid s; \boldsymbol \theta_{now})$ （模拟）选择动作 $\tilde a_{t+1}$ 。
 - 让价值网络对 $(s_t, a_t)$ 和 $(s_{t+1}, \tilde a_{t+1})$ 进行打分
 
 <div class="math">
@@ -151,7 +151,7 @@ $$
 
 - 观测到当前状态 $s_t$ ，根据当前策略做随机抽样： $a_t \sim \pi(\cdot \mid s_t)$ ，并让智能体执行该动作 $a_t$ 。
 - 从环境中观测到下一个状态 $s_{t+1}$ 和奖励 $r_t$ 。
-- 在状态 $s_{t+1}$ 下，根据当前策略 $\pi(a \mid s; \boldsymbol{\theta}_{now})$ （模拟）选择动作 $\tilde a_{t+1}$ 。
+- 在状态 $s_{t+1}$ 下，根据当前策略 $\pi(a \mid s; \boldsymbol \theta_{now})$ （模拟）选择动作 $\tilde a_{t+1}$ 。
 - 让价值网络对 $(s_t, a_t)$ 进行打分
 
 <div class="math">
