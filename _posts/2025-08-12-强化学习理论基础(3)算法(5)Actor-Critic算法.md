@@ -90,4 +90,97 @@ $$
 
 ## 2. 训练流程
 
+我们假定当前的策略网络的参数是 $\boldsymbol{\theta}_{now}$ ，当前的价值网络的参数是 $\boldsymbol{\omega}_{now}$ ，通过以下步骤更新这些参数
+
+- 观测到当前状态 $s_t$ ，根据当前策略做随机抽样： $a_t \sim \pi(\cdot \mid s_t)$ ，并让智能体执行该动作 $a_t$ 。
+- 从环境中观测到下一个状态 $s_{t+1}$ 和奖励 $r_t$ 。
+- 在状态 $s_{t+1}$ 下，根据当前策略 $\pi(a \mid s; \boldsymbol{\theta}_{now})$ （模拟）选择动作 $\tilde a_{t+1}$ 。
+- 让价值网络对 $(s_t, a_t)$ 和 $(s_{t+1}, \tilde a_{t+1})$ 进行打分
+
+$$
+\begin{aligned}
+   \hat q_t &= q(s_t, a_t; \boldsymbol{\omega}_{now}) \\
+   \hat q_{t+1} &= q(s_{t+1}, \tilde a_{t+1}; \boldsymbol{\omega}_{now})
+\end{aligned} \tag{2.1}
+$$
+
+- 计算TD目标和TD误差
+
+$$
+\begin{aligned}
+   \hat y_t &= r_t + \gamma \cdot \hat q_{t+1} \\
+   \delta_t &= \hat q_t - \hat y_t
+\end{aligned} \tag{2.2}
+$$
+
+- 更新价值网络
+
+$$
+\begin{aligned}
+   \boldsymbol{\omega}_{new} &\leftarrow \boldsymbol{\omega}_{now} - \alpha \cdot \delta_t \cdot \nabla_{\boldsymbol{\omega}} q(s_t, a_t; \boldsymbol{\omega}_{now})
+\end{aligned}
+$$
+
+- 更新策略网络
+
+$$
+\begin{aligned}
+   \boldsymbol{\theta}_{new} &\leftarrow \boldsymbol{\theta}_{now} + \beta \cdot \hat q_t \cdot \nabla_{\boldsymbol{\theta}} \ln \pi(a_t \mid s_t; \boldsymbol{\theta}_{now})
+\end{aligned}
+$$
+
 ## 3. 目标网络改进训练流程
+
+在[《使用TD算法训练DQN方法改进》](https://xinyukhan.github.io/2025/08/12/强化学习理论基础(3)算法(2)使用TD算法训练DQN方法改进.html)一文中，我们介绍了如何用目标网络解决DQN训练过程中由于自举导致的高估问题。类似的在上述SARSA算法的训练过程中也同样存在自举，因此也同样存在高估问题，因此，类似地，我们可以引入目标网络来缓解这一问题。我们把目标网络表示为 $q(s, a; \boldsymbol{\omega}^{-})$ ，那么由目标网络改进的训练流程如下
+
+- 观测到当前状态 $s_t$ ，根据当前策略做随机抽样： $a_t \sim \pi(\cdot \mid s_t)$ ，并让智能体执行该动作 $a_t$ 。
+- 从环境中观测到下一个状态 $s_{t+1}$ 和奖励 $r_t$ 。
+- 在状态 $s_{t+1}$ 下，根据当前策略 $\pi(a \mid s; \boldsymbol{\theta}_{now})$ （模拟）选择动作 $\tilde a_{t+1}$ 。
+- 让价值网络对 $(s_t, a_t)$ 进行打分
+
+$$
+\begin{aligned}
+   \hat q_t &= q(s_t, a_t; \boldsymbol{\omega}_{now}) \\
+\end{aligned} \tag{2.1}
+$$
+
+- 让目标网络对 $(s_{t+1}, \tilde a_{t+1})$ 进行打分
+
+$$
+\begin{aligned}
+   \hat q_{t+1}^{-} &= q(s_{t+1}, \tilde a_{t+1}; \boldsymbol{\omega}^{-})
+\end{aligned} \tag{2.1}
+$$
+
+- 计算TD目标和TD误差
+
+$$
+\begin{aligned}
+   \hat y_t^{-} &= r_t + \gamma \cdot \hat q_{t+1}^{-} \\
+   \delta_t &= \hat q_t - \hat y_t^{-}
+\end{aligned} \tag{2.2}
+$$
+
+- 更新价值网络
+
+$$
+\begin{aligned}
+   \boldsymbol{\omega}_{new} &\leftarrow \boldsymbol{\omega}_{now} - \alpha \cdot \delta_t \cdot \nabla_{\boldsymbol{\omega}} q(s_t, a_t; \boldsymbol{\omega}_{now})
+\end{aligned}
+$$
+
+- 更新策略网络
+
+$$
+\begin{aligned}
+   \boldsymbol{\theta}_{new} &\leftarrow \boldsymbol{\theta}_{now} + \beta \cdot \hat q_t \cdot \nabla_{\boldsymbol{\theta}} \ln \pi(a_t \mid s_t; \boldsymbol{\theta}_{now})
+\end{aligned}
+$$
+
+- 更新目标网络，其中 $\tau$ 是一个需要调节的超参数
+
+$$
+\begin{aligned}
+   \boldsymbol{\omega}^{-}_{new} &\leftarrow \tau \cdot \boldsymbol{\omega}_{new} + (1 - \tau) \cdot \boldsymbol{\omega}^{-}_{now}
+\end{aligned}
+$$
