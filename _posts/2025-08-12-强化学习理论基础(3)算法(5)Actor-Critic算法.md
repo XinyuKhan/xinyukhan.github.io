@@ -97,6 +97,8 @@ $$
 - 在状态 $s_{t+1}$ 下，根据当前策略 $\pi(a \mid s; \boldsymbol{\theta}_{now})$ （模拟）选择动作 $\tilde a_{t+1}$ 。
 - 让价值网络对 $(s_t, a_t)$ 和 $(s_{t+1}, \tilde a_{t+1})$ 进行打分
 
+<div class="math">
+
 $$
 \begin{aligned}
    \hat q_t &= q(s_t, a_t; \boldsymbol{\omega}_{now}) \\
@@ -104,7 +106,11 @@ $$
 \end{aligned} \tag{2.1}
 $$
 
+</div>
+
 - 计算TD目标和TD误差
+
+<div class="math">
 
 $$
 \begin{aligned}
@@ -113,21 +119,31 @@ $$
 \end{aligned} \tag{2.2}
 $$
 
+</div>
+
 - 更新价值网络
+
+<div class="math">
 
 $$
 \begin{aligned}
    \boldsymbol{\omega}_{new} &\leftarrow \boldsymbol{\omega}_{now} - \alpha \cdot \delta_t \cdot \nabla_{\boldsymbol{\omega}} q(s_t, a_t; \boldsymbol{\omega}_{now})
-\end{aligned}
+\end{aligned} \tag{2.3}
 $$
 
+</div>
+
 - 更新策略网络
+
+<div class="math">
 
 $$
 \begin{aligned}
    \boldsymbol{\theta}_{new} &\leftarrow \boldsymbol{\theta}_{now} + \beta \cdot \hat q_t \cdot \nabla_{\boldsymbol{\theta}} \ln \pi(a_t \mid s_t; \boldsymbol{\theta}_{now})
-\end{aligned}
+\end{aligned} \tag{2.4}
 $$
+
+</div>
 
 ## 3. 目标网络改进训练流程
 
@@ -138,49 +154,73 @@ $$
 - 在状态 $s_{t+1}$ 下，根据当前策略 $\pi(a \mid s; \boldsymbol{\theta}_{now})$ （模拟）选择动作 $\tilde a_{t+1}$ 。
 - 让价值网络对 $(s_t, a_t)$ 进行打分
 
+<div class="math">
+
 $$
 \begin{aligned}
    \hat q_t &= q(s_t, a_t; \boldsymbol{\omega}_{now}) \\
-\end{aligned} \tag{2.1}
+\end{aligned} \tag{3.1}
 $$
 
+</div>
+
 - 让目标网络对 $(s_{t+1}, \tilde a_{t+1})$ 进行打分
+
+<div class="math">
 
 $$
 \begin{aligned}
    \hat q_{t+1}^{-} &= q(s_{t+1}, \tilde a_{t+1}; \boldsymbol{\omega}^{-})
-\end{aligned} \tag{2.1}
+\end{aligned} \tag{3.2}
 $$
 
+</div>
+
 - 计算TD目标和TD误差
+
+<div class="math">
 
 $$
 \begin{aligned}
    \hat y_t^{-} &= r_t + \gamma \cdot \hat q_{t+1}^{-} \\
    \delta_t &= \hat q_t - \hat y_t^{-}
-\end{aligned} \tag{2.2}
+\end{aligned} \tag{3.3}
 $$
 
+</div>
+
 - 更新价值网络
+
+<div class="math">
 
 $$
 \begin{aligned}
    \boldsymbol{\omega}_{new} &\leftarrow \boldsymbol{\omega}_{now} - \alpha \cdot \delta_t \cdot \nabla_{\boldsymbol{\omega}} q(s_t, a_t; \boldsymbol{\omega}_{now})
-\end{aligned}
+\end{aligned} \tag{3.4}
 $$
 
+</div>
+
 - 更新策略网络
+
+<div class="math">
 
 $$
 \begin{aligned}
    \boldsymbol{\theta}_{new} &\leftarrow \boldsymbol{\theta}_{now} + \beta \cdot \hat q_t \cdot \nabla_{\boldsymbol{\theta}} \ln \pi(a_t \mid s_t; \boldsymbol{\theta}_{now})
-\end{aligned}
+\end{aligned} \tag{3.5}
 $$
 
+</div>
+
 - 更新目标网络，其中 $\tau$ 是一个需要调节的超参数
+
+<div class="math">
 
 $$
 \begin{aligned}
    \boldsymbol{\omega}^{-}_{new} &\leftarrow \tau \cdot \boldsymbol{\omega}_{new} + (1 - \tau) \cdot \boldsymbol{\omega}^{-}_{now}
-\end{aligned}
+\end{aligned} \tag{3.6}
 $$
+
+</div>
