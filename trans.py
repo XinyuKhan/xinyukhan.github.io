@@ -14,10 +14,15 @@ def advanced_replace(content):
     modified_content = ''.join(modified_split)
     return modified_content
 
+# rm div tags but keep content
+def remove_div_tags(content):
+    return re.sub(r'<div.*?>(.*?)</div>', r'\1', content, flags=re.DOTALL)
+
 def modify_latex_expressions(input_file_path, output_file_path):
     with open(input_file_path, 'r', encoding='utf-8') as file:
         content = file.read()
     new_content = advanced_replace(content)
+    new_content = remove_div_tags(new_content)
     with open(output_file_path, 'w', encoding='utf-8') as file:
         file.write(new_content)
 
@@ -28,3 +33,4 @@ if __name__ == "__main__":
     input_file_path = sys.argv[1]
     output_file_path = sys.argv[2]
     modify_latex_expressions(input_file_path, output_file_path)
+    
