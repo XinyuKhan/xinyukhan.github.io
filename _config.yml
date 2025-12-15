@@ -25,6 +25,12 @@ rss: rss
 #kramdown:
 #  syntax_highlighter_opts:
 #    disable: true
+
+kramdown:
+  math_engine: katex
+  parse_block_html: true
+  math_engine_opts:
+    katex_inline: true
     
 plugins:
   - jekyll-feed
