@@ -26,28 +26,6 @@ rss: rss
 #  syntax_highlighter_opts:
 #    disable: true
 
-kramdown:
-  math_engine: mathjax
-  parse_block_html: true
-  syntax_highlighter_opts:
-    disable: true
-  hard_wrap: false
-  # 关键配置 ↓↓↓
-  parse_span_html: true
-  smart_quotes: ["apos", "apos", "quot", "quot"]
-  # 关闭下划线斜体
-  auto_ids: true
-  footnote_nr: 1
-  entity_output: as_char
-  toc_levels: 1..6
-  input: GFM
-  hard_wrap: false
-  gfm_quirks: [paragraph_end]
-  # 关键配置 ↓↓↓
-  enable_coderay: false
-  # 关键配置 ↓↓↓
-  # 关闭下划线斜体
-  parse_emphasis: false
     
 plugins:
   - jekyll-feed
