@@ -1,6 +1,12 @@
 ---
 title: 强化学习理论基础(3)算法(4)REINFORCE算法
 date: 2025-08-12 00:08:00
+categories:
+- 强化学习
+- 理论基础
+tags:
+- REINFORCE
+- 强化学习
 ---
 
 # 强化学习理论基础-算法-REINFORCE算法

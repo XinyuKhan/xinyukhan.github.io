@@ -1,6 +1,14 @@
 ---
 title: Drake B-Spline基础类（bspline_basis）
 date: 2023-11-25 00:00:00
+categories:
+- 轨迹规划
+- Drake
+tags:
+- B-Spline
+- Drake
+- 规划算法
+- 轨迹优化
 ---
 
 ## Drake B-Spline基础类（bspline_basis）

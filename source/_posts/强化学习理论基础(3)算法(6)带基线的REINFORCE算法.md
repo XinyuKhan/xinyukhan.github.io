@@ -1,6 +1,13 @@
 ---
 title: 强化学习理论基础(3)算法(6)带基线的REINFORCE算法
 date: 2025-08-12 00:10:00
+categories:
+- 强化学习
+- 理论基础
+tags:
+- Baseline
+- REINFORCE
+- 强化学习
 ---
 
 # 强化学习理论基础-算法-带基线的REINFORCE算法

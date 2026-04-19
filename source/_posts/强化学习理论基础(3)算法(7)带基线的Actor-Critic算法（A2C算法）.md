@@ -1,6 +1,14 @@
 ---
 title: 强化学习理论基础(3)算法(7)带基线的Actor-Critic算法（A2C算法）
 date: 2025-08-12 00:11:00
+categories:
+- 强化学习
+- 理论基础
+tags:
+- A2C
+- Actor-Critic
+- Baseline
+- 强化学习
 ---
 
 # 强化学习理论基础-算法-带基线的Actor-Critic算法（A2C算法）

@@ -1,6 +1,14 @@
 ---
 title: Drake B-Spline轨迹类（bspline_trajectory）
 date: 2023-11-26 00:00:00
+categories:
+- 轨迹规划
+- Drake
+tags:
+- B-Spline
+- Drake
+- 规划算法
+- 轨迹优化
 ---
 
 ## Drake B-Spline轨迹类（bspline_trajectory）

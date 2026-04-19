@@ -1,6 +1,13 @@
 ---
 title: Drake 运动学轨迹优化类（kinematic_trajectory_optimization）（二）
 date: 2024-01-22 00:00:00
+categories:
+- 轨迹规划
+- Drake
+tags:
+- Drake
+- 规划算法
+- 运动学
 ---
 
 ## Drake 运动学轨迹优化类（kinematic_trajectory_optimization）（二）

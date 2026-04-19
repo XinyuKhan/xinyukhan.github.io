@@ -1,6 +1,13 @@
 ---
 title: 强化学习理论基础(3)算法(5)Actor-Critic算法
 date: 2025-08-12 00:09:00
+categories:
+- 强化学习
+- 理论基础
+tags:
+- A2C
+- Actor-Critic
+- 强化学习
 ---
 
 # 强化学习理论基础-算法-Actor-Critic算法

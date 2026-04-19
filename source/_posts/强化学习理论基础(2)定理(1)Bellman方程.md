@@ -1,6 +1,12 @@
 ---
 title: 强化学习理论基础(2)定理(1)Bellman方程
 date: 2025-08-12 00:01:00
+categories:
+- 强化学习
+- 理论基础
+tags:
+- Bellman方程
+- 强化学习
 ---
 
 # 强化学习理论基础-定理-Bellman方程
