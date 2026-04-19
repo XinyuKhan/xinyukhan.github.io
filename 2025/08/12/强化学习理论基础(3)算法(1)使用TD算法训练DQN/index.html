@@ -420,8 +420,8 @@ $$
 </div>
 
 <p>公式(2.1.1)右侧的期望可以使用蒙特卡洛法进行近似，当前状态为$s_t$，采取的动作为$a_t$，环境根据状态转移函数$p(\cdot \mid s_t, a_t)$迁移到下一个状态$s_{t+1}$，并且得到一个奖励$r_t$，因此我们可以得到，于是得到一个四元组</p>
-<script type="math/tex; mode=display">(s_t, a_t, r_t, s_{t+1}) \tag{2.1.2}</script><p>于是可以计算出</p>
-<script type="math/tex; mode=display">r_t + \gamma \max_{a \in \mathcal{A}} Q_*(s_{t+1}, a) \tag{2.1.3}</script><p>将其看作对公式(2.1.1)的蒙特卡洛近似，我们可以得到</p>
+$$(s_t, a_t, r_t, s_{t+1}) \tag{2.1.2}$$<p>于是可以计算出</p>
+$$r_t + \gamma \max_{a \in \mathcal{A}} Q_*(s_{t+1}, a) \tag{2.1.3}$$<p>将其看作对公式(2.1.1)的蒙特卡洛近似，我们可以得到</p>
 <div class="math">
 
 $$
@@ -445,8 +445,8 @@ $$
 </div>
 
 <p>其中$\hat q_t$是对 $Q_{\ast}(s_t, a_t)$ 的预测，$\hat y_t$是对$r_t + \gamma \max_{a \in \mathcal{A}} Q_{\ast}(s_{t+1}, a)$的预测。$\hat y_t$比$\hat q_t$更可信，因为它部分（$r_t$）基于事实观测，据此构建损失函数</p>
-<script type="math/tex; mode=display">
-L(\boldsymbol{\omega}) = \frac{1}{2}\left[ \hat y_t - \hat q_t \right]^2 \tag{2.1.6}</script><p>计算$L$关于$\boldsymbol{\omega}$的梯度，注意，这里假装$\hat y_t$是常数 （<strong>我猜</strong>是因为在引入<strong>目标网络</strong>以后，$\hat y_t$不再随$\boldsymbol{\omega}$变化）。</p>
+$$
+L(\boldsymbol{\omega}) = \frac{1}{2}\left[ \hat y_t - \hat q_t \right]^2 \tag{2.1.6}$$<p>计算$L$关于$\boldsymbol{\omega}$的梯度，注意，这里假装$\hat y_t$是常数 （<strong>我猜</strong>是因为在引入<strong>目标网络</strong>以后，$\hat y_t$不再随$\boldsymbol{\omega}$变化）。</p>
 <div class="math">
 
 $$
@@ -459,8 +459,8 @@ $$
 </div>
 
 <p>所以使用梯度下降法更新参数$\boldsymbol{\omega}$的方式如下</p>
-<script type="math/tex; mode=display">
-\boldsymbol{\omega} \leftarrow \boldsymbol{\omega} - \alpha \cdot \delta_t \cdot \nabla_{\boldsymbol{\omega}} Q(s_t, a_t; \boldsymbol{\omega}) \tag{2.1.8}</script><h3 id="2-2-训练过程"><a href="#2-2-训练过程" class="headerlink" title="2.2. 训练过程"></a>2.2. 训练过程</h3><ul>
+$$
+\boldsymbol{\omega} \leftarrow \boldsymbol{\omega} - \alpha \cdot \delta_t \cdot \nabla_{\boldsymbol{\omega}} Q(s_t, a_t; \boldsymbol{\omega}) \tag{2.1.8}$$<h3 id="2-2-训练过程"><a href="#2-2-训练过程" class="headerlink" title="2.2. 训练过程"></a>2.2. 训练过程</h3><ul>
 <li>获取四元组</li>
 </ul>
 <div class="math">

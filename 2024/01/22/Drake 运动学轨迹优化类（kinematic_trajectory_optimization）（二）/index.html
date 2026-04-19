@@ -387,7 +387,7 @@
 <p>这部分的代码位于下面两个文件中：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">planning\trajectory_optimization\kinematic_trajectory_optimization.h<br>planning\trajectory_optimization\kinematic_trajectory_optimization.cc<br></code></pre></td></tr></table></figure>
 <p>回顾上一篇文章的讨论，我们知道，该类的主要目的是解决如下问题：</p>
-<script type="math/tex; mode=display">
+$$
 \begin{aligned}
 & \underset{T,q(\cdot)}{\text{min}}
 & & J(T,q(\cdot)) \\
@@ -401,15 +401,15 @@
 & & & \text{obstacle avoidance} \\
 & & & \text{kinematics, dynamics constrains}
 \end{aligned}
-\tag{1}</script><p>并且有以下关系：</p>
-<script type="math/tex; mode=display">
+\tag{1}$$<p>并且有以下关系：</p>
+$$
 \begin{aligned}
 \overline{q}(\tau) &= \overline{q}(\frac{t}{T})=q(t)\\
 \dot{q}(t) &= \frac{dq}{dt} = \frac{dq}{d\tau}\frac{d\tau}{dt} = \frac{\dot{\overline{q}}(\tau)}{T} \\
 \ddot{q}(t) &= \frac{d^2q}{dt^2} = \frac{d}{dt}(\frac{dq}{dt}) = \frac{d}{d\tau}(\frac{dq}{d\tau})\frac{d\tau}{dt} = \frac{\ddot{\overline{q}}(\tau)}{T^2}
 \end{aligned}
-\tag{2}</script><p>经过转化，我们可以得到如下形式的优化问题：</p>
-<script type="math/tex; mode=display">
+\tag{2}$$<p>经过转化，我们可以得到如下形式的优化问题：</p>
+$$
 \begin{aligned}
 & \underset{T,\overline{q}_{0:n}}{\text{min}}
 & & J(T,\overline{q}_{0:n}) \\
@@ -424,7 +424,7 @@
 & & & \text{obstacle avoidance} \\
 & & & \text{kinematics, dynamics constrains}
 \end{aligned}
-\tag{3}</script><p><strong>（为了方便起见，下文用$q$表示$\overline{q}$，用$\dot{q}$表示$\dot{\overline{q}}$，用$\ddot{q}$表示$\ddot{\overline{q}}$）</strong></p>
+\tag{3}$$<p><strong>（为了方便起见，下文用$q$表示$\overline{q}$，用$\dot{q}$表示$\dot{\overline{q}}$，用$\ddot{q}$表示$\ddot{\overline{q}}$）</strong></p>
 <p>详细推导请参考上一篇文章。</p>
 <h1 id="2-代码实现"><a href="#2-代码实现" class="headerlink" title="2. 代码实现"></a>2. 代码实现</h1><h2 id="2-1-综述"><a href="#2-1-综述" class="headerlink" title="2.1. 综述"></a>2.1. 综述</h2><p><code>KinematicTrajectoryOptimization</code>类的主要作用，就是使用BSpline描述一个n维运动学轨迹，通过配置其代价和约束，以便用来描述运动学轨迹约束优化问题，然后使用<code>MathematicalProgram</code>将该问题的描述配置，为其选择一个“合适”的优化器，并将通用的问题描述，变成变成一个特化的约束优化问题的的配置，最后通过调用求解器得到求解结果，根据求解结果，得到最优的运动学轨迹。</p>
 <h2 id="2-2-确定优化变量"><a href="#2-2-确定优化变量" class="headerlink" title="2.2. 确定优化变量"></a>2.2. 确定优化变量</h2><p>在<code>KinematicTrajectoryOptimization</code>类的实现中，我们有优化时间变量$T$和控制点变量$q$，其中控制点变量$q$是一个$n \times m$维向量，其中n表示控制点的个数，m表示每个控制点的维度。如果我们需要优化一个7自由度的机械臂的运动学轨迹，那么m=7。</p>
@@ -451,71 +451,71 @@
 </ol>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">KinematicTrajectoryOptimization::AddPathLengthCost</span><span class="hljs-params">(</span></span><br><span class="hljs-params"><span class="hljs-function">    <span class="hljs-type">double</span> weight, <span class="hljs-type">bool</span> use_conic_constraint)</span> </span>&#123;<br>  <span class="hljs-function">MatrixXd <span class="hljs-title">A</span><span class="hljs-params">(num_positions_, <span class="hljs-number">2</span> * num_positions_)</span></span>;<br>  A.<span class="hljs-built_in">leftCols</span>(num_positions_) =<br>      weight * MatrixXd::<span class="hljs-built_in">Identity</span>(num_positions_, num_positions_);<br>  A.<span class="hljs-built_in">rightCols</span>(num_positions_) =<br>      -weight * MatrixXd::<span class="hljs-built_in">Identity</span>(num_positions_, num_positions_);<br>  <span class="hljs-type">const</span> VectorXd b = VectorXd::<span class="hljs-built_in">Zero</span>(num_positions_);<br>  <span class="hljs-function">VectorXDecisionVariable <span class="hljs-title">vars</span><span class="hljs-params">(<span class="hljs-number">2</span> * num_positions_)</span></span>;<br>  <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; <span class="hljs-built_in">num_control_points</span>(); ++i) &#123;<br>    vars.<span class="hljs-built_in">head</span>(num_positions_) = control_points_.<span class="hljs-built_in">col</span>(i);<br>    vars.<span class="hljs-built_in">tail</span>(num_positions_) = control_points_.<span class="hljs-built_in">col</span>(i - <span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">if</span> (use_conic_constraint) &#123;<br>      prog_.<span class="hljs-built_in">AddL2NormCostUsingConicConstraint</span>(A, b, vars);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      prog_.<span class="hljs-built_in">AddL2NormCost</span>(A, b, vars);<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>代码中首先构造了一个$n \times 2n$的矩阵$A$：</p>
-<script type="math/tex; mode=display">
+$$
 A = w_{length}\begin{bmatrix}
 I_n & -I_n
 \end{bmatrix}
-\tag{4}</script><p>一个全零的$n$维向量$b$：</p>
-<script type="math/tex; mode=display">
+\tag{4}$$<p>一个全零的$n$维向量$b$：</p>
+$$
 b = \begin{bmatrix}
 0_n
 \end{bmatrix}
-\tag{5}</script><p>于是得到个二阶范数的代价项：</p>
-<script type="math/tex; mode=display">
+\tag{5}$$<p>于是得到个二阶范数的代价项：</p>
+$$
 J_{length} = \sum_{i=1}^{m-1} \vert \vert A\begin{bmatrix}
 q_i \\ q_{i-1}
 \end{bmatrix}-b
  \vert \vert _2 = w_{length}\sum_{i=1}^{m-1} \vert \vert (q_i-q_{i-1}) \vert \vert _2
-\tag{6}</script><p>如果直接使用<strong>L2NormCost</strong>，那就直接调用<code>AddL2NormCost</code>方法并将上述的$A$和$b$以及相关的变量向量传入即可，如果使用<strong>L2NormCostUsingConicConstraint</strong>，那么就需要将上述的$A$和$b$以及相关的变量向量传入<code>AddL2NormCostUsingConicConstraint</code>方法，该方法会自动将其转化为一个 <strong>洛仑兹锥约束</strong>，并添加到<code>prog_</code>对象中。</p>
+\tag{6}$$<p>如果直接使用<strong>L2NormCost</strong>，那就直接调用<code>AddL2NormCost</code>方法并将上述的$A$和$b$以及相关的变量向量传入即可，如果使用<strong>L2NormCostUsingConicConstraint</strong>，那么就需要将上述的$A$和$b$以及相关的变量向量传入<code>AddL2NormCostUsingConicConstraint</code>方法，该方法会自动将其转化为一个 <strong>洛仑兹锥约束</strong>，并添加到<code>prog_</code>对象中。</p>
 <p>我们一窥<code>AddL2NormCostUsingConicConstraint</code>方法的实现：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs cpp">std::tuple&lt;symbolic::Variable, Binding&lt;LinearCost&gt;,<br>           Binding&lt;LorentzConeConstraint&gt;&gt;<br>MathematicalProgram::<span class="hljs-built_in">AddL2NormCostUsingConicConstraint</span>(<br>    <span class="hljs-type">const</span> Eigen::Ref&lt;<span class="hljs-type">const</span> Eigen::MatrixXd&gt;&amp; A,<br>    <span class="hljs-type">const</span> Eigen::Ref&lt;<span class="hljs-type">const</span> Eigen::VectorXd&gt;&amp; b,<br>    <span class="hljs-type">const</span> Eigen::Ref&lt;<span class="hljs-type">const</span> VectorXDecisionVariable&gt;&amp; vars) &#123;<br>  <span class="hljs-keyword">auto</span> s = <span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">NewContinuousVariables</span>&lt;<span class="hljs-number">1</span>&gt;(<span class="hljs-string">&quot;slack&quot;</span>)(<span class="hljs-number">0</span>);<br>  <span class="hljs-keyword">auto</span> linear_cost =<br>      <span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">AddLinearCost</span>(<span class="hljs-built_in">Vector1d</span>(<span class="hljs-number">1</span>), <span class="hljs-number">0</span>, <span class="hljs-built_in">Vector1</span>&lt;symbolic::Variable&gt;(s));<br>  <span class="hljs-comment">// A_full = [1 0]</span><br>  <span class="hljs-comment">//          [0 A]</span><br>  <span class="hljs-comment">// b_full = [0 b]</span><br>  <span class="hljs-comment">// A_full * [s ; vars] + b_full = [s, A*vars+b]</span><br>  <span class="hljs-function">Eigen::MatrixXd <span class="hljs-title">A_full</span><span class="hljs-params">(A.rows() + <span class="hljs-number">1</span>, A.cols() + <span class="hljs-number">1</span>)</span></span>;<br>  A_full.<span class="hljs-built_in">setZero</span>();<br>  <span class="hljs-built_in">A_full</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>) = <span class="hljs-number">1</span>;<br>  A_full.<span class="hljs-built_in">bottomRightCorner</span>(A.<span class="hljs-built_in">rows</span>(), A.<span class="hljs-built_in">cols</span>()) = A;<br>  <span class="hljs-function">Eigen::VectorXd <span class="hljs-title">b_full</span><span class="hljs-params">(b.rows() + <span class="hljs-number">1</span>)</span></span>;<br>  <span class="hljs-built_in">b_full</span>(<span class="hljs-number">0</span>) = <span class="hljs-number">0</span>;<br>  b_full.<span class="hljs-built_in">bottomRows</span>(b.<span class="hljs-built_in">rows</span>()) = b;<br>  <span class="hljs-keyword">auto</span> lorentz_cone_constraint = <span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">AddLorentzConeConstraint</span>(<br>      A_full, b_full, &#123;<span class="hljs-built_in">Vector1</span>&lt;symbolic::Variable&gt;(s), vars&#125;);<br>  <span class="hljs-keyword">return</span> std::<span class="hljs-built_in">make_tuple</span>(s, linear_cost, lorentz_cone_constraint);<br>&#125;<br><br></code></pre></td></tr></table></figure>
 <p>上述代码引入了一个新的松弛变量$s$，将其作为一个作为一个新的优化变量，并使用它的线性代价作为一个代价项，然后将原本的二阶范数的代价项转化为一个 <strong>洛仑兹锥约束</strong>，并添加到<code>prog_</code>对象中。</p>
 <p>首先构建一个新的$A_{full}$：</p>
-<script type="math/tex; mode=display">
+$$
 A_{full} = \begin{bmatrix}
 1 & 0 \\
 0 & A
 \end{bmatrix}
-\tag{7}</script><p>以及一个新的$b_{full}$：</p>
-<script type="math/tex; mode=display">
+\tag{7}$$<p>以及一个新的$b_{full}$：</p>
+$$
 b_{full} = \begin{bmatrix}
 0 \\
 b
 \end{bmatrix}
-\tag{8}</script><p>以及新的变量列表：</p>
-<script type="math/tex; mode=display">
+\tag{8}$$<p>以及新的变量列表：</p>
+$$
 \begin{aligned}
 x_i &= \begin{bmatrix}
 s \\ q_i \\ q_{i-1}
 \end{bmatrix}
 \end{aligned}
-\tag{9}</script><p>将上述对象作为<code>AddLorentzConeConstraint</code>函数的参数调用，就可以添加一个如下形式的 <strong>洛仑兹锥约束</strong>：</p>
-<script type="math/tex; mode=display">
+\tag{9}$$<p>将上述对象作为<code>AddLorentzConeConstraint</code>函数的参数调用，就可以添加一个如下形式的 <strong>洛仑兹锥约束</strong>：</p>
+$$
 \begin{aligned}
 \vert \vert A_{full}x_i+b_{full} \vert \vert _2 \leq s
 \end{aligned}
-\tag{10}</script><p>这样就完成了如下的问题变换：</p>
-<script type="math/tex; mode=display">
+\tag{10}$$<p>这样就完成了如下的问题变换：</p>
+$$
 \begin{aligned}
 & \underset{q_i,q_{i-1}}{\text{min}}
 & & \vert \vert q_i-q_{i-1} \vert \vert _2 \\
 \end{aligned}
-\tag{11}</script><p>变成：</p>
-<script type="math/tex; mode=display">
+\tag{11}$$<p>变成：</p>
+$$
 \begin{aligned}
 & \underset{s,q_i,q_{i-1}}{\text{min}}
 & & s \\
 & \text{subject to}
 & & \vert \vert A_{full}x_i+b_{full}\vert \vert _2 \leq s
 \end{aligned}
-\tag{12}</script><p>以上就是<code>KinematicTrajectoryOptimization</code>代码中关于路径长度的代价的实现。不难发现这两种方法得到的配置在代价部分或者约束项部分都有非线性项，因此在后续的求解过程中，都需要使用非线性优化器来求解。如果我们希望尽可能的使用线性约束优化求解器，我们也可以把长度代价定义成一个二次型（Quadratic Cost），这样就可以使用线性约束优化求解器来求解了，即：</p>
-<script type="math/tex; mode=display">
+\tag{12}$$<p>以上就是<code>KinematicTrajectoryOptimization</code>代码中关于路径长度的代价的实现。不难发现这两种方法得到的配置在代价部分或者约束项部分都有非线性项，因此在后续的求解过程中，都需要使用非线性优化器来求解。如果我们希望尽可能的使用线性约束优化求解器，我们也可以把长度代价定义成一个二次型（Quadratic Cost），这样就可以使用线性约束优化求解器来求解了，即：</p>
+$$
 J_{length} = w_{length}\sum_{i=1}^{m-1}(q_i-q_{i-1})^T(q_i-q_{i-1})
-\tag{13}</script><p>不过<code>KinematicTrajectoryOptimization</code>并没有采取这样的方式。</p>
+\tag{13}$$<p>不过<code>KinematicTrajectoryOptimization</code>并没有采取这样的方式。</p>
 <h3 id="2-3-3-关于能量的代价"><a href="#2-3-3-关于能量的代价" class="headerlink" title="2.3.3. 关于能量的代价"></a>2.3.3. 关于能量的代价</h3><p>有关能量的代价，<code>KinematicTrajectoryOptimization</code>代码中目前只有一个<code>TODO</code>，还没有实现。不过我们可以简单讨论一下这部分内容，出于简化的考虑，我们可以简单实用广义坐标$q$的一阶导的平方来代表能量，即 $\vert \vert \dot{q} \vert \vert _2^2$ ，这样我们就可以使用一个 <strong>二次型（Quadratic Cost）</strong> 来描述能量代价，即：</p>
-<script type="math/tex; mode=display">
+$$
 J_{energy} = w_{energy}\vert \vert\dot{q} \vert \vert _2^2
-\tag{14}</script><p>不过考虑到如果是机械臂的刚体运动的能量，广义速度各项的二次项在能量中的比重是不同的（主要受惯量参数的影响），因此实际的能量形式也许应该在$\dot{q}$的各项上乘以不同的权重系数。</p>
+\tag{14}$$<p>不过考虑到如果是机械臂的刚体运动的能量，广义速度各项的二次项在能量中的比重是不同的（主要受惯量参数的影响），因此实际的能量形式也许应该在$\dot{q}$的各项上乘以不同的权重系数。</p>
 <h2 id="2-4-确定约束"><a href="#2-4-确定约束" class="headerlink" title="2.4. 确定约束"></a>2.4. 确定约束</h2><h3 id="2-4-1-时间约束"><a href="#2-4-1-时间约束" class="headerlink" title="2.4.1. 时间约束"></a>2.4.1. 时间约束</h3><p>可以通过<code>AddDurationConstraint</code>方法为时间添加上下界约束，代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">KinematicTrajectoryOptimization::AddDurationConstraint</span><span class="hljs-params">(</span></span><br><span class="hljs-params"><span class="hljs-function">    optional&lt;<span class="hljs-type">double</span>&gt; lb, optional&lt;<span class="hljs-type">double</span>&gt; ub)</span> </span>&#123;<br>  prog_.<span class="hljs-built_in">AddBoundingBoxConstraint</span>(<br>      lb.<span class="hljs-built_in">value_or</span>(<span class="hljs-number">0</span>), ub.<span class="hljs-built_in">value_or</span>(std::numeric_limits&lt;<span class="hljs-type">double</span>&gt;::<span class="hljs-built_in">infinity</span>()),<br>      duration_);<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>上述代码比较直观，不需要过多解释。</p>

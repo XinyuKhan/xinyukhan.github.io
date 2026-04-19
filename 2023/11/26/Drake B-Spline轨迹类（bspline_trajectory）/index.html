@@ -340,7 +340,7 @@
         
         
         
-          89 分钟
+          90 分钟
         
       </span>
     
@@ -405,21 +405,21 @@
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/140921657">https://zhuanlan.zhihu.com/p/140921657</a></p>
 <p>推导过程如下：</p>
 <p>首先B-Spline曲线的定义如下：</p>
-<script type="math/tex; mode=display">
-\mathbf P(u)=\sum_{i=0}^{n} N_{i, p}(u) \mathbf P_i</script><p>其中 $N_{i, p}(u)$ 是B-Spline基底函数， $\mathbf P_i$ 是控制点，$p$是B-Spline基底函数的阶数，$n$是控制点的个数。</p>
+$$
+\mathbf P(u)=\sum_{i=0}^{n} N_{i, p}(u) \mathbf P_i$$<p>其中 $N_{i, p}(u)$ 是B-Spline基底函数， $\mathbf P_i$ 是控制点，$p$是B-Spline基底函数的阶数，$n$是控制点的个数。</p>
 <p>我们假设$u$是一个时间变量，那么B-Spline曲线的导数可以表示为：</p>
-<script type="math/tex; mode=display">
-\mathbf P^{\prime}(u)=\sum_{i=0}^{n} N_{i, p}^{\prime}(u) \mathbf P_i</script><p>其中 $N_{i, p}^{\prime}(u)$ 是 $N_{i, p}(u)$ 的导数。</p>
+$$
+\mathbf P^{\prime}(u)=\sum_{i=0}^{n} N_{i, p}^{\prime}(u) \mathbf P_i$$<p>其中 $N_{i, p}^{\prime}(u)$ 是 $N_{i, p}(u)$ 的导数。</p>
 <p>我们知道B-Spline基底函数的导数可以表示为：</p>
-<script type="math/tex; mode=display">
-N_{i, p}^{\prime}(u)=\frac{p}{u_{i+p}-u_{i}} N_{i, p-1}(u)-\frac{p}{u_{i+p+1}-u_{i+1}} N_{i+1, p-1}(u)</script><p>其中$u_{i}$是节点向量，$u_{i+p}$是节点向量中的第$i+p$个元素。</p>
+$$
+N_{i, p}^{\prime}(u)=\frac{p}{u_{i+p}-u_{i}} N_{i, p-1}(u)-\frac{p}{u_{i+p+1}-u_{i+1}} N_{i+1, p-1}(u)$$<p>其中$u_{i}$是节点向量，$u_{i+p}$是节点向量中的第$i+p$个元素。</p>
 <p>因此B-Spline曲线的导数可以表示为：</p>
-<script type="math/tex; mode=display">
+$$
 \begin{aligned}
 \mathbf{P}^{\prime}(u)&=\sum_{i=0}^{n} \frac{p}{u_{i+p}-u_{i}} N_{i, p-1}(u) \mathbf{P}_{i}-\sum_{i=0}^{n} \frac{p}{u_{i+p+1}-u_{i+1}} N_{i+1, p-1}(u) \mathbf{P}_{i+1} \\
 &=\sum_{i=0}^{n-1}N_{i+1,p-1}(u)\mathbf{Q}_i \\
 \mathbf{Q}_i&=\frac{p}{u_{i+p+1}-u_{i+1}} (\mathbf{P}_{i+1}-\mathbf{P}_{i})
-\end{aligned}</script><p>代码部分的实现在<code>DoMakeDerivative</code>成员函数中：</p>
+\end{aligned}$$<p>代码部分的实现在<code>DoMakeDerivative</code>成员函数中：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;<br>std::unique_ptr&lt;Trajectory&lt;T&gt;&gt; BsplineTrajectory&lt;T&gt;::<span class="hljs-built_in">DoMakeDerivative</span>(<br>    <span class="hljs-type">int</span> derivative_order) <span class="hljs-type">const</span> &#123;<br>  <span class="hljs-keyword">if</span> (derivative_order == <span class="hljs-number">0</span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">Clone</span>();<br>  &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (derivative_order &gt; basis_.<span class="hljs-built_in">degree</span>()) &#123;<br>    std::vector&lt;T&gt; derivative_knots;<br>    derivative_knots.<span class="hljs-built_in">push_back</span>(basis_.<span class="hljs-built_in">knots</span>().<span class="hljs-built_in">front</span>());<br>    derivative_knots.<span class="hljs-built_in">push_back</span>(basis_.<span class="hljs-built_in">knots</span>().<span class="hljs-built_in">back</span>());<br>    std::vector&lt;MatrixX&lt;T&gt;&gt; <span class="hljs-built_in">control_points</span>(<span class="hljs-number">1</span>, MatrixX&lt;T&gt;::<span class="hljs-built_in">Zero</span>(<span class="hljs-built_in">rows</span>(), <span class="hljs-built_in">cols</span>()));<br>    <span class="hljs-keyword">return</span> std::make_unique&lt;BsplineTrajectory&lt;T&gt;&gt;(<br>        <span class="hljs-built_in">BsplineBasis</span>&lt;T&gt;(<span class="hljs-number">1</span>, derivative_knots), control_points);<br>  &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (derivative_order &gt; <span class="hljs-number">1</span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">MakeDerivative</span>(<span class="hljs-number">1</span>)-&gt;<span class="hljs-built_in">MakeDerivative</span>(derivative_order - <span class="hljs-number">1</span>);<br>  &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (derivative_order == <span class="hljs-number">1</span>) &#123;<br>    std::vector&lt;T&gt; derivative_knots;<br>    <span class="hljs-type">const</span> <span class="hljs-type">int</span> num_derivative_knots = basis_.<span class="hljs-built_in">knots</span>().<span class="hljs-built_in">size</span>() - <span class="hljs-number">2</span>;<br>    derivative_knots.<span class="hljs-built_in">reserve</span>(num_derivative_knots);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= num_derivative_knots; ++i) &#123;<br>      derivative_knots.<span class="hljs-built_in">push_back</span>(basis_.<span class="hljs-built_in">knots</span>()[i]);<br>    &#125;<br>    std::vector&lt;MatrixX&lt;T&gt;&gt; derivative_control_points;<br>    derivative_control_points.<span class="hljs-built_in">reserve</span>(<span class="hljs-built_in">num_control_points</span>() - <span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">num_control_points</span>() - <span class="hljs-number">1</span>; ++i) &#123;<br>      derivative_control_points.<span class="hljs-built_in">push_back</span>(<br>          basis_.<span class="hljs-built_in">degree</span>() /<br>          (basis_.<span class="hljs-built_in">knots</span>()[i + basis_.<span class="hljs-built_in">order</span>()] - basis_.<span class="hljs-built_in">knots</span>()[i + <span class="hljs-number">1</span>]) *<br>          (<span class="hljs-built_in">control_points</span>()[i + <span class="hljs-number">1</span>] - <span class="hljs-built_in">control_points</span>()[i]));<br>    &#125;<br>    <span class="hljs-keyword">return</span> std::make_unique&lt;BsplineTrajectory&lt;T&gt;&gt;(<br>        <span class="hljs-built_in">BsplineBasis</span>&lt;T&gt;(basis_.<span class="hljs-built_in">order</span>() - <span class="hljs-number">1</span>, derivative_knots),<br>        derivative_control_points);<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-keyword">throw</span> std::<span class="hljs-built_in">invalid_argument</span>(<br>        fmt::format(<span class="hljs-string">&quot;Invalid derivative order (&#123;&#125;). The derivative order must &quot;</span><br>                    <span class="hljs-string">&quot;be greater than or equal to 0.&quot;</span>,<br>                    derivative_order));<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>这是我最喜欢的一部分，该函数传递一个参数<code>derivative_order</code>，它表示要求导的阶数。这个函数的功能是返回一个新的<code>Trajectory</code>对象，它是原来的<code>Trajectory</code>对象的导数。这个函数的实现非常巧妙，它使用了递归的思想，将求导的问题转化为了求导一次的问题。这样的设计使得代码的实现非常简洁。</p>
 <p>值得注意的是，对于一个现有的BsplineTrajectory对象，我们每对它进行一次求导，他的阶数就会减少1，当求导的阶数大于曲线的阶数的时候，我们就会得到一个阶数为1，只有一个全零的控制点的曲线，这个曲线的导数就是0。因此我们在这里对这种情况进行了特殊处理。</p>
@@ -439,11 +439,11 @@ N_{i, p}^{\prime}(u)=\frac{p}{u_{i+p}-u_{i}} N_{i, p-1}(u)-\frac{p}{u_{i+p+1}-u_
 <li>找到一个最大的节点$t_l$，使得$t_l\leq t_{bar}$，同时$t_l&lt;t_{end}$，这里$t_{end}$是曲线的结束时间。</li>
 <li>将节点$t_{bar}$插入到节点向量$t$中，得到新的节点向量$t^{‘}$。</li>
 <li>根据节点向量$t^{‘}$，计算新的控制点向量$P^{‘}$，这里的计算公式如下：</li>
-<li><script type="math/tex; mode=display">
+<li>$$
 \begin{aligned}
 P^{'}_i&=\left\{\begin{aligned} P_i\quad &i\leq l-k+1\\ (1-a)P_{i-1}+aP_i\quad &l-k+2\leq i\leq l\\ P_{i-1}\quad &i>l \end{aligned}\right.\\
  a&=\frac{t_{bar}-t_i}{t_{i+k-1}-t_i}
-\end{aligned}</script></li>
+\end{aligned}$$</li>
 <li>将新的节点向量和控制点向量赋值给原来的节点向量和控制点向量。</li>
 <li>重新计算B-Spline基底。</li>
 <li>重复上述步骤，直到所有的节点都被插入。</li>
