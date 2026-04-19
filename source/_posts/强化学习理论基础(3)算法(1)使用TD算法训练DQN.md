@@ -16,7 +16,6 @@ tags:
 
 最优动作价值函数$Q_*$定义如下
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -26,11 +25,9 @@ $$
 \end{aligned} \tag{1.1}
 $$
 
-</div>
 
 假如知道最优动作-价值函数$Q_*$的表达式，就可以获得如下策略
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -38,7 +35,6 @@ $$
 \end{aligned} \tag{1.2}
 $$
 
-</div>
 
 Q学习就是通过一个参数方法$Q(a,s;\boldsymbol{\omega})$近似最优动作-价值函数$Q_*$，如果这个参数方法使用的是一个深度神经网络，那就称之为DQN（Deep Q-Network）。
 
@@ -48,7 +44,6 @@ Q学习就是通过一个参数方法$Q(a,s;\boldsymbol{\omega})$近似最优动
 
 根据最优Bellman方程（详情参考[Bellman方程](/2025/08/12/强化学习理论基础(2)定理(1)Bellman方程/)），我们有
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -56,7 +51,6 @@ $$
 \end{aligned} \tag{2.1.1}
 $$
 
-</div>
 
 公式(2.1.1)右侧的期望可以使用蒙特卡洛法进行近似，当前状态为$s_t$，采取的动作为$a_t$，环境根据状态转移函数$p(\cdot \mid s_t, a_t)$迁移到下一个状态$s_{t+1}$，并且得到一个奖励$r_t$，因此我们可以得到，于是得到一个四元组
 
@@ -70,7 +64,6 @@ $$r_t + \gamma \max_{a \in \mathcal{A}} Q_*(s_{t+1}, a) \tag{2.1.3}$$
 
 将其看作对公式(2.1.1)的蒙特卡洛近似，我们可以得到
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -78,11 +71,9 @@ $$
 \end{aligned} \tag{2.1.4}
 $$
 
-</div>
 
 下面用DQN根据当前的四元组对$Q_*$进行预测
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -91,7 +82,6 @@ $$
 \end{aligned} \tag{2.1.5}
 $$
 
-</div>
 
 其中$\hat q_t$是对 $Q_{\ast}(s_t, a_t)$ 的预测，$\hat y_t$是对$r_t + \gamma \max_{a \in \mathcal{A}} Q_{\ast}(s_{t+1}, a)$的预测。$\hat y_t$比$\hat q_t$更可信，因为它部分（$r_t$）基于事实观测，据此构建损失函数
 
@@ -101,7 +91,6 @@ $$
 
 计算$L$关于$\boldsymbol{\omega}$的梯度，注意，这里假装$\hat y_t$是常数 （**我猜**是因为在引入**目标网络**以后，$\hat y_t$不再随$\boldsymbol{\omega}$变化）。
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -110,7 +99,6 @@ $$
 \end{aligned} \tag{2.1.7}
 $$
 
-</div>
 
 所以使用梯度下降法更新参数$\boldsymbol{\omega}$的方式如下
 
@@ -123,43 +111,35 @@ $$
 
 - 获取四元组
 
-<div class="math">
 
 $$
 (s_t, a_t, r_t, s_{t+1}) \tag{2.2.1}
 $$
 
-</div>
 
 - 计算TD目标
 
-<div class="math">
 
 $$
 \hat y_t = r_t + \gamma \max_{a \in \mathcal{A}} Q(s_{t+1}, a; \boldsymbol{\omega}) \tag{2.2.2}
 $$
 
-</div>
 
 - 计算TD误差
 
-<div class="math">
 
 $$
 \delta_t = \hat q_t - \hat y_t \tag{2.2.3}
 $$
 
-</div>
 
 - 更新参数
 
-<div class="math">
 
 $$
 \boldsymbol{\omega} \leftarrow \boldsymbol{\omega} - \alpha \cdot \delta_t \cdot \nabla_{\boldsymbol{\omega}} Q(s_t, a_t; \boldsymbol{\omega}) \tag{2.2.4}
 $$
 
-</div>
 
 ## 3. 总结
 

@@ -21,7 +21,6 @@ tags:
 
 在[《带基线的策略梯度定理》](/2025/08/12/强化学习理论基础(2)定理(4)带基线的策略梯度定理/)中，我们得到策略梯度的无偏估计为：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -29,7 +28,6 @@ $$
 \end{aligned} \tag{1.1}
 $$
 
-</div>
 
 其中 $Q_{\pi}(s, a) - V_{\pi}(s)$ 被称为**优势函数（Advantage Function）**，通常记为 $A_{\pi}(s, a)$。优势函数表示在状态 $s$ 下采取动作 $a$ 相比于平均水平 $V_{\pi}(s)$ 的优势。
 
@@ -37,7 +35,6 @@ $$
 
 根据贝尔曼方程，动作价值函数可以表示为：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -45,11 +42,9 @@ $$
 \end{aligned} \tag{1.2}
 $$
 
-</div>
 
 如果我们用实际观测到的奖励 $r_t$ 和下一步的部分状态价值函数打分代替期望，就可以得到 $Q_{\pi}(s_t, a_t)$ 的蒙特卡洛近似：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -57,11 +52,9 @@ $$
 \end{aligned} \tag{1.3}
 $$
 
-</div>
 
 将公式(1.3)代入公式(1.1)中的优势函数，得到：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -69,7 +62,6 @@ $$
 \end{aligned} \tag{1.4}
 $$
 
-</div>
 
 这是一个非常漂亮的结论！**TD误差 $\delta_t$ 可以作为优势函数 $A_{\pi}(s_t, a_t)$ 的一个无偏估计。**
 
@@ -79,7 +71,6 @@ $$
 
 价值网络 $v(s; \boldsymbol{\omega})$ 用来拟合状态价值函数 $V_{\pi}(s)$。根据TD算法，我们可以构建损失函数：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -87,11 +78,9 @@ $$
 \end{aligned} \tag{1.1.1}
 $$
 
-</div>
 
 其中TD目标 $\hat y_t = r_t + \gamma v(s_{t+1}; \boldsymbol{\omega})$。令 $\delta_t = \hat y_t - v(s_t; \boldsymbol{\omega})$，更新参数的公式为：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -100,13 +89,11 @@ $$
 \end{aligned} \tag{1.1.2}
 $$
 
-</div>
 
 ### 1.2. 训练策略网络
 
 由于 $\delta_t$ 近似表示了优势函数，我们可以将近似策略梯度写为：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -114,11 +101,9 @@ $$
 \end{aligned} \tag{1.2.1}
 $$
 
-</div>
 
 使用该近似梯度，可以通过梯度上升法更新策略网络的参数 $\boldsymbol{\theta}$：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -126,7 +111,6 @@ $$
 \end{aligned} \tag{1.2.2}
 $$
 
-</div>
 
 ## 2. 训练流程
 
@@ -141,7 +125,6 @@ A2C算法的单步训练流程如下：
 
 - 让价值网络对 $s_t$ 和 $s_{t+1}$ 进行打分：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -150,11 +133,9 @@ $$
 \end{aligned} \tag{2.1}
 $$
 
-</div>
 
 - 计算TD目标和TD误差（即近似优势函数）：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -163,11 +144,9 @@ $$
 \end{aligned} \tag{2.2}
 $$
 
-</div>
 
 - 更新价值网络参数：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -175,11 +154,9 @@ $$
 \end{aligned} \tag{2.3}
 $$
 
-</div>
 
 - 更新策略网络参数：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -187,6 +164,5 @@ $$
 \end{aligned} \tag{2.4}
 $$
 
-</div>
 
 未经允许，禁止转载。

@@ -15,7 +15,6 @@ tags:
 我们在文章[《带基线的策略梯度定理》](/2025/08/12/强化学习理论基础(2)定理(4)带基线的策略梯度定理/)中已经讨论和证明了如下带基线的策略梯度定理：
 
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -23,13 +22,11 @@ $$
 \end{aligned} \tag {0.1}
 $$
 
-</div>
 
 其中 $b$ 是基线（baseline），可以是任意一个和动作 $a$ 无关的函数。
 
 我们在文章[《REINFORCE算法》](/2025/08/12/强化学习理论基础(3)算法(4)REINFORCE算法/)中讨论了一种近似策略梯度的方法，即使用时刻 $t$ 之后汇报 $u_t$ 近似动作价值函数 $Q_{\pi}(s_t, a_t)$。进而得到近似随机梯度
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -37,7 +34,6 @@ $$
 \end{aligned} \tag{0.2}
 $$
 
-</div>
 
 ## 1. 推导
 
@@ -45,7 +41,6 @@ $$
 
 那么我们可以将策略梯度的无偏估计写成
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -53,12 +48,10 @@ $$
 \end{aligned} \tag{1.1}
 $$
 
-</div>
 
 
 这里我们使用一个神经网络 $v(s; \boldsymbol{\omega})$ 来近似状态价值函数 $V_{\pi}(s)$ ，然后依然使用回报 $u$ 来进替代 $Q_{\pi}(s, a)$。因此我们使用蒙特卡洛法近似得到随机近似梯度
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -66,13 +59,11 @@ $$
 \end{aligned} \tag{1.2}
 $$
 
-</div>
 
 ### 1.1. 训练策略网络
 
 我们使用上述随机近似梯度，就可以用梯度上升法来更新策略网络的参数 $\boldsymbol{\theta}$：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -80,7 +71,6 @@ $$
 \end{aligned} \tag{1.3}
 $$
 
-</div>
 
 注意，回忆一下文章[《REINFORCE算法》](/2025/08/12/强化学习理论基础(3)算法(4)REINFORCE算法/)中的推导，上述更新方式同样是简化版本
 
@@ -88,7 +78,6 @@ $$
 
 根据定义，状态价值函数 $V_{\pi}(s_t)$ 回报 $U_t$ 的期望
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -96,11 +85,9 @@ $$
 \end{aligned} \tag{1.4}
 $$
 
-</div>
 
 价值网络 $v(s_t; \boldsymbol{\omega})$ 用来拟合状态价值函数 $V_{\pi}(s_t)$。我们希望它尽可能接近回报 $U_t$ 的期望，于是我们用回报 $U_t$ 的观测结果 $u_t$ 来构架如下代价函数
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -108,11 +95,9 @@ $$
 \end{aligned} \tag{1.5}
 $$
 
-</div>
 
 于是可以得到损失函数的梯度
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -120,11 +105,9 @@ $$
 \end{aligned} \tag{1.6}
 $$
 
-</div>
 
 于是可以使用梯度下降法更新价值网络的参数 $\boldsymbol{\omega}$：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -132,7 +115,6 @@ $$
 \end{aligned} \tag{1.7}
 $$
 
-</div>
 
 
 ## 2. 训练流程
@@ -145,7 +127,6 @@ $$
 
 - 使用策略网络$\pi(a \mid s; \boldsymbol{\theta}_{now})$ 控制智能体和环境交互并完成一个episode，得到一条轨迹
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -153,11 +134,9 @@ $$
 \end{aligned} \tag{2.1}
 $$
 
-</div>
 
 - 计算所有的回报 $u_t$
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -165,11 +144,9 @@ $$
 \end{aligned} \tag{2.2}
 $$
 
-</div>
 
 - 计算当前价值网络的预测值
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -177,11 +154,9 @@ $$
 \end{aligned} \tag{2.3}
 $$
 
-</div>
 
 - 计算误差
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -189,11 +164,9 @@ $$
 \end{aligned} \tag{2.4}
 $$
 
-</div>
 
 - 通过反向传播计算价值网络的梯度
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -201,11 +174,9 @@ $$
 \end{aligned} \tag{2.5}
 $$
 
-</div>
 
 - 更新价值网络的参数
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -213,11 +184,9 @@ $$
 \end{aligned} \tag{2.6}
 $$
 
-</div>
 
 - 通过反向传播计算近似策略梯度
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -226,11 +195,9 @@ $$
 \end{aligned}, \space \forall t = 1, 2, \ldots, n \tag{2.7}
 $$
 
-</div>
 
 - 更新策略网络的参数
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -239,6 +206,5 @@ $$
 \end{aligned} \tag{2.8}
 $$
 
-</div>
 
 未经允许，禁止转载。

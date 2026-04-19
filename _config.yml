@@ -56,4 +56,4 @@ markdown:
     linkify: true
     typographer: true
   plugins:
-    - markdown-it-katex
+    - "@iktakahiro/markdown-it-katex"

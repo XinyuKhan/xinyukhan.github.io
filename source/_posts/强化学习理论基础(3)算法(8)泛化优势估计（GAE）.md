@@ -13,7 +13,6 @@ tags:
 
 在之前的文章[《带基线的Actor-Critic算法（A2C算法）》](/2025/08/12/强化学习理论基础(3)算法(7)带基线的Actor-Critic算法（A2C算法）/)中，我们引入了优势函数（Advantage Function） $A_{\pi}(s, a)$，并得出单步 TD 误差 $\delta_t$ 可以作为优势函数的一个无偏估计：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -21,7 +20,6 @@ $$
 \end{aligned} \tag{1.1}
 $$
 
-</div>
 
 虽然单步 TD 误差具有较低的方差，但是由于在计算中使用了价值网络来近似真实的价值函数（自举 Bootstrap），因此会带来一定的偏差（Bias）。泛化优势估计（Generalized Advantage Estimation, GAE）就是为了在偏差和方差之间进行更好的权衡而提出的一种方法。
 
@@ -29,7 +27,6 @@ $$
 
 为了权衡偏差和方差，我们可以像[多步 TD 目标](/2025/08/12/强化学习理论基础(3)算法(2)使用TD算法训练DQN方法改进/)那样，引入多步优势估计。定义 $k$ 步优势估计 $\hat{A}_t^{(k)}$ 如下：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -38,7 +35,6 @@ $$
 \end{aligned} \tag{1.2}
 $$
 
-</div>
 
 - 当 $k=1$ 时，$\hat{A}_t^{(1)} = \delta_t$，这正是单步 TD 误差。此时估计的方差最小，但偏差较大。
 - 当 $k \to \infty$ 时，$\hat{A}_t^{(\infty)} = \sum_{l=0}^{\infty} \gamma^l r_{t+l} - V_{\pi}(s_t)$ ，这相当于使用的是蒙特卡洛回报减去基线。此时估计是无偏的，但因为包含了长序列的随机奖励，方差最大。
@@ -47,7 +43,6 @@ $$
 
 GAE 通过引入一个衰减超参数 $\lambda \in [0, 1]$，对所有的 $k$ 步优势估计进行指数加权移动平均，从而平滑地在偏差和方差之间进行折中：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -55,11 +50,9 @@ $$
 \end{aligned} \tag{2.1}
 $$
 
-</div>
 
 利用 $\sum_{k=1}^{\infty} (1 - \lambda)\lambda^{k-1} = 1$ 的性质，可以将公式进行展开和化简，最终得到 GAE 的简化表达式，它可以直接写成 TD 误差 $\delta_t$ 的衰减求和：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -67,7 +60,6 @@ $$
 \end{aligned} \tag{2.2}
 $$
 
-</div>
 
 这说明，计算 GAE 就相当于对未来的 TD 误差序列进行折扣系数为 $\gamma \lambda$ 的求和。
 
@@ -89,19 +81,16 @@ $$
 
 根据定理，策略梯度的期望方向为：
 
-<div class="math">
 
 $$
 \nabla_{\boldsymbol{\theta}} J(\boldsymbol{\theta}) \propto \mathbb{E}_{\pi} \left[ \nabla_{\boldsymbol{\theta}} \ln \pi(a \mid s; \boldsymbol{\theta}) \cdot \left( Q_{\pi}(s, a) - b(s) \right) \right] \tag{4.1}
 $$
 
-</div>
 
 我们知道，为了最大化降低方差，最优的基线 $b(s)$ 选择就是状态价值函数 $V_{\pi}(s)$。那么，GAE 在这个框架中扮演了什么角色呢？它改变了基线吗？
 
 我们可以把 GAE 的表达式 $\hat{A}_t^{GAE(\gamma, \lambda)} = \sum_{l=0}^{\infty} (\gamma \lambda)^l \delta_{t+l}$ 展开并重新组合：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -111,11 +100,9 @@ $$
 \end{aligned} \tag{4.2}
 $$
 
-</div>
 
 将所有关于后续奖励 $r$ 和后续状态价值 $V$ 的项合并，提取出唯一的 $V_{\pi}(s_t)$：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -123,7 +110,6 @@ $$
 \end{aligned} \tag{4.3}
 $$
 
-</div>
 
 **结论非常清晰**：
 
@@ -134,7 +120,6 @@ $$
 
 在使用 GAE 的情况下，Actor-Critic 算法中策略网络的参数更新公式为：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -142,6 +127,5 @@ $$
 \end{aligned} \tag{4.4}
 $$
 
-</div>
 
 未经允许，禁止转载。

@@ -15,13 +15,11 @@ tags:
 
 SARSA算法虽然训练过程和Q学习算法十分相似，可是它却是一种 **同策略（On Policy）** 算法。算法名称SARSA是“状态-动作-奖励-状态-动作（State-Action-Reward-State-Action）”的缩写，表明它利用一个“五元组”进行训练
 
-<div class="math">
 
 $$
 s_t, a_t, r_t, s_{t+1}, \tilde a_{t+1} \tag{0.1}
 $$
 
-</div>
 
 - $s_t$ 表示当前状态
 - $a_t$ 表示应用策略 $\pi$ 根据当前状态 $s_t$ 选择的动作
@@ -37,27 +35,22 @@ $$
 
 假定当前状态是$s_t$，智能体执行动作$a_t$，获得奖励$r_t$，并转移到下一个状态$s_{t+1}$。在状态$s_{t+1}$下，智能体根据当前策略$\pi$（模拟）选择动作$\tilde{a}_{t+1}$。因此，根据最优Bellman方程，可以得到TD目标：
 
-<div class="math">
 
 $$
 \hat y_t = r_t + \gamma \cdot q(s_{t+1}, \tilde{a}_{t+1}; \boldsymbol{\omega}) \tag{1.1}
 $$
 
-</div>
 
 因为要通过学习使得$q(s_t, a_t; \boldsymbol{\omega})$尽可能接近$\hat y_t$，因此可以定义损失函数
 
-<div class="math">
 
 $$
 L(\boldsymbol{\omega}) = \frac{1}{2} \left( q(s_t, a_t; \boldsymbol{\omega}) - \hat y_t \right)^2 \tag{1.2}
 $$
 
-</div>
 
 同样的我们还是在假设$\hat y_t$是一个常数的情况下（**我猜**是因为在引入**目标网络**以后，$\hat y_t$不再随$\boldsymbol{\omega}$变化）求$L(\boldsymbol{\omega})$对$\boldsymbol{\omega}$的梯度
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -66,17 +59,14 @@ $$
 \end{aligned} \tag{1.3}
 $$
 
-</div>
 
 因此应用梯度下降法，得到了SARSA算法的更新公式：
 
-<div class="math">
 
 $$
 \boldsymbol{\omega} \leftarrow \boldsymbol{\omega} - \alpha \cdot \delta_t \nabla_{\boldsymbol{\omega}} q(s_t, a_t; \boldsymbol{\omega}) \tag{1.4}
 $$
 
-</div>
 
 ## 2. 训练过程
 
@@ -84,13 +74,11 @@ $$
 
 - 用当前的价值网络计算价值
 
-<div class="math">
 
 $$
 \hat q_t = q(s_t, a_t; \boldsymbol{\omega}_{now}) \tag{2.1}
 $$
 
-</div>
 
 - 智能体执行动作$a_t$，获得奖励$r_t$，并转移到下一个状态$s_{t+1}$。
 
@@ -98,17 +86,14 @@ $$
 
 - 用当前的价值网络计算价值
 
-<div class="math">
 
 $$
 \hat q_{t+1} = q(s_{t+1}, \tilde{a}_{t+1}; \boldsymbol{\omega}_{now}) \tag{2.2}
 $$
 
-</div>
 
 - 计算TD目标和TD误差
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -117,19 +102,16 @@ $$
 \end{aligned} \tag{2.3}
 $$
 
-</div>
 
 - 对价值网络进行反向传播计算关于价值网络梯度
 
 - 更新参数
 
-<div class="math">
 
 $$
 \boldsymbol{\omega}_{new} \leftarrow \boldsymbol{\omega}_{now} - \alpha \cdot \delta_t \cdot \nabla_{\boldsymbol{\omega}_{now}} q(s_t, a_t; \boldsymbol{\omega}_{now}) \tag{2.4}
 $$
 
-</div>
 
 
 未经允许，禁止转载。

@@ -19,7 +19,6 @@ tags:
 
 我们在讨论连续时间的LQR问题时，引入了一个代价函数，然后利用变分法，求解出了最优控制输入，以及引入了Riccati方程。
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -30,13 +29,11 @@ J&=h(x(t_f),t_f)+\int_{t_0}^{t_f}g(x(t),u(t),t)dt\\
 \tag{1}
 $$
 
-</div>
 
 在卡尔曼状态估计问题中，当我们把离散系统的状态估计问题通过取极限的方式转化成为了连续时间的状态估计问题时，我们也得到了一个形式几乎完全相同的Riccati方程。
 
 考虑一个连续时间的线性系统，其状态方程为：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -48,11 +45,9 @@ v(t)&\sim N(0,R)
 \tag{2}
 $$
 
-</div>
 
 可以到如下状态估计方程：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -63,7 +58,6 @@ K &\triangleq P(t)C^TR^{-1}
 \tag{3}
 $$
 
-</div>
 
 我们不难发现这其中的对偶性，如果这两种问题存在对偶性，那么能否通过之前LQR问题中提到的构造一个代价函数并且利用变分法的方式，来求解卡尔曼滤波问题呢？我们下边讨论这个问题。
 
@@ -71,7 +65,6 @@ $$
 
 为了不失一般性，我们重新定义一下系统的状态方程和观测方程：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -83,11 +76,9 @@ v(t)&\sim N(0,R)
 \tag{4}
 $$
 
-</div>
 
 我们的目标是求解一个最优的状态估计器，使得状态估计误差的方差最小，我们可以写出如下的代价函数：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -96,11 +87,9 @@ J &= h(x(0)) + \int_{0}^{t_f}g(x(t),w(t),t)dt \\
 \tag{5}
 $$
 
-</div>
 
 我们可以观察到，这个代价函数和之前的LQR问题中的代价函数非常相似，但是我们需要注意到，这里的代价函数中并没有出现控制输入$u(t)$，因为在状态估计问题中控制输入量$u(t)$是给定的。相应的，在状态估计问题中，我们需要求解一个最优的$w(t)$，$w(t)$代表着系统的过程误差（噪声）。这样如果结合观测噪声，我们可以按照如下方式去构建代价函数中的$g(x)$：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -110,13 +99,11 @@ g(x(t),w(t),t) &= \frac{1}{2}v(t)^TR^{-1}v(t) + \frac{1}{2}w^T(t)Q^{-1}w(t) \\
 \tag{6}
 $$
 
-</div>
 
 由于上边的公式中的$y(t)$也是给定的，因此函数$g$是一个关于$x(t)$、$w(t)$和$t$的函数。
 
 由于在状态估计问题中会给定一个初始状态$\check x_0$和初始方差$\check P_0$，因此初始代价函数$h$可以写成：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -129,13 +116,11 @@ $$
 \tag{7}
 $$
 
-</div>
 
 # 增广代价函数
 
 参考之前的LQR问题，作为一个约束优化问题，我们可以引入拉格朗日乘子$p(t)$，并且对代价函数进行增广，得到如下的拉格朗日代价：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -145,13 +130,11 @@ $$
 \tag{8}
 $$
 
-</div>
 
 # 变分法
 
 参考LQR变分法中的讨论，我们可以对上述的代价函数进行变分，得到如下的变分方程：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -161,11 +144,9 @@ $$
 \tag{9}
 $$
 
-</div>
 
 同样的，我们定义哈密顿函数：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -174,11 +155,9 @@ $$
 \tag{10}
 $$
 
-</div>
 
 代入哈密顿量，我们得到：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -188,11 +167,9 @@ $$
 \tag{11}
 $$
 
-</div>
 
 我们使用分部积分的方式，将上述的积分项进行变换：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -204,11 +181,9 @@ $$
 \tag{12}
 $$
 
-</div>
 
 将上述的结果代入到变分方程中，我们得到：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -222,11 +197,9 @@ $$
 \tag{13}
 $$
 
-</div>
 
 因为在状态估计问题中，$\delta t_f$可以认为是固定的，因此$\delta t_f =0$，由此，我们可以得到如下关系：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -239,13 +212,11 @@ $$
 \tag{14}
 $$
 
-</div>
 
 # 线性系统
 
 我们考虑一个线性系统，其状态方程为：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -257,11 +228,9 @@ v(t)&\sim N(0,R)
 \tag{15}
 $$
 
-</div>
 
 由此我们可得：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -274,11 +243,9 @@ $$
 \tag{16}
 $$
 
-</div>
 
 导数：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -294,11 +261,9 @@ $$
 \tag{17}
 $$
 
-</div>
 
 因此根据公式(14)我们可以得到如下关系：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -315,11 +280,9 @@ $$
 \tag{18}
 $$
 
-</div>
 
 代入上述的线性系统，我们可以得到如下的状态估计方程：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -343,14 +306,12 @@ $$
 \tag{19}
 $$
 
-</div>
 
 
 到这里，我们推导出了一个和LQR问题中类似的 **协状态（costate）转移方程** 。
 
 我们进行变量替换，将上述的状态估计方程变成如下形式：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -370,13 +331,11 @@ $$
 \tag{19}
 $$
 
-</div>
 
 # Riccati方程
 
 根据变分法LQR中的推导，具有如下关系：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -386,11 +345,9 @@ $$
 \tag{20}
 $$
 
-</div>
 
 两边同时求导：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -402,11 +359,9 @@ $$
 \tag{21}
 $$
 
-</div>
 
 于是我们得到：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -415,11 +370,9 @@ $$
 \tag{22}
 $$
 
-</div>
 
 根据公式（18），我们可以得到初始的$P_0$：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -428,13 +381,11 @@ $$
 \tag{23}
 $$
 
-</div>
 
 # 卡尔曼增益K
 
 根据公式（19）和（20），我们不难得到如下关系：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -444,11 +395,9 @@ $$
 \tag{24}
 $$
 
-</div>
 
 因此我们可以得到：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -457,11 +406,9 @@ $$
 \tag{25}
 $$
 
-</div>
 
 不难发现我们需要求解的对于状态的最优估计$\hat x$其实就是$x$的最终状态$x_f$，又由于公式（18）中的边界条件$p_f = 0$，以及公式（24），我们可以得到：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -470,13 +417,11 @@ $$
 \tag{26}
 $$
 
-</div>
 
 有因为公式（25），我们只有得到$s(t)$，就可以得到$\bar x(t)$，进而得到$\hat x$。下面我们考虑如何求解$s(t)$。
 
 将公式（24）两侧同时求导数：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -485,11 +430,9 @@ $$
 \tag{27}
 $$
 
-</div>
 
 代入公式（19）：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -501,11 +444,9 @@ $$
 \tag{28}
 $$
 
-</div>
 
 根据公式（22），我们可以得到：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -516,11 +457,9 @@ $$
 \tag{29}
 $$
 
-</div>
 
 因此我们可以得到：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -529,11 +468,9 @@ $$
 \tag{30}
 $$
 
-</div>
 
 对公式（25）两侧同时求导：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -542,11 +479,9 @@ $$
 \tag{31}
 $$
 
-</div>
 
 将公式（25）和（31）代入公式（30）：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -557,11 +492,9 @@ A^{T}P^{-1}\bar x - C^{T}R^{-1}y - P^{-1}Bu + P^{-1}QP^{-1}\bar x +P^{-1}\dot{\b
 \tag{32}
 $$
 
-</div>
 
 根据公式（26），我们可以最终得到卡尔曼增益$K$，以及状态估计方程：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -571,7 +504,6 @@ $$
 \tag{33}
 $$
 
-</div>
 
 
 # 结论

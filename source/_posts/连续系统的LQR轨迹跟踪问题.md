@@ -23,7 +23,6 @@ tags:
 
 给定一个连续系统：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -32,11 +31,9 @@ $$
 \tag{1}
 $$
 
-</div>
 
 我们定义LQR轨迹跟踪问题的代价函数为：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -46,7 +43,6 @@ $$
 \tag{2}
 $$
 
-</div>
 
 其中 $r(t)$ 是给定的轨迹，$P_f$ 是最终状态的权重矩阵，$Q$ 是状态的权重矩阵，$R$ 是控制的权重矩阵。
 
@@ -55,7 +51,6 @@ $$
 根据前述文章中的结论，我们可以得到上述问题的哈密顿量（Hamiltonian）：
 
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -65,13 +60,11 @@ $$
 \tag{3}
 $$
 
-</div>
 
 其中 $p$ 是拉格朗日乘子。
 
 根据变分法的结论，我们可以得到最优控制率 $\hat{u}$：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -80,11 +73,9 @@ $$
 \tag{4}
 $$
 
-</div>
 
 除此之外还可以得到最优控制率下的状态和协状态的微分方程：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -94,11 +85,9 @@ $$
 \tag{5}
 $$
 
-</div>
 
 我们将上述状态和协状态的微分方程写成矩阵形式：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -119,11 +108,9 @@ $$
 \tag{6}
 $$
 
-</div>
 
 上述形式在[《连续系统的LQR变分法推导》](https://xinyukhan.github.io/2023/09/30/连续系统的LQR变分法推导)中已经见过类似的形式，我们通过简单的变量替换，不难发现上述微分方程的解具有如下形式：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -132,11 +119,9 @@ $$
 \tag{7}
 $$
 
-</div>
 
 其中关于 $P(t)$ 可以得到同样形式的Riccati方程：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -146,11 +131,9 @@ $$
 \tag{8}
 $$
 
-</div>
 
 下面我们需要做的就是求解变量 $s(t)$ 。对公式 $(7)$ 两边同时求微分：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -159,11 +142,9 @@ $$
 \tag{9}
 $$
 
-</div>
 
 我们将其代入到公式 $(6)$ 中：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -173,11 +154,9 @@ $$
 \tag{10}
 $$
 
-</div>
 
 带入Riccati方程 $(8)$ ，可以得到：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -186,13 +165,11 @@ $$
 \tag{11}
 $$
 
-</div>
 
 这就是变量 $s(t)$ 的微分方程。
 
 下边我们根据边界条件，有：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -201,11 +178,9 @@ $$
 \tag{12}
 $$
 
-</div>
 
 于是有：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -214,11 +189,9 @@ $$
 \tag{13}
 $$
 
-</div>
 
 因此可以根据边界条件和微分方程 $(11)$ 和 $(8)$ 求解变量 $s(t)$ 和 $P(t)$。最后我们可以得到最优控制率 $\hat u$ 为：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -227,7 +200,6 @@ $$
 \tag{14}
 $$
 
-</div>
 
 
 未经允许，禁止转载。

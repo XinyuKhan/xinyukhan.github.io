@@ -15,7 +15,6 @@ tags:
 
 ## 1. 将$Q_\pi$表示成$Q_\pi$的递归形式
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -23,13 +22,11 @@ Q_\pi(s_t, a_t) & = \mathbb{E}_{S_{t+1}, A_{t+1}}[R_t + \gamma Q_\pi(S_{t+1}, A_
 \end{aligned} \tag {1}
 $$
 
-</div>
 
 ### 证明
 
 根据定义
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -37,11 +34,9 @@ Q_\pi(s_t, a_t) & = \mathbb{E}_{\mathcal{S}_{t+1:}, \mathcal{A}_{t+1:}}[U_t | S_
 \end{aligned} \tag {1.1}
 $$
 
-</div>
 
 其中
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -50,11 +45,9 @@ U_t &= R_t + \gamma \underbrace{\sum_{k=t+1}^{n} \gamma^{k-t-1} R_k}_{=U_{t+1}} 
 \end{aligned} \tag {1.2}
 $$
 
-</div>
 
 代入可得到
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -63,11 +56,9 @@ Q_\pi(s_t, a_t) & = \mathbb{E}_{\mathcal{S}_{t+1:}, \mathcal{A}_{t+1:}}[R_t + \g
 \end{aligned} \tag {1.3}
 $$
 
-</div>
 
 其中1.3.1中的$R_t$是在智能体以状态$S_t$作为输入应用策略$\pi$得到动作$A_t$后，环境反馈转移到状态$S_{t+1}$的时候获得的奖励。因此其随机性来源于$S_t$，$A_t$和$S_{t+1}$，1.3.1中$S_t$和$A_t$都已固定为$s_t$和$a_t$，因此1.3.1的随机性仅来源于$S_{t+1}$，于是有：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -75,11 +66,9 @@ $$
 \end{aligned} \tag {1.4}
 $$
 
-</div>
 
 1.3.2则可以写成如下形式：
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -88,13 +77,11 @@ $$
 \end{aligned} \tag {1.5}
 $$
 
-</div>
 
 将(1.4)和(1.5)代入(1.3)中可得公式1。
 
 ## 2. 将$Q_\pi$表示成$V_\pi$的递归形式
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -102,13 +89,11 @@ Q_\pi(s_t, a_t) & = \mathbb{E}_{S_{t+1}}[R_t + \gamma V_\pi(S_{t+1}) | S_t = s_t
 \end{aligned} \tag {2}
 $$
 
-</div>
 
 ### 证明
 
 根据定义
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -116,11 +101,9 @@ V_\pi(s_t) & = \mathbb{E}_{A_{t+1}}[Q_\pi(s_t, A_{t+1}) | S_t = s_t] \\
 \end{aligned} \tag {2.1}
 $$
 
-</div>
 
 代入公式1
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -131,11 +114,9 @@ Q_\pi(s_t, a_t) & = \mathbb{E}_{S_{t+1}}[R_t | S_t = s_t, A_t = a_t] + \gamma \m
 \end{aligned} \tag {2.2}
 $$
 
-</div>
 
 ## 3. 将$V_\pi$表示成$V_\pi$的递归形式
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -143,13 +124,11 @@ V_\pi(s_t) & = \mathbb{E}_{A_t, S_{t+1}}[R_t + \gamma V_\pi(S_{t+1}) | S_t = s_t
 \end{aligned} \tag {3}
 $$
 
-</div>
 
 ### 证明
 
 根据定义
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -157,11 +136,9 @@ V_\pi(s_t) & = \mathbb{E}_{A_t}[Q_\pi(s_t, A_t)] \\
 \end{aligned} \tag {3.1}
 $$
 
-</div>
 
 代入公式2
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -170,11 +147,9 @@ V_\pi(s_t) & = \mathbb{E}_{A_t}[ \mathbb{E}_{S_{t+1}}[R_t + \gamma V_\pi(S_{t+1}
 \end{aligned} \tag {3.2}
 $$
 
-</div>
 
 ## 4. 最优Bellman方程
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -182,13 +157,11 @@ Q_*(s_t, a_t) & = \mathbb{E}_{S_{t+1} \sim p(\cdot |s_t, a_t) }[R_t + \gamma \ma
 \end{aligned} \tag {4}
 $$
 
-</div>
 
 ### 证明
 
 最优策略函数定义如下：
 
-<div class="math">
 
 
 $$
@@ -197,11 +170,9 @@ $$
 \end{aligned} \tag {4.1}
 $$
 
-</div>
 
 由Bellman方程公式1可得
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -209,11 +180,9 @@ Q_{\pi^*}(s_t, a_t) & = \mathbb{E}_{S_{t+1}, A_{t+1}}[R_t + \gamma Q_{\pi^*}(S_{
 \end{aligned} \tag {4.2}
 $$
 
-</div>
 
 根据定义，最优状态-动作值函数$Q_*(s_t, a_t)$是所有策略的最大值，因此有
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -221,11 +190,9 @@ Q_*(s_t, a_t) & \triangleq Q_{\pi^*}(s_t, a_t) \\
 \end{aligned} \tag {4.3}
 $$
 
-</div>
 
 于是有
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -233,11 +200,9 @@ Q_*(s_t, a_t) & = \mathbb{E}_{S_{t+1}, A_{t+1}}[R_t + \gamma Q_*(S_{t+1}, A_{t+1
 \end{aligned} \tag {4.4}
 $$
 
-</div>
 
 其中$A_{t+1}$是由最优策略$\pi^*$根据状态$S_{t+1}$选择的动作，因此有
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -245,11 +210,9 @@ A_{t+1} & = \arg\max_{A \in \mathcal{A}} Q_*(S_{t+1}, A) \\
 \end{aligned} \tag {4.5}
 $$
 
-</div>
 
 $A_{t+1}$是状态$S_{t+1}$的确定性函数，因此公式4.4可以写成
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -257,6 +220,5 @@ Q_*(s_t, a_t) & = \mathbb{E}_{S_{t+1} \sim p(\cdot |s_t, a_t)}[R_t + \gamma \max
 \end{aligned}
 $$
 
-</div>
 
 未经允许，禁止转载。

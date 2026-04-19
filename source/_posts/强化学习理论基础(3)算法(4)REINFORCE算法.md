@@ -15,7 +15,6 @@ tags:
 在[《策略梯度定理》](/2025/08/12/强化学习理论基础(2)定理(3)策略梯度定理/)一文中我们证明推导了策略梯度定理，现在把它抄到下边以供回忆
 
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -23,11 +22,9 @@ $$
 \end{aligned} \tag {0.1}
 $$
 
-</div>
 
 同时我们介绍了近似策略梯度，即使用蒙特卡洛近似表示上述期望，得到一个随机策略梯度函数$g$
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -35,7 +32,6 @@ $$
 \end{aligned} \tag{0.2}
 $$
 
-</div>
 
 
 接下来我们使用上述方法来推导REINFORCE算法。
@@ -44,7 +40,6 @@ $$
 
 回忆[《策略梯度定理》](/2025/08/12/强化学习理论基础(2)定理(3)策略梯度定理/)中的公式(2.3.1)，抄在下方
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -58,11 +53,9 @@ $$
 \end{aligned} \tag{1.1}
 $$
 
-</div>
 
 对上述期望做蒙特卡洛近似，假设我们从状态$s_1$开始，应用策略 $\pi(a \mid s; \boldsymbol{\theta}_{now})$控制智能体和环境交互，产生如下轨迹
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -70,11 +63,9 @@ s_1, a_1, r_1,\space\space s_2, a_2, r_2, \space\space \ldots, \space\space s_n,
 \end{aligned} \tag{1.2}
 $$
 
-</div>
 
 使用上述轨迹对公式(1.1)进行蒙特卡洛近似，得到
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -82,11 +73,9 @@ $$
 \end{aligned} \tag{1.3}
 $$
 
-</div>
 
 根据定义有
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -94,11 +83,9 @@ u_t & = r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \cdots + \gamma^{n-t} r_n = \s
 \end{aligned} \tag{1.4}
 $$
 
-</div>
 
 我们可以使用$u_t$近似公式(0.2)中的 $Q_{\pi}(s, a)$，有
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -106,11 +93,9 @@ g(s_t, a_t; \boldsymbol{\theta}_{now}) & \approx \frac{\partial \ln \pi(a_t | s_
 \end{aligned} \tag{1.5}
 $$
 
-</div>
 
 代入公式(1.3)，我们得到
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -118,11 +103,9 @@ $$
 \end{aligned} \tag{1.6}
 $$
 
-</div>
 
 于是根据随机梯度上升公式，我们更新参数
 
-<div class="math">
 
 $$
 \begin{aligned}
@@ -130,7 +113,6 @@ $$
 \end{aligned} \tag{1.7}
 $$
 
-</div>
 
 ## 2. 训练方法
 
