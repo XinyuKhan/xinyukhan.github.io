@@ -19,12 +19,12 @@
   <meta name="author" content="Xinyu Han">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Drake 运动学轨迹优化类（kinematic_trajectory_optimization）（一）背景本文主要讨论运动学轨迹优化类（KinematicTrajectoryOptimization），该类用于解决运动学轨迹优化问题。这次先讨论理论，后续再讨论具体的实现。 这部分的代码位于下面两个文件中： planning\trajectory_optimization\kinematic_tr">
+    <meta name="description" content="Drake 运动学轨迹优化类（kinematic_trajectory_optimization）（一） 背景 本文主要讨论运动学轨迹优化类（KinematicTrajectoryOptimization），该类用于解决运动学轨迹优化问题。这次先讨论理论，后续再讨论具体的实现。 这部分的代码位于下面两个文件中： planning\trajectory_optimization\kinematic_">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Drake 运动学轨迹优化类（kinematic_trajectory_optimization）（一）">
 <meta property="og:url" content="http://example.com/2023/12/03/Drake%20%E8%BF%90%E5%8A%A8%E5%AD%A6%E8%BD%A8%E8%BF%B9%E4%BC%98%E5%8C%96%E7%B1%BB%EF%BC%88kinematic_trajectory_optimization%EF%BC%89%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
 <meta property="og:site_name" content="Xinyu&#39;s Blog">
-<meta property="og:description" content="Drake 运动学轨迹优化类（kinematic_trajectory_optimization）（一）背景本文主要讨论运动学轨迹优化类（KinematicTrajectoryOptimization），该类用于解决运动学轨迹优化问题。这次先讨论理论，后续再讨论具体的实现。 这部分的代码位于下面两个文件中： planning\trajectory_optimization\kinematic_tr">
+<meta property="og:description" content="Drake 运动学轨迹优化类（kinematic_trajectory_optimization）（一） 背景 本文主要讨论运动学轨迹优化类（KinematicTrajectoryOptimization），该类用于解决运动学轨迹优化问题。这次先讨论理论，后续再讨论具体的实现。 这部分的代码位于下面两个文件中： planning\trajectory_optimization\kinematic_">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-12-02T16:00:00.000Z">
 <meta property="article:modified_time" content="2026-04-19T13:07:15.959Z">
@@ -47,6 +47,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
 
 
 
@@ -328,7 +330,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.3k 字
+          6.6k 字
         
       </span>
     
@@ -339,7 +341,7 @@
         
         
         
-          53 分钟
+          56 分钟
         
       </span>
     
@@ -383,14 +385,14 @@
             
               <div class="markdown-body">
                 
-                <h2 id="Drake-运动学轨迹优化类（kinematic-trajectory-optimization）（一）"><a href="#Drake-运动学轨迹优化类（kinematic-trajectory-optimization）（一）" class="headerlink" title="Drake 运动学轨迹优化类（kinematic_trajectory_optimization）（一）"></a>Drake 运动学轨迹优化类（kinematic_trajectory_optimization）（一）</h2><h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>本文主要讨论运动学轨迹优化类（<code>KinematicTrajectoryOptimization</code>），该类用于解决运动学轨迹优化问题。这次先讨论理论，后续再讨论具体的实现。</p>
+                <h2 id="Drake-运动学轨迹优化类（kinematic-trajectory-optimization）（一）">Drake 运动学轨迹优化类（kinematic_trajectory_optimization）（一）</h2>
+<h1 id="背景">背景</h1>
+<p>本文主要讨论运动学轨迹优化类（<code>KinematicTrajectoryOptimization</code>），该类用于解决运动学轨迹优化问题。这次先讨论理论，后续再讨论具体的实现。</p>
 <p>这部分的代码位于下面两个文件中：</p>
 <p><code>planning\trajectory_optimization\kinematic_trajectory_optimization.h</code></p>
 <p><code>planning\trajectory_optimization\kinematic_trajectory_optimization.cc</code></p>
-<h1 id="问题定义"><a href="#问题定义" class="headerlink" title="问题定义"></a>问题定义</h1><p>该运动学轨迹优化类用于解决如下问题：</p>
-
-$$
-
+<h1 id="问题定义">问题定义</h1>
+<p>该运动学轨迹优化类用于解决如下问题：</p>
 \begin{aligned}
 & \underset{T,q(\cdot)}{\text{min}}
 & & J(T,q(\cdot)) \\
@@ -405,35 +407,24 @@ $$
 & & & \text{kinematics, dynamics constrains}
 \end{aligned}
 \tag{1}
-$$
-<p>上述问题中，$q(\cdot)$是一个关于时间的四次阶连续可导的函数，$q(t)$表示在时间$t$时刻的机器人的关节角度（广义坐标）。$T$是一个标量，表示整个轨迹的时间长度。我们的优化目标就是找到一个$T$和一个关于时间的函数$q(\cdot)$，在满足约束的情况下，使得$J(T,q(\cdot))$最小，其中$J(T,q(\cdot))$是一个关于$T$和$q(\cdot)$的标量函数，表示整个轨迹的代价。</p>
-<h2 id="1-问题的转化"><a href="#1-问题的转化" class="headerlink" title="1. 问题的转化"></a>1. 问题的转化</h2><p>由于在实际应用中，计算机通常不太方便对一个连续函数进行优化，因此我们通过使用一个四次B样条曲线来近似表示$q(\cdot)$，即：</p>
 
-$$
-
+<p>上述问题中，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>q</mi><mo>(</mo><mo>⋅</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">q(\cdot)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.03588em;">q</span><span class="mopen">(</span><span class="mord">⋅</span><span class="mclose">)</span></span></span></span>是一个关于时间的四次阶连续可导的函数，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>q</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">q(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.03588em;">q</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span></span></span></span>表示在时间<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.61508em;"></span><span class="strut bottom" style="height:0.61508em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">t</span></span></span></span>时刻的机器人的关节角度（广义坐标）。<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.13889em;">T</span></span></span></span>是一个标量，表示整个轨迹的时间长度。我们的优化目标就是找到一个<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.13889em;">T</span></span></span></span>和一个关于时间的函数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>q</mi><mo>(</mo><mo>⋅</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">q(\cdot)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.03588em;">q</span><span class="mopen">(</span><span class="mord">⋅</span><span class="mclose">)</span></span></span></span>，在满足约束的情况下，使得<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>J</mi><mo>(</mo><mi>T</mi><mo separator="true">,</mo><mi>q</mi><mo>(</mo><mo>⋅</mo><mo>)</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">J(T,q(\cdot))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.09618em;">J</span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.13889em;">T</span><span class="mpunct">,</span><span class="mord mathit" style="margin-right:0.03588em;">q</span><span class="mopen">(</span><span class="mord">⋅</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span>最小，其中<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>J</mi><mo>(</mo><mi>T</mi><mo separator="true">,</mo><mi>q</mi><mo>(</mo><mo>⋅</mo><mo>)</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">J(T,q(\cdot))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.09618em;">J</span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.13889em;">T</span><span class="mpunct">,</span><span class="mord mathit" style="margin-right:0.03588em;">q</span><span class="mopen">(</span><span class="mord">⋅</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span>是一个关于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.13889em;">T</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>q</mi><mo>(</mo><mo>⋅</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">q(\cdot)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.03588em;">q</span><span class="mopen">(</span><span class="mord">⋅</span><span class="mclose">)</span></span></span></span>的标量函数，表示整个轨迹的代价。</p>
+<h2 id="1-问题的转化">1. 问题的转化</h2>
+<p>由于在实际应用中，计算机通常不太方便对一个连续函数进行优化，因此我们通过使用一个四次B样条曲线来近似表示<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>q</mi><mo>(</mo><mo>⋅</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">q(\cdot)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.03588em;">q</span><span class="mopen">(</span><span class="mord">⋅</span><span class="mclose">)</span></span></span></span>，即：</p>
 q(t) = \sum_{i=0}^{n}q_iB_{i,p}(t)
 \tag{2}
-$$
-<p>由于$T$也是一个需要优化的变量，为了简化优化问题，我们可以将优化曲线的参数$t$归一化到$[0,1]$区间，即$\tau \in [0,1], \space \tau = \frac{t}{T}$，曲线和总时间就可以被当作两个彼此独立的变量来处理。如下：</p>
 
-$$
-
+<p>由于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.13889em;">T</span></span></span></span>也是一个需要优化的变量，为了简化优化问题，我们可以将优化曲线的参数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.61508em;"></span><span class="strut bottom" style="height:0.61508em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">t</span></span></span></span>归一化到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">[0,1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mopen">[</span><span class="mord mathrm">0</span><span class="mpunct">,</span><span class="mord mathrm">1</span><span class="mclose">]</span></span></span></span>区间，即<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>τ</mi><mo>∈</mo><mo>[</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo>]</mo><mo separator="true">,</mo><mtext> </mtext><mi>τ</mi><mo>=</mo><mfrac><mrow><mi>t</mi></mrow><mrow><mi>T</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\tau \in [0,1], \space \tau = \frac{t}{T}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.824556em;"></span><span class="strut bottom" style="height:1.169556em;vertical-align:-0.345em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.1132em;">τ</span><span class="mrel">∈</span><span class="mopen">[</span><span class="mord mathrm">0</span><span class="mpunct">,</span><span class="mord mathrm">1</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mord mspace"> </span><span class="mord mathit" style="margin-right:0.1132em;">τ</span><span class="mrel">=</span><span class="mord reset-textstyle textstyle uncramped"><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span><span class="mfrac"><span class="vlist"><span style="top:0.345em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.13889em;">T</span></span></span></span><span style="top:-0.22999999999999998em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle textstyle uncramped frac-line"></span></span><span style="top:-0.394em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathit">t</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span></span></span></span></span>，曲线和总时间就可以被当作两个彼此独立的变量来处理。如下：</p>
 \overline{q}(\tau) = \overline{q}(\frac{t}{T})=q(t) \tag{3}
-$$
+
 <p>求导可得：</p>
-
-$$
-
 \begin{aligned}
 \dot{q}(t) &= \frac{dq}{dt} = \frac{dq}{d\tau}\frac{d\tau}{dt} = \frac{\dot{\overline{q}}(\tau)}{T} \\
 \ddot{q}(t) &= \frac{d^2q}{dt^2} = \frac{d}{dt}(\frac{dq}{dt}) = \frac{d}{d\tau}(\frac{dq}{d\tau})\frac{d\tau}{dt} = \frac{\ddot{\overline{q}}(\tau)}{T^2}
 \end{aligned}
 \tag{4}
-$$
+
 <p>这样，我们就可以将上述优化问题转化为如下形式：</p>
-
-$$
-
 \begin{aligned}
 & \underset{T,\overline{q}_{0:n}}{\text{min}}
 & & J(T,\overline{q}_{0:n}) \\
@@ -449,11 +440,10 @@ $$
 & & & \text{kinematics, dynamics constrains}
 \end{aligned}
 \tag{5}
-$$
-<p><strong>（为了方便起见，下文用$q$表示$\overline{q}$，用$\dot{q}$表示$\dot{\overline{q}}$，用$\ddot{q}$表示$\ddot{\overline{q}}$）</strong></p>
-<h2 id="2-轨迹约束"><a href="#2-轨迹约束" class="headerlink" title="2. 轨迹约束"></a>2. 轨迹约束</h2><h3 id="2-1-样条"><a href="#2-1-样条" class="headerlink" title="2.1 样条"></a>2.1 样条</h3>
-$$
 
+<p><strong>（为了方便起见，下文用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>q</mi></mrow><annotation encoding="application/x-tex">q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.03588em;">q</span></span></span></span>表示<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mrow><mi>q</mi></mrow><mo stretchy="true">‾</mo></mover></mrow><annotation encoding="application/x-tex">\overline{q}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.63056em;"></span><span class="strut bottom" style="height:0.825em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="overline mord"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="mord textstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">q</span></span></span><span style="top:-0.5505599999999999em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="reset-textstyle textstyle uncramped overline-line"></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span>​</span></span></span></span></span></span>，用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mrow><mi>q</mi></mrow><mo>˙</mo></mover></mrow><annotation encoding="application/x-tex">\dot{q}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.66786em;"></span><span class="strut bottom" style="height:0.8623000000000001em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord textstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">q</span></span></span><span style="top:0em;margin-left:0.16668em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>˙</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>表示<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mrow><mover accent="true"><mrow><mi>q</mi></mrow><mo stretchy="true">‾</mo></mover></mrow><mo>˙</mo></mover></mrow><annotation encoding="application/x-tex">\dot{\overline{q}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.8674200000000001em;"></span><span class="strut bottom" style="height:1.06186em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="mord textstyle cramped"><span class="overline mord"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="mord textstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">q</span></span></span><span style="top:-0.5505599999999999em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="reset-textstyle textstyle uncramped overline-line"></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span>​</span></span></span></span></span><span style="top:-0.19956000000000002em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="accent-body"><span>˙</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span>​</span></span></span></span></span></span>，用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mrow><mi>q</mi></mrow><mo>¨</mo></mover></mrow><annotation encoding="application/x-tex">\ddot{q}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.66786em;"></span><span class="strut bottom" style="height:0.8623000000000001em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord textstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">q</span></span></span><span style="top:0em;margin-left:0.16668em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>¨</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>表示<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mrow><mover accent="true"><mrow><mi>q</mi></mrow><mo stretchy="true">‾</mo></mover></mrow><mo>¨</mo></mover></mrow><annotation encoding="application/x-tex">\ddot{\overline{q}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.8674200000000001em;"></span><span class="strut bottom" style="height:1.06186em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="mord textstyle cramped"><span class="overline mord"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="mord textstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">q</span></span></span><span style="top:-0.5505599999999999em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="reset-textstyle textstyle uncramped overline-line"></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span>​</span></span></span></span></span><span style="top:-0.19956000000000002em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="accent-body"><span>¨</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span>​</span></span></span></span></span></span>）</strong></p>
+<h2 id="2-轨迹约束">2. 轨迹约束</h2>
+<h3 id="2-1-样条">2.1 样条</h3>
 \begin{aligned}
     q(\tau) &= \sum_{i=0}^{n}q_iB_{i,p}(\tau) \\
     &= \begin{bmatrix}
@@ -463,13 +453,11 @@ $$
     \end{bmatrix}
 \end{aligned}
 \tag{6}
-$$
-<p>根据上述公式，我们可以得知，如果我们需要在$\tau$时刻为$q$添加任边界约束，那么该约束会是一个关于控制点（$q_{0:n}$）的线性约束。</p>
-<p><strong>注意</strong>：由于$p$阶B样条曲线的当前值只与$p+1$个控制点有关，因此上述公式如果用于计算约束，那么约束项的维度应该是$p+1$，而不是$n+1$。</p>
-<h3 id="2-2-样条的一阶导数-velocity"><a href="#2-2-样条的一阶导数-velocity" class="headerlink" title="2.2 样条的一阶导数(velocity)"></a>2.2 样条的一阶导数(velocity)</h3><p>根据B样条的一阶导数公式：</p>
 
-$$
-
+<p>根据上述公式，我们可以得知，如果我们需要在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>τ</mi></mrow><annotation encoding="application/x-tex">\tau</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.1132em;">τ</span></span></span></span>时刻为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>q</mi></mrow><annotation encoding="application/x-tex">q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.03588em;">q</span></span></span></span>添加任边界约束，那么该约束会是一个关于控制点（<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>q</mi><mrow><mn>0</mn><mo>:</mo><mi>n</mi></mrow></msub></mrow><annotation encoding="application/x-tex">q_{0:n}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.03588em;">q</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.03588em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathrm">0</span><span class="mrel">:</span><span class="mord mathit">n</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>）的线性约束。</p>
+<p><strong>注意</strong>：由于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span></span></span></span>阶B样条曲线的当前值只与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">p+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span>个控制点有关，因此上述公式如果用于计算约束，那么约束项的维度应该是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">p+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span>，而不是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span>。</p>
+<h3 id="2-2-样条的一阶导数-velocity">2.2 样条的一阶导数(velocity)</h3>
+<p>根据B样条的一阶导数公式：</p>
 \begin{aligned}
     \dot{q}(\tau) &= \sum_{i=0}^{n}q_i\dot{B}_{i,p}(\tau) \\
     &= \begin{bmatrix}
@@ -479,30 +467,21 @@ $$
     \end{bmatrix}
 \end{aligned}
 \tag{7}
-$$
-<p>由于$B_{i,p}(\tau)$是关于$\tau$的$p$次多项式，因此$\dot{B}_{i,p}(\tau)$是关于$\tau$的$p-1$次多项式。容易证明：</p>
 
-$$
-
+<p>由于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>B</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>p</mi></mrow></msub><mo>(</mo><mi>τ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">B_{i,p}(\tau)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.05017em;">B</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.05017em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">i</span><span class="mpunct">,</span><span class="mord mathit">p</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.1132em;">τ</span><span class="mclose">)</span></span></span></span>是关于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>τ</mi></mrow><annotation encoding="application/x-tex">\tau</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.1132em;">τ</span></span></span></span>的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span></span></span></span>次多项式，因此<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mover accent="true"><mrow><mi>B</mi></mrow><mo>˙</mo></mover><mrow><mi>i</mi><mo separator="true">,</mo><mi>p</mi></mrow></msub><mo>(</mo><mi>τ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\dot{B}_{i,p}(\tau)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.9201900000000001em;"></span><span class="strut bottom" style="height:1.206298em;vertical-align:-0.286108em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord textstyle cramped"><span class="mord mathit" style="margin-right:0.05017em;">B</span></span></span><span style="top:-0.25233em;margin-left:0.16668em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>˙</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">i</span><span class="mpunct">,</span><span class="mord mathit">p</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.1132em;">τ</span><span class="mclose">)</span></span></span></span>是关于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>τ</mi></mrow><annotation encoding="application/x-tex">\tau</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.1132em;">τ</span></span></span></span>的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">p-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span><span class="mbin">−</span><span class="mord mathrm">1</span></span></span></span>次多项式。容易证明：</p>
 \begin{aligned}
     \dot{B}_{i,p}(\tau) &= \frac{p}{\tau_{i+p}-\tau_i}B_{i,p-1}(\tau) - \frac{p}{\tau_{i+p+1}-\tau_{i+1}}B_{i+1,p-1}(\tau)
 \end{aligned}
 \tag{8}
-$$
+
 <p>将上述公式代入到公式（7）中，可以得到：</p>
-
-$$
-
 \begin{aligned}
     \dot{q}(\tau) &= \sum_{i=0}^{n-1}B_{i+1,p-1}(\tau)Q_i \\
     \text{where } Q_i &= \frac{p}{\tau_{i+p+1}-\tau_{i+1}}(q_{i+1}-q_i)
 \end{aligned}
 \tag{9}
-$$
-<p>如果用矩阵表示为和$[q_0 \cdots q_n]^T$相乘的形式，可以得到：</p>
 
-$$
-
+<p>如果用矩阵表示为和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><msub><mi>q</mi><mn>0</mn></msub><mo>⋯</mo><msub><mi>q</mi><mi>n</mi></msub><msup><mo>]</mo><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">[q_0 \cdots q_n]^T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.8413309999999999em;"></span><span class="strut bottom" style="height:1.0913309999999998em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mopen">[</span><span class="mord"><span class="mord mathit" style="margin-right:0.03588em;">q</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.03588em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathrm">0</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="minner">⋯</span><span class="mord"><span class="mord mathit" style="margin-right:0.03588em;">q</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.03588em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">n</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose"><span class="mclose">]</span><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord mathit" style="margin-right:0.13889em;">T</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>相乘的形式，可以得到：</p>
 \begin{aligned}
     \dot{q}(\tau) &= \begin{bmatrix}
         B_{1,p-1}(\tau) & B_{2,p-1}(\tau) & \cdots & B_{n,p-1}(\tau)
@@ -528,76 +507,65 @@ $$
         \end{bmatrix}
 \end{aligned}
 \tag{10}
-$$
-<p>通过公式可知，$\dot{q}(\tau)$是一个$p-1$阶的B样条曲线，因此如果我们需要在$\tau$时刻为$\dot{q}$添加任边界约束，那么根据公式（5），该约束会是一个关于控制点（$q_{0:n}$）以及时间$T$的线性约束，可以描述为一个QP问题。</p>
-<p><strong>注意</strong>：由于$p-1$阶B样条曲线的当前值只与$p$个控制点有关，因此上述公式如果用于计算约束，那么约束项的维度应该是$p$，而不是$n+1$。</p>
-<h3 id="2-3-样条的二阶导数-acceleration"><a href="#2-3-样条的二阶导数-acceleration" class="headerlink" title="2.3 样条的二阶导数(acceleration)"></a>2.3 样条的二阶导数(acceleration)</h3><p>根据B样条的二阶导数公式：</p>
 
-$$
-
+<p>通过公式可知，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mrow><mi>q</mi></mrow><mo>˙</mo></mover><mo>(</mo><mi>τ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\dot{q}(\tau)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord textstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">q</span></span></span><span style="top:0em;margin-left:0.16668em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>˙</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.1132em;">τ</span><span class="mclose">)</span></span></span></span>是一个<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">p-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span><span class="mbin">−</span><span class="mord mathrm">1</span></span></span></span>阶的B样条曲线，因此如果我们需要在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>τ</mi></mrow><annotation encoding="application/x-tex">\tau</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.1132em;">τ</span></span></span></span>时刻为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mrow><mi>q</mi></mrow><mo>˙</mo></mover></mrow><annotation encoding="application/x-tex">\dot{q}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.66786em;"></span><span class="strut bottom" style="height:0.8623000000000001em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord textstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">q</span></span></span><span style="top:0em;margin-left:0.16668em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>˙</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>添加任边界约束，那么根据公式（5），该约束会是一个关于控制点（<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>q</mi><mrow><mn>0</mn><mo>:</mo><mi>n</mi></mrow></msub></mrow><annotation encoding="application/x-tex">q_{0:n}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.03588em;">q</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.03588em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathrm">0</span><span class="mrel">:</span><span class="mord mathit">n</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>）以及时间<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.13889em;">T</span></span></span></span>的线性约束，可以描述为一个QP问题。</p>
+<p><strong>注意</strong>：由于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">p-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span><span class="mbin">−</span><span class="mord mathrm">1</span></span></span></span>阶B样条曲线的当前值只与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span></span></span></span>个控制点有关，因此上述公式如果用于计算约束，那么约束项的维度应该是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span></span></span></span>，而不是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span>。</p>
+<h3 id="2-3-样条的二阶导数-acceleration">2.3 样条的二阶导数(acceleration)</h3>
+<p>根据B样条的二阶导数公式：</p>
 \begin{aligned}
     \ddot{q}(\tau) &= \frac{d\dot{q}(\tau)}{d\tau} \\
     &= \frac{d}{d\tau}\left[\sum_{i=0}^{n-1}B_{i+1,p-1}(\tau)Q_i\right]\\
     &= \sum_{i=0}^{n-1}\dot{B}_{i+1,p-1}(\tau)Q_i\\
 \end{aligned}
 \tag{11}
-$$
-<p>由此可以看出该问题和上述一阶导数的问题是一样的，只是将$p$替换为$p-1$，因此我们可以得到：</p>
 
-$$
-
+<p>由此可以看出该问题和上述一阶导数的问题是一样的，只是将<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span></span></span></span>替换为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">p-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span><span class="mbin">−</span><span class="mord mathrm">1</span></span></span></span>，因此我们可以得到：</p>
 \begin{aligned}
     \ddot{q}(\tau) &= \sum_{i=0}^{n-2}B_{i+2,p-2}(\tau)R_i \\
     \text{where } R_i &= \frac{p-1}{\tau_{i+p+2}-\tau_{i+2}}(Q_{i+1}-Q_i)\\
     &= \frac{p(p-1)}{(\tau_{i+p+2}-\tau_{i+2})(\tau_{i+p+1}-\tau_{i+1})}(q_{i+2}-2q_{i+1}+q_i)
 \end{aligned}
 \tag{12}
-$$
-<p>因此我们可以得到一个相同的结论：$\ddot{q}(\tau)$是一个$p-2$阶的B样条曲线，因此如果我们需要在$\tau$时刻为$\ddot{q}$添加任边界约束，那么根据公式（5），该约束会是一个关于控制点（$q_{0:n}$）以及时间$T$的约束，不过由于其中包含$T^2$项，因此该约束不再是一个线性约束，无法描述为一个QP问题。</p>
-<p><strong>注意</strong>：由于$p-2$阶B样条曲线的当前值只与$p-1$个控制点有关，因此上述公式如果用于计算约束，那么约束项的维度应该是$p-1$，而不是$n+1$。</p>
-<h3 id="2-4-样条的三阶导数-jerk"><a href="#2-4-样条的三阶导数-jerk" class="headerlink" title="2.4 样条的三阶导数(jerk)"></a>2.4 样条的三阶导数(jerk)</h3><p>此处结论和上述一阶导数和二阶导数的结论是一样的，和二阶中关于约束的结论类似，如果我们需要在$\tau$时刻为$\frac{d^3q}{d\tau^3}$添加任边界约束，那么根据公式（5），该约束会是一个关于控制点（$q_{0:n}$）以及时间$T$的约束，不过由于其中包含$T^3$项，因此该约束不再是一个线性约束，无法描述为一个QP问题。</p>
-<h2 id="3-代价函数"><a href="#3-代价函数" class="headerlink" title="3. 代价函数"></a>3. 代价函数</h2><h3 id="3-1-时间代价"><a href="#3-1-时间代价" class="headerlink" title="3.1 时间代价"></a>3.1 时间代价</h3><p>我们希望轨迹的时间越短越好，因此我们可以将时间作为一个代价函数的一部分，即：</p>
 
-$$
-
+<p>因此我们可以得到一个相同的结论：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mrow><mi>q</mi></mrow><mo>¨</mo></mover><mo>(</mo><mi>τ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\ddot{q}(\tau)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord textstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">q</span></span></span><span style="top:0em;margin-left:0.16668em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>¨</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.1132em;">τ</span><span class="mclose">)</span></span></span></span>是一个<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">p-2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span><span class="mbin">−</span><span class="mord mathrm">2</span></span></span></span>阶的B样条曲线，因此如果我们需要在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>τ</mi></mrow><annotation encoding="application/x-tex">\tau</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.1132em;">τ</span></span></span></span>时刻为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mrow><mi>q</mi></mrow><mo>¨</mo></mover></mrow><annotation encoding="application/x-tex">\ddot{q}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.66786em;"></span><span class="strut bottom" style="height:0.8623000000000001em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord textstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">q</span></span></span><span style="top:0em;margin-left:0.16668em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>¨</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>添加任边界约束，那么根据公式（5），该约束会是一个关于控制点（<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>q</mi><mrow><mn>0</mn><mo>:</mo><mi>n</mi></mrow></msub></mrow><annotation encoding="application/x-tex">q_{0:n}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.03588em;">q</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.03588em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathrm">0</span><span class="mrel">:</span><span class="mord mathit">n</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>）以及时间<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.13889em;">T</span></span></span></span>的约束，不过由于其中包含<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>T</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">T^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.8141079999999999em;"></span><span class="strut bottom" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.13889em;">T</span><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord mathrm">2</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>项，因此该约束不再是一个线性约束，无法描述为一个QP问题。</p>
+<p><strong>注意</strong>：由于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">p-2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span><span class="mbin">−</span><span class="mord mathrm">2</span></span></span></span>阶B样条曲线的当前值只与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">p-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span><span class="mbin">−</span><span class="mord mathrm">1</span></span></span></span>个控制点有关，因此上述公式如果用于计算约束，那么约束项的维度应该是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">p-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span><span class="mbin">−</span><span class="mord mathrm">1</span></span></span></span>，而不是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span>。</p>
+<h3 id="2-4-样条的三阶导数-jerk">2.4 样条的三阶导数(jerk)</h3>
+<p>此处结论和上述一阶导数和二阶导数的结论是一样的，和二阶中关于约束的结论类似，如果我们需要在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>τ</mi></mrow><annotation encoding="application/x-tex">\tau</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.1132em;">τ</span></span></span></span>时刻为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mfrac><mrow><msup><mi>d</mi><mn>3</mn></msup><mi>q</mi></mrow><mrow><mi>d</mi><msup><mi>τ</mi><mn>3</mn></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{d^3q}{d\tau^3}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:1.022428em;"></span><span class="strut bottom" style="height:1.3674279999999999em;vertical-align:-0.345em;"></span><span class="base textstyle uncramped"><span class="mord reset-textstyle textstyle uncramped"><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span><span class="mfrac"><span class="vlist"><span style="top:0.345em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">d</span><span class="mord"><span class="mord mathit" style="margin-right:0.1132em;">τ</span><span class="vlist"><span style="top:-0.289em;margin-right:0.07142857142857144em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord mathrm">3</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span><span style="top:-0.22999999999999998em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle textstyle uncramped frac-line"></span></span><span style="top:-0.44610799999999995em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord"><span class="mord mathit">d</span><span class="vlist"><span style="top:-0.363em;margin-right:0.07142857142857144em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle uncramped"><span class="mord mathrm">3</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mord mathit" style="margin-right:0.03588em;">q</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span></span></span></span></span>添加任边界约束，那么根据公式（5），该约束会是一个关于控制点（<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>q</mi><mrow><mn>0</mn><mo>:</mo><mi>n</mi></mrow></msub></mrow><annotation encoding="application/x-tex">q_{0:n}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.03588em;">q</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.03588em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathrm">0</span><span class="mrel">:</span><span class="mord mathit">n</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>）以及时间<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.13889em;">T</span></span></span></span>的约束，不过由于其中包含<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>T</mi><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">T^3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.8141079999999999em;"></span><span class="strut bottom" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.13889em;">T</span><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord mathrm">3</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>项，因此该约束不再是一个线性约束，无法描述为一个QP问题。</p>
+<h2 id="3-代价函数">3. 代价函数</h2>
+<h3 id="3-1-时间代价">3.1 时间代价</h3>
+<p>我们希望轨迹的时间越短越好，因此我们可以将时间作为一个代价函数的一部分，即：</p>
 J_{time}(T) = T
 \tag{13}
-$$
-<p>该代价是一个关于$T$的线性函数。</p>
-<h3 id="3-2-路径代价"><a href="#3-2-路径代价" class="headerlink" title="3.2 路径代价"></a>3.2 路径代价</h3><p>我们希望轨迹的路径越短越好，因此我们可以将路径作为一个代价函数的一部分，该代价函数可以有多种形式，最为直观的一种形式是我们可以使用控制点之间的差值的二阶范数的累加作为路径代价，即：</p>
 
-$$
-
+<p>该代价是一个关于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.13889em;">T</span></span></span></span>的线性函数。</p>
+<h3 id="3-2-路径代价">3.2 路径代价</h3>
+<p>我们希望轨迹的路径越短越好，因此我们可以将路径作为一个代价函数的一部分，该代价函数可以有多种形式，最为直观的一种形式是我们可以使用控制点之间的差值的二阶范数的累加作为路径代价，即：</p>
 J_{path}(q_{0:n}) = \sum_{i=0}^{n-1}\|q_{i+1}-q_i\|_2
 \tag{14}
-$$
+
 <p>在控制点距离足够近的时候，上述代价可以近似反应轨迹的路径长度。由于上述代价中包含开平方运算，因此会导致优化问题无法被描述为一个QP问题，因此我们可以考虑使用控制点之间的差值的二阶范数的平方的累加作为路径代价，即：</p>
-
-$$
-
 J_{path}(q_{0:n}) = \sum_{i=0}^{n-1}\|q_{i+1}-q_i\|_2^2
 \tag{15}
-$$
-<h3 id="3-3-能量的代价"><a href="#3-3-能量的代价" class="headerlink" title="3.3 能量的代价"></a>3.3 能量的代价</h3><p>我们希望轨迹的能量越小越好，因此我们可以将能量作为一个代价函数的一部分，即：</p>
 
-$$
-
+<h3 id="3-3-能量的代价">3.3 能量的代价</h3>
+<p>我们希望轨迹的能量越小越好，因此我们可以将能量作为一个代价函数的一部分，即：</p>
 J_{energy}(q_{0:n}) = \sum_{i=0}^{n-1}\|\dot{q}_i\|_2^2
 \tag{16}
-$$
-<p>参考上述关于$\dot{q}(\tau)$的讨论，我们可以发现上述代价函数是一个关于控制点（$q_{0:n}$）的线性二次函数。因此是一个线性二次（Linear Quadratic）代价函数，可以使用QP问题来描述。</p>
-<h3 id="3-4-总代价"><a href="#3-4-总代价" class="headerlink" title="3.4 总代价"></a>3.4 总代价</h3><p>我们可以将上述三个代价函数按照一定的权重进行加权求和，得到总代价函数：</p>
 
-$$
-
+<p>参考上述关于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mrow><mi>q</mi></mrow><mo>˙</mo></mover><mo>(</mo><mi>τ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\dot{q}(\tau)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord textstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">q</span></span></span><span style="top:0em;margin-left:0.16668em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>˙</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.1132em;">τ</span><span class="mclose">)</span></span></span></span>的讨论，我们可以发现上述代价函数是一个关于控制点（<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>q</mi><mrow><mn>0</mn><mo>:</mo><mi>n</mi></mrow></msub></mrow><annotation encoding="application/x-tex">q_{0:n}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.03588em;">q</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.03588em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathrm">0</span><span class="mrel">:</span><span class="mord mathit">n</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>）的线性二次函数。因此是一个线性二次（Linear Quadratic）代价函数，可以使用QP问题来描述。</p>
+<h3 id="3-4-总代价">3.4 总代价</h3>
+<p>我们可以将上述三个代价函数按照一定的权重进行加权求和，得到总代价函数：</p>
 J(T,q_{0:n}) = \alpha J_{time}(T) + \beta J_{path}(q_{0:n}) + \gamma J_{energy}(q_{0:n})
 \tag{17}
-$$
-<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>综上所述，我们可以得到如下结论：</p>
+
+<h1 id="结论">结论</h1>
+<p>综上所述，我们可以得到如下结论：</p>
 <ol>
-<li><p>如果我们选择时间、路径（二阶范数的平方）、能量作为代价函数，同时我们只对控制点的位置和速度进行约束，那么我们可以将该优化问题描述为一个QP问题。</p>
+<li>
+<p>如果我们选择时间、路径（二阶范数的平方）、能量作为代价函数，同时我们只对控制点的位置和速度进行约束，那么我们可以将该优化问题描述为一个QP问题。</p>
 </li>
-<li><p>如果我们选择了其它的代价函数，或者我们对控制点的加速度或者加加速度进行约束，或者我们自定义的其它非线性约束，那么我们就无法将该优化问题描述为一个QP问题，只能用支持NLP（Nonlinear Programming）的优化器来求解。</p>
+<li>
+<p>如果我们选择了其它的代价函数，或者我们对控制点的加速度或者加加速度进行约束，或者我们自定义的其它非线性约束，那么我们就无法将该优化问题描述为一个QP问题，只能用支持NLP（Nonlinear Programming）的优化器来求解。</p>
 </li>
 </ol>
 <hr>
@@ -775,7 +743,6 @@ $$
 
   
   
-
 
 
 
@@ -1048,49 +1015,6 @@ $$
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-
-        Fluid.events.registerRefreshCallback(function() {
-          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
-            MathJax.startup.document.state(0);
-            MathJax.texReset();
-            MathJax.typeset();
-            MathJax.typesetPromise();
-          }
-        });
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

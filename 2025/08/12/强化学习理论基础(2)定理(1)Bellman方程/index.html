@@ -19,12 +19,12 @@
   <meta name="author" content="Xinyu Han">
   <meta name="keywords" content="">
   
-    <meta name="description" content="强化学习理论基础-定理-Bellman方程本文将推导Bellman方程在RL中的几种形式 1. 将$Q_\pi$表示成$Q_\pi$的递归形式  $$ \begin{aligned} Q_\pi(s_t, a_t) &amp; &#x3D; \mathbb{E}_{S_{t+1}, A_{t+1}}[R_t + \gamma Q_\pi(S_{t+1}, A_{t+1}) | S_t &#x3D; s_t, A_t &#x3D; a_">
+    <meta name="description" content="强化学习理论基础-定理-Bellman方程 本文将推导Bellman方程在RL中的几种形式 1. 将QπQ_\piQ​π​​表示成QπQ_\piQ​π​​的递归形式  \begin{aligned} Q_\pi(s_t, a_t) &amp; &#x3D; \mathbb{E}_{S_{t+1}, A_{t+1}}[R_t + \gamma Q_\pi(S_{t+1}, A_{t+1}) | S_t &#x3D; s_t,">
 <meta property="og:type" content="article">
 <meta property="og:title" content="强化学习理论基础(2)定理(1)Bellman方程">
 <meta property="og:url" content="http://example.com/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(2)%E5%AE%9A%E7%90%86(1)Bellman%E6%96%B9%E7%A8%8B/index.html">
 <meta property="og:site_name" content="Xinyu&#39;s Blog">
-<meta property="og:description" content="强化学习理论基础-定理-Bellman方程本文将推导Bellman方程在RL中的几种形式 1. 将$Q_\pi$表示成$Q_\pi$的递归形式  $$ \begin{aligned} Q_\pi(s_t, a_t) &amp; &#x3D; \mathbb{E}_{S_{t+1}, A_{t+1}}[R_t + \gamma Q_\pi(S_{t+1}, A_{t+1}) | S_t &#x3D; s_t, A_t &#x3D; a_">
+<meta property="og:description" content="强化学习理论基础-定理-Bellman方程 本文将推导Bellman方程在RL中的几种形式 1. 将QπQ_\piQ​π​​表示成QπQ_\piQ​π​​的递归形式  \begin{aligned} Q_\pi(s_t, a_t) &amp; &#x3D; \mathbb{E}_{S_{t+1}, A_{t+1}}[R_t + \gamma Q_\pi(S_{t+1}, A_{t+1}) | S_t &#x3D; s_t,">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-08-11T16:01:00.000Z">
 <meta property="article:modified_time" content="2026-04-19T13:07:15.960Z">
@@ -46,6 +46,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
 
 
 
@@ -327,7 +329,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.6k 字
+          3.9k 字
         
       </span>
     
@@ -338,7 +340,7 @@
         
         
         
-          31 分钟
+          33 分钟
         
       </span>
     
@@ -382,221 +384,153 @@
             
               <div class="markdown-body">
                 
-                <h1 id="强化学习理论基础-定理-Bellman方程"><a href="#强化学习理论基础-定理-Bellman方程" class="headerlink" title="强化学习理论基础-定理-Bellman方程"></a>强化学习理论基础-定理-Bellman方程</h1><p>本文将推导Bellman方程在RL中的几种形式</p>
-<h2 id="1-将-Q-pi-表示成-Q-pi-的递归形式"><a href="#1-将-Q-pi-表示成-Q-pi-的递归形式" class="headerlink" title="1. 将$Q_\pi$表示成$Q_\pi$的递归形式"></a>1. 将$Q_\pi$表示成$Q_\pi$的递归形式</h2><div class="math">
-
-$$
+                <h1 id="强化学习理论基础-定理-bellman方程">强化学习理论基础-定理-Bellman方程</h1>
+<p>本文将推导Bellman方程在RL中的几种形式</p>
+<h2 id="1-将Q-pi表示成Q-pi的递归形式">1. 将<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>Q</mi><mi>π</mi></msub></mrow><annotation encoding="application/x-tex">Q_\pi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">Q</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">π</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>表示成<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>Q</mi><mi>π</mi></msub></mrow><annotation encoding="application/x-tex">Q_\pi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">Q</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">π</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>的递归形式</h2>
+<div class="math">
 \begin{aligned}
 Q_\pi(s_t, a_t) & = \mathbb{E}_{S_{t+1}, A_{t+1}}[R_t + \gamma Q_\pi(S_{t+1}, A_{t+1}) | S_t = s_t, A_t = a_t] \\
 \end{aligned} \tag {1}
-$$
 
 </div>
-
-<h3 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h3><p>根据定义</p>
+<h3 id="证明">证明</h3>
+<p>根据定义</p>
 <div class="math">
-
-$$
 \begin{aligned}
 Q_\pi(s_t, a_t) & = \mathbb{E}_{\mathcal{S}_{t+1:}, \mathcal{A}_{t+1:}}[U_t | S_t = s_t, A_t = a_t] \\
 \end{aligned} \tag {1.1}
-$$
 
 </div>
-
 <p>其中</p>
 <div class="math">
-
-$$
 \begin{aligned}
 U_t &= R_t + \gamma \underbrace{\sum_{k=t+1}^{n} \gamma^{k-t-1} R_k}_{=U_{t+1}} \\
 &= R_t + \gamma U_{t+1} \\
 \end{aligned} \tag {1.2}
-$$
 
 </div>
-
 <p>代入可得到</p>
 <div class="math">
-
-$$
 \begin{aligned}
 Q_\pi(s_t, a_t) & = \mathbb{E}_{\mathcal{S}_{t+1:}, \mathcal{A}_{t+1:}}[R_t + \gamma U_{t+1} | S_t = s_t, A_t = a_t] \\
 & = \underbrace{\mathbb{E}_{\mathcal{S}_{t+1:}, \mathcal{A}_{t+1:}}[R_t | S_t = s_t, A_t = a_t]}_{(1.3.1)} + \gamma \underbrace{\mathbb{E}_{\mathcal{S}_{t+1:}, \mathcal{A}_{t+1:}}[U_{t+1} | S_t = s_t, A_t = a_t]}_{(1.3.2)} \\
 \end{aligned} \tag {1.3}
-$$
 
 </div>
-
-<p>其中1.3.1中的$R_t$是在智能体以状态$S_t$作为输入应用策略$\pi$得到动作$A_t$后，环境反馈转移到状态$S_{t+1}$的时候获得的奖励。因此其随机性来源于$S_t$，$A_t$和$S_{t+1}$，1.3.1中$S_t$和$A_t$都已固定为$s_t$和$a_t$，因此1.3.1的随机性仅来源于$S_{t+1}$，于是有：</p>
+<p>其中1.3.1中的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>R</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">R_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.00773em;">R</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.00773em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>是在智能体以状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>S</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">S_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.05764em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>作为输入应用策略<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>π</mi></mrow><annotation encoding="application/x-tex">\pi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.03588em;">π</span></span></span></span>得到动作<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>A</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">A_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">A</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>后，环境反馈转移到状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>S</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">S_{t+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.05764em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">t</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>的时候获得的奖励。因此其随机性来源于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>S</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">S_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.05764em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>A</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">A_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">A</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>S</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">S_{t+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.05764em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">t</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>，1.3.1中<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>S</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">S_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.05764em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>A</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">A_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">A</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>都已固定为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>s</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">s_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">a_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">a</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>，因此1.3.1的随机性仅来源于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>S</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">S_{t+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.05764em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">t</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>，于是有：</p>
 <div class="math">
-
-$$
 \begin{aligned}
 (1.3.1) & = \mathbb{E}_{S_{t+1}}[R_t | S_t = s_t, A_t = a_t] \\
 \end{aligned} \tag {1.4}
-$$
 
 </div>
-
 <p>1.3.2则可以写成如下形式：</p>
 <div class="math">
-
-$$
 \begin{aligned}
 (1.3.2) & = \mathbb{E}_{S_{t+1}, A_{t+1}}[\mathbb{E}_{\mathcal{S}_{t+2:}, \mathcal{A}_{t+2:}}[U_{t+1} | S_{t+1}, A_{t+1}] | S_t = s_t, A_t = a_t] \\
 & = \mathbb{E}_{S_{t+1}, A_{t+1}}[Q_\pi(S_{t+1}, A_{t+1}) | S_t = s_t, A_t = a_t] \\
 \end{aligned} \tag {1.5}
-$$
 
 </div>
-
 <p>将(1.4)和(1.5)代入(1.3)中可得公式1。</p>
-<h2 id="2-将-Q-pi-表示成-V-pi-的递归形式"><a href="#2-将-Q-pi-表示成-V-pi-的递归形式" class="headerlink" title="2. 将$Q_\pi$表示成$V_\pi$的递归形式"></a>2. 将$Q_\pi$表示成$V_\pi$的递归形式</h2><div class="math">
-
-$$
+<h2 id="2-将Q-pi表示成V-pi的递归形式">2. 将<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>Q</mi><mi>π</mi></msub></mrow><annotation encoding="application/x-tex">Q_\pi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">Q</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">π</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>表示成<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>V</mi><mi>π</mi></msub></mrow><annotation encoding="application/x-tex">V_\pi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.22222em;">V</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.22222em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">π</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>的递归形式</h2>
+<div class="math">
 \begin{aligned}
 Q_\pi(s_t, a_t) & = \mathbb{E}_{S_{t+1}}[R_t + \gamma V_\pi(S_{t+1}) | S_t = s_t, A_t = a_t] \\
 \end{aligned} \tag {2}
-$$
 
 </div>
-
-<h3 id="证明-1"><a href="#证明-1" class="headerlink" title="证明"></a>证明</h3><p>根据定义</p>
+<h3 id="证明-2">证明</h3>
+<p>根据定义</p>
 <div class="math">
-
-$$
 \begin{aligned}
 V_\pi(s_t) & = \mathbb{E}_{A_{t+1}}[Q_\pi(s_t, A_{t+1}) | S_t = s_t] \\
 \end{aligned} \tag {2.1}
-$$
 
 </div>
-
 <p>代入公式1</p>
 <div class="math">
-
-$$
 \begin{aligned}
 Q_\pi(s_t, a_t) & = \mathbb{E}_{S_{t+1}}[R_t | S_t = s_t, A_t = a_t] + \gamma \mathbb{E}_{S_{t+1}, A_{t+1}}[Q_\pi(S_{t+1}, A_{t+1}) | S_t = s_t, A_t = a_t] \\
 & = \mathbb{E}_{S_{t+1}}[R_t | S_t = s_t, A_t = a_t] + \gamma \mathbb{E}_{S_{t+1}}[\mathbb{E}_{A_{t+1}}[Q_\pi(S_{t+1}, A_{t+1})]| S_t = s_t, A_t = a_t] \\
 & = \mathbb{E}_{S_{t+1}}[R_t | S_t = s_t, A_t = a_t] + \gamma \mathbb{E}_{S_{t+1}}[V_\pi(S_{t+1}) | S_t = s_t, A_t = a_t] \\
 & = \mathbb{E}_{S_{t+1}}[R_t + \gamma V_\pi(S_{t+1}) | S_t = s_t, A_t = a_t] \\
 \end{aligned} \tag {2.2}
-$$
 
 </div>
-
-<h2 id="3-将-V-pi-表示成-V-pi-的递归形式"><a href="#3-将-V-pi-表示成-V-pi-的递归形式" class="headerlink" title="3. 将$V_\pi$表示成$V_\pi$的递归形式"></a>3. 将$V_\pi$表示成$V_\pi$的递归形式</h2><div class="math">
-
-$$
+<h2 id="3-将V-pi表示成V-pi的递归形式">3. 将<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>V</mi><mi>π</mi></msub></mrow><annotation encoding="application/x-tex">V_\pi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.22222em;">V</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.22222em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">π</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>表示成<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>V</mi><mi>π</mi></msub></mrow><annotation encoding="application/x-tex">V_\pi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.22222em;">V</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.22222em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">π</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>的递归形式</h2>
+<div class="math">
 \begin{aligned}
 V_\pi(s_t) & = \mathbb{E}_{A_t, S_{t+1}}[R_t + \gamma V_\pi(S_{t+1}) | S_t = s_t] \\
 \end{aligned} \tag {3}
-$$
 
 </div>
-
-<h3 id="证明-2"><a href="#证明-2" class="headerlink" title="证明"></a>证明</h3><p>根据定义</p>
+<h3 id="证明-3">证明</h3>
+<p>根据定义</p>
 <div class="math">
-
-$$
 \begin{aligned}
 V_\pi(s_t) & = \mathbb{E}_{A_t}[Q_\pi(s_t, A_t)] \\
 \end{aligned} \tag {3.1}
-$$
 
 </div>
-
 <p>代入公式2</p>
 <div class="math">
-
-$$
 \begin{aligned}
 V_\pi(s_t) & = \mathbb{E}_{A_t}[ \mathbb{E}_{S_{t+1}}[R_t + \gamma V_\pi(S_{t+1}) | S_t = s_t, A_t = a_t] ] \\
 & = \mathbb{E}_{A_t, S_{t+1}}[R_t + \gamma V_\pi(S_{t+1}) | S_t = s_t] \\
 \end{aligned} \tag {3.2}
-$$
 
 </div>
-
-<h2 id="4-最优Bellman方程"><a href="#4-最优Bellman方程" class="headerlink" title="4. 最优Bellman方程"></a>4. 最优Bellman方程</h2><div class="math">
-
-$$
+<h2 id="4-最优Bellman方程">4. 最优Bellman方程</h2>
+<div class="math">
 \begin{aligned}
 Q_*(s_t, a_t) & = \mathbb{E}_{S_{t+1} \sim p(\cdot |s_t, a_t) }[R_t + \gamma \max_{A \in \mathcal{A}} Q_*(S_{t+1}, A) | S_t = s_t, A_t = a_t] \\
 \end{aligned} \tag {4}
-$$
 
 </div>
-
-<h3 id="证明-3"><a href="#证明-3" class="headerlink" title="证明"></a>证明</h3><p>最优策略函数定义如下：</p>
+<h3 id="证明-4">证明</h3>
+<p>最优策略函数定义如下：</p>
 <div class="math">
-
-
-$$
 \begin{aligned}
 \pi^*(a|s) & = \arg\max_\pi Q_\pi(s, a), \forall s \in \mathcal{S}, a \in \mathcal{A} \\
 \end{aligned} \tag {4.1}
-$$
 
 </div>
-
 <p>由Bellman方程公式1可得</p>
 <div class="math">
-
-$$
 \begin{aligned}
 Q_{\pi^*}(s_t, a_t) & = \mathbb{E}_{S_{t+1}, A_{t+1}}[R_t + \gamma Q_{\pi^*}(S_{t+1}, A_{t+1}) | S_t = s_t, A_t = a_t] \\
 \end{aligned} \tag {4.2}
-$$
 
 </div>
-
-<p>根据定义，最优状态-动作值函数$Q_*(s_t, a_t)$是所有策略的最大值，因此有</p>
+<p>根据定义，最优状态-动作值函数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>Q</mi><mo>∗</mo></msub><mo>(</mo><msub><mi>s</mi><mi>t</mi></msub><mo separator="true">,</mo><msub><mi>a</mi><mi>t</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">Q_*(s_t, a_t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">Q</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord">∗</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mpunct">,</span><span class="mord"><span class="mord mathit">a</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span></span></span></span>是所有策略的最大值，因此有</p>
 <div class="math">
-
-$$
 \begin{aligned}
 Q_*(s_t, a_t) & \triangleq Q_{\pi^*}(s_t, a_t) \\
 \end{aligned} \tag {4.3}
-$$
 
 </div>
-
 <p>于是有</p>
 <div class="math">
-
-$$
 \begin{aligned}
 Q_*(s_t, a_t) & = \mathbb{E}_{S_{t+1}, A_{t+1}}[R_t + \gamma Q_*(S_{t+1}, A_{t+1}) | S_t = s_t, A_t = a_t] \\
 \end{aligned} \tag {4.4}
-$$
 
 </div>
-
-<p>其中$A_{t+1}$是由最优策略$\pi^*$根据状态$S_{t+1}$选择的动作，因此有</p>
+<p>其中<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>A</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">A_{t+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">A</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">t</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>是由最优策略<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>π</mi><mo>∗</mo></msup></mrow><annotation encoding="application/x-tex">\pi^*</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.688696em;"></span><span class="strut bottom" style="height:0.688696em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.03588em;">π</span><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord">∗</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>根据状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>S</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">S_{t+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.05764em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">t</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>选择的动作，因此有</p>
 <div class="math">
-
-$$
 \begin{aligned}
 A_{t+1} & = \arg\max_{A \in \mathcal{A}} Q_*(S_{t+1}, A) \\
 \end{aligned} \tag {4.5}
-$$
 
 </div>
-
-<p>$A_{t+1}$是状态$S_{t+1}$的确定性函数，因此公式4.4可以写成</p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>A</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">A_{t+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">A</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">t</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>是状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>S</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">S_{t+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.05764em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">t</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>的确定性函数，因此公式4.4可以写成</p>
 <div class="math">
-
-$$
-\begin{aligned}
-Q_*(s_t, a_t) & = \mathbb{E}_{S_{t+1} \sim p(\cdot |s_t, a_t)}[R_t + \gamma \max_{A \in \mathcal{A}} Q_*(S_{t+1}, A) | S_t = s_t, A_t = a_t] \\
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtable><mtr><mtd><mrow><msub><mi>Q</mi><mo>∗</mo></msub><mo>(</mo><msub><mi>s</mi><mi>t</mi></msub><mo separator="true">,</mo><msub><mi>a</mi><mi>t</mi></msub><mo>)</mo></mrow></mtd><mtd><mrow><mrow></mrow><mo>=</mo><msub><mrow><mi mathvariant="double-struck">E</mi></mrow><mrow><msub><mi>S</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>∼</mo><mi>p</mi><mo>(</mo><mo>⋅</mo><mi mathvariant="normal">∣</mi><msub><mi>s</mi><mi>t</mi></msub><mo separator="true">,</mo><msub><mi>a</mi><mi>t</mi></msub><mo>)</mo></mrow></msub><mo>[</mo><msub><mi>R</mi><mi>t</mi></msub><mo>+</mo><mi>γ</mi><msub><mi>max</mi><mrow><mi>A</mi><mo>∈</mo><mrow><mi mathvariant="script">A</mi></mrow></mrow></msub><msub><mi>Q</mi><mo>∗</mo></msub><mo>(</mo><msub><mi>S</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo separator="true">,</mo><mi>A</mi><mo>)</mo><mi mathvariant="normal">∣</mi><msub><mi>S</mi><mi>t</mi></msub><mo>=</mo><msub><mi>s</mi><mi>t</mi></msub><mo separator="true">,</mo><msub><mi>A</mi><mi>t</mi></msub><mo>=</mo><msub><mi>a</mi><mi>t</mi></msub><mo>]</mo></mrow></mtd></mtr><mtr><mtd><mrow></mrow></mtd></mtr></mtable></mrow><annotation encoding="application/x-tex">\begin{aligned}
+Q_*(s_t, a_t) &amp; = \mathbb{E}_{S_{t+1} \sim p(\cdot |s_t, a_t)}[R_t + \gamma \max_{A \in \mathcal{A}} Q_*(S_{t+1}, A) | S_t = s_t, A_t = a_t] \\
 \end{aligned}
-$$
-
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:1.6558505em;"></span><span class="strut bottom" style="height:2.8117010000000002em;vertical-align:-1.1558505000000003em;"></span><span class="base displaystyle textstyle uncramped"><span class="mord"><span class="mtable"><span class="col-align-r"><span class="vlist"><span style="top:-0.8158504999999998em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord displaystyle textstyle uncramped"><span class="mord"><span class="mord mathit">Q</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord">∗</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mpunct">,</span><span class="mord"><span class="mord mathit">a</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span></span></span><span style="top:0.7958505000000002em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord displaystyle textstyle uncramped"></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="col-align-l"><span class="vlist"><span style="top:-0.8158504999999998em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord displaystyle textstyle uncramped"><span class="mord displaystyle textstyle uncramped"></span><span class="mrel">=</span><span class=""><span class="mord displaystyle textstyle uncramped"><span class="mord mathbb">E</span></span><span class="vlist"><span style="top:0.18019999999999992em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord"><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="vlist"><span style="top:0.15000000000000002em;margin-right:0.07142857142857144em;margin-left:-0.05764em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord scriptscriptstyle cramped"><span class="mord mathit">t</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mrel">∼</span><span class="mord mathit">p</span><span class="mopen">(</span><span class="mord">⋅</span><span class="mord mathrm">∣</span><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:0.15em;margin-right:0.07142857142857144em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mpunct">,</span><span class="mord"><span class="mord mathit">a</span><span class="vlist"><span style="top:0.15em;margin-right:0.07142857142857144em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">[</span><span class="mord"><span class="mord mathit" style="margin-right:0.00773em;">R</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.00773em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mbin">+</span><span class="mord mathit" style="margin-right:0.05556em;">γ</span><span class="mop op-limits"><span class="vlist"><span style="top:0.644331em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">A</span><span class="mrel">∈</span><span class="mord scriptstyle cramped"><span class="mord mathcal">A</span></span></span></span></span><span style="top:2.7755575615628914e-17em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span><span class="mop">max</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mord"><span class="mord mathit">Q</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord">∗</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.05764em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">t</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mpunct">,</span><span class="mord mathit">A</span><span class="mclose">)</span><span class="mord mathrm">∣</span><span class="mord"><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.05764em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mrel">=</span><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mpunct">,</span><span class="mord"><span class="mord mathit">A</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mrel">=</span><span class="mord"><span class="mord mathit">a</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">]</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span></span></span></span></p>
 </div>
-
 <p>未经允许，禁止转载。</p>
 
                 
@@ -769,7 +703,6 @@ $$
 
   
   
-
 
 
 
@@ -1042,49 +975,6 @@ $$
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-
-        Fluid.events.registerRefreshCallback(function() {
-          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
-            MathJax.startup.document.state(0);
-            MathJax.texReset();
-            MathJax.typeset();
-            MathJax.typesetPromise();
-          }
-        });
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

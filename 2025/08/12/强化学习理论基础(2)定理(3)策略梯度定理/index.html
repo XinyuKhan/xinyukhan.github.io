@@ -19,12 +19,12 @@
   <meta name="author" content="Xinyu Han">
   <meta name="keywords" content="">
   
-    <meta name="description" content="强化学习理论基础-定理-策略梯度定理1. 定理  $$ \begin{aligned}   \frac{\partial J(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} &amp;&#x3D; \frac{1 - \gamma^n}{1 - \gamma} \mathbb{E}_{S \sim d(\cdot)} \left [\mathbb{E}_{A">
+    <meta name="description" content="强化学习理论基础-定理-策略梯度定理 1. 定理  \begin{aligned}   \frac{\partial J(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} &amp;&#x3D; \frac{1 - \gamma^n}{1 - \gamma} \mathbb{E}_{S \sim d(\cdot)} \left [\mathbb{E}_{A \s">
 <meta property="og:type" content="article">
 <meta property="og:title" content="强化学习理论基础(2)定理(3)策略梯度定理">
 <meta property="og:url" content="http://example.com/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(2)%E5%AE%9A%E7%90%86(3)%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E5%AE%9A%E7%90%86/index.html">
 <meta property="og:site_name" content="Xinyu&#39;s Blog">
-<meta property="og:description" content="强化学习理论基础-定理-策略梯度定理1. 定理  $$ \begin{aligned}   \frac{\partial J(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} &amp;&#x3D; \frac{1 - \gamma^n}{1 - \gamma} \mathbb{E}_{S \sim d(\cdot)} \left [\mathbb{E}_{A">
+<meta property="og:description" content="强化学习理论基础-定理-策略梯度定理 1. 定理  \begin{aligned}   \frac{\partial J(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} &amp;&#x3D; \frac{1 - \gamma^n}{1 - \gamma} \mathbb{E}_{S \sim d(\cdot)} \left [\mathbb{E}_{A \s">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-08-11T16:03:00.000Z">
 <meta property="article:modified_time" content="2026-04-19T13:07:15.958Z">
@@ -46,6 +46,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
 
 
 
@@ -338,7 +340,7 @@
         
         
         
-          85 分钟
+          86 分钟
         
       </span>
     
@@ -382,76 +384,55 @@
             
               <div class="markdown-body">
                 
-                <h1 id="强化学习理论基础-定理-策略梯度定理"><a href="#强化学习理论基础-定理-策略梯度定理" class="headerlink" title="强化学习理论基础-定理-策略梯度定理"></a>强化学习理论基础-定理-策略梯度定理</h1><h2 id="1-定理"><a href="#1-定理" class="headerlink" title="1. 定理"></a>1. 定理</h2><div class="math">
-
-$$
+                <h1 id="强化学习理论基础-定理-策略梯度定理">强化学习理论基础-定理-策略梯度定理</h1>
+<h2 id="1-定理">1. 定理</h2>
+<div class="math">
 \begin{aligned}
   \frac{\partial J(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} &= \frac{1 - \gamma^n}{1 - \gamma} \mathbb{E}_{S \sim d(\cdot)} \left [\mathbb{E}_{A \sim \pi(\cdot | S; \boldsymbol{\theta})} \left[ \frac{\partial \ln \pi(A | S; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot Q_{\pi}(S, A) \right]\right]
 \end{aligned} \tag {1}
-$$
 
 </div>
-
-<p>其中$J(\boldsymbol{\theta})$是代价函数，上述定理成立的前提是随机状态$S$服从分布马尔可夫链的稳态分布$d(\cdot)$，可以通过上述定理求得代价函数的梯度,然后利用梯度法求解如下问题：</p>
+<p>其中J(\boldsymbol{\theta})是代价函数，上述定理成立的前提是随机状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi></mrow><annotation encoding="application/x-tex">S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.05764em;">S</span></span></span></span>服从分布马尔可夫链的稳态分布<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mo>(</mo><mo>⋅</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">d(\cdot)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">d</span><span class="mopen">(</span><span class="mord">⋅</span><span class="mclose">)</span></span></span></span>，可以通过上述定理求得代价函数的梯度,然后利用梯度法求解如下问题：</p>
 <div class="math">
-
-$$
 \begin{aligned}
 \max_{\boldsymbol{\theta}} J(\boldsymbol{\theta})
 \end{aligned} \tag{1.1}
-$$
 
 </div>
-
-<p>其中$J$是状态值函数的期望</p>
+<p>其中<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>J</mi></mrow><annotation encoding="application/x-tex">J</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.09618em;">J</span></span></span></span>是状态值函数的期望</p>
 <div class="math">
-
-$$
 \begin{aligned}
 J(\boldsymbol{\theta}) &= \mathbb{E}_{S \sim d(\cdot)}\left[V_\pi(S)\right] \\
 \end{aligned} \tag{1.2}
-$$
 
 </div>
-
 <p>求解过程为</p>
 <div class="math">
-
-$$
 \begin{aligned}
 \boldsymbol{\theta}_{new} & \leftarrow \boldsymbol{\theta}_{now} + \beta \nabla_{\boldsymbol{\theta}} J(\boldsymbol{\theta}_{now}) \\
 \nabla_{\boldsymbol{\theta}} J(\boldsymbol{\theta}_{now}) &\triangleq \frac{\partial J(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \bigg|_{\boldsymbol{\theta} = \boldsymbol{\theta}_{now}}
 \end{aligned} \tag{1.3}
-$$
 
 </div>
-
-<h2 id="2-证明"><a href="#2-证明" class="headerlink" title="2. 证明"></a>2. 证明</h2><h3 id="2-1-递归公式"><a href="#2-1-递归公式" class="headerlink" title="2.1. 递归公式"></a>2.1. 递归公式</h3><div class="math">
-
-$$
+<h2 id="2-证明">2. 证明</h2>
+<h3 id="2-1-递归公式">2.1. 递归公式</h3>
+<div class="math">
 \begin{aligned}
 \frac{\partial V_\pi(s)}{\partial \boldsymbol{\theta}} &= \mathbb{E}_{A \sim \pi(\cdot | s; \boldsymbol{\theta})}\left[\frac{\partial \ln \pi(A | s; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot Q_\pi(s, A) + \gamma \mathbb{E}_{S' \sim p(\cdot | s, A)}\left[\frac{\partial V_\pi(S')}{\partial \boldsymbol{\theta}}\right]\right]
 \end{aligned} \tag {2.1}
-$$
 
 </div>
-
-<h4 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h4><p>根据定义有</p>
+<h4 id="证明">证明</h4>
+<p>根据定义有</p>
 <div class="math">
-
-$$
 \begin{aligned}
 V_\pi(s) &=\mathbb{E}_{A \sim \pi(\cdot | s; \boldsymbol{\theta})}\left[Q_\pi(s, A)\right] \\
 &= \sum_{a \in \mathcal{A}} \pi(a | s; \boldsymbol{\theta}) \cdot Q_\pi(s, a)
 \end{aligned}
-$$
 
 </div>
-
-<p>那么对其求$\boldsymbol{\theta}$的梯度有</p>
+<p>那么对其求\boldsymbol{\theta}的梯度有</p>
 <div class="math">
-
-$$
 \begin{aligned}
 \frac{\partial V_\pi(s)}{\partial \boldsymbol{\theta}} &= \frac{\partial}{\partial \boldsymbol{\theta}} \mathbb{E}_{A \sim \pi(\cdot | s; \boldsymbol{\theta})}\left[Q_\pi(s, A)\right] \\
 &= \frac{\partial}{\partial \boldsymbol{\theta}} \sum_{a \in \mathcal{A}} \pi(a | s; \boldsymbol{\theta}) \cdot Q_\pi(s, a) \\
@@ -461,86 +442,61 @@ $$
    \sum_{a \in \mathcal{A}} \pi(a | s; \boldsymbol{\theta}) \cdot \frac{\partial Q_\pi(s, a)}{\partial \boldsymbol{\theta}} \\
 &= \mathbb{E}_{A \sim \pi(\cdot | s; \boldsymbol{\theta})}\left[\frac{\partial \ln \pi(A | s; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot Q_\pi(s, A)+\underbrace{\frac{\partial Q_\pi(s, A)}{\partial \boldsymbol{\theta}}}_{\text{2.1.2}}\right]
 \end{aligned} \tag{2.1.1}
-$$
 
 </div>
-
-<p>下面对其中的2.1.2部分进行进一步展开，假设$R$是关于状态$s$、$a$和后续状态$s’$的函数，应用<a href="/2025/08/12/强化学习理论基础(2">Bellman方程</a>定理(1)Bellman方程/)有</p>
+<p>下面对其中的2.1.2部分进行进一步展开，假设<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>R</mi></mrow><annotation encoding="application/x-tex">R</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.00773em;">R</span></span></span></span>是关于状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">s</span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">a</span></span></span></span>和后续状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>s</mi><mrow><mi mathvariant="normal">′</mi></mrow></msup></mrow><annotation encoding="application/x-tex">s&#x27;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.751892em;"></span><span class="strut bottom" style="height:0.751892em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathrm">′</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>的函数，应用<a href="/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(2)%E5%AE%9A%E7%90%86(1)Bellman%E6%96%B9%E7%A8%8B/">Bellman方程</a>有</p>
 <div class="math">
-
-$$
 \begin{aligned}
 Q_\pi(s, a) &= \mathbb{E}_{S' \sim p(\cdot | s, a)}\left[R(s, a, S') + \gamma V_\pi(S')\right] \\
 &= \sum_{s' \in \mathcal{S}} \underbrace{p(s' | s, a) \cdot R(s, a, s')}_{\text{2.1.3}} + \gamma \sum_{s' \in \mathcal{S}} \underbrace{p(s' | s, a) \cdot V_\pi(s')}_{\text{2.1.4}}
 \end{aligned} \tag{2.1.2}
-$$
 
 </div>
-
-<p>其中$p(\cdot \mid s, a)$是状态$s$和动作$a$下后续状态的转移概率分布，$R$是根据状态$s$、动作$a$和后续状态$s’$获取的奖励，这些都只跟环境和奖励设计有关，跟策略本身无关，因此2.1.2中的2.1.3部分对于$\boldsymbol{\theta}$的梯度为$\boldsymbol{0}$，2.1.4部分的状态转移条件概率函数可以提出来，于是有</p>
+<p>其中<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo>(</mo><mo>⋅</mo><mo>∣</mo><mi>s</mi><mo separator="true">,</mo><mi>a</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">p(\cdot \mid s, a)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span><span class="mopen">(</span><span class="mord">⋅</span><span class="mrel">∣</span><span class="mord mathit">s</span><span class="mpunct">,</span><span class="mord mathit">a</span><span class="mclose">)</span></span></span></span>是状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">s</span></span></span></span>和动作<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">a</span></span></span></span>下后续状态的转移概率分布，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>R</mi></mrow><annotation encoding="application/x-tex">R</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.00773em;">R</span></span></span></span>是根据状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">s</span></span></span></span>、动作<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">a</span></span></span></span>和后续状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>s</mi><mrow><mi mathvariant="normal">′</mi></mrow></msup></mrow><annotation encoding="application/x-tex">s&#x27;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.751892em;"></span><span class="strut bottom" style="height:0.751892em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathrm">′</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>获取的奖励，这些都只跟环境和奖励设计有关，跟策略本身无关，因此2.1.2中的2.1.3部分对于\boldsymbol{\theta}的梯度为\boldsymbol{0}，2.1.4部分的状态转移条件概率函数可以提出来，于是有</p>
 <div class="math">
-
-$$
 \begin{aligned}
 \frac{\partial Q_\pi(s, a)}{\partial \boldsymbol{\theta}} &= \sum_{s' \in \mathcal{S}} \frac{\partial}{\partial \boldsymbol{\theta}}\left[p(s' | s, a) \cdot R(s, a, s') \right] + \gamma \sum_{s' \in \mathcal{S}} \frac{\partial}{\partial \boldsymbol{\theta}}\left[p(s' | s, a) \cdot V_\pi(s')\right] \\
 &= \gamma \sum_{s' \in \mathcal{S}} p(s' | s, a) \cdot \frac{\partial V_\pi(s')}{\partial \boldsymbol{\theta}} \\
 &= \gamma \mathbb{E}_{S' \sim p(\cdot | s, a)}\left[\frac{\partial V_\pi(S')}{\partial \boldsymbol{\theta}}\right]
 \end{aligned} \tag{2.1.5}
-$$
 
 </div>
-
 <p>将其代入2.1.1公式2.1得证</p>
-<h3 id="2-2-具有稳态分布的马尔可夫链的状态转移期望引理"><a href="#2-2-具有稳态分布的马尔可夫链的状态转移期望引理" class="headerlink" title="2.2. 具有稳态分布的马尔可夫链的状态转移期望引理"></a>2.2. 具有稳态分布的马尔可夫链的状态转移期望引理</h3><p>如果$d(\cdot)$是马尔可夫链的稳态分布，那么对于函数$f(S’)$，满足</p>
+<h3 id="2-2-具有稳态分布的马尔可夫链的状态转移期望引理">2.2. 具有稳态分布的马尔可夫链的状态转移期望引理</h3>
+<p>如果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mo>(</mo><mo>⋅</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">d(\cdot)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">d</span><span class="mopen">(</span><span class="mord">⋅</span><span class="mclose">)</span></span></span></span>是马尔可夫链的稳态分布，那么对于函数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><msup><mi>S</mi><mrow><mi mathvariant="normal">′</mi></mrow></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">f(S&#x27;)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.751892em;"></span><span class="strut bottom" style="height:1.001892em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathrm">′</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span></span></span></span>，满足</p>
 <div class="math">
-
-$$
 \begin{aligned}
 \mathbb{E}_{S \sim d(\cdot)}\left[\mathbb{E}_{A \sim \pi(\cdot | S; \boldsymbol{\theta})}\left[\mathbb{E}_{S' \sim p(\cdot | S, A)}\left[f(S')\right]\right]\right] &= \mathbb{E}_{S' \sim d(\cdot)}\left[f(S')\right]
 \end{aligned} \tag{2.2}
-$$
 
 </div>
-
-<h4 id="证明-1"><a href="#证明-1" class="headerlink" title="证明"></a>证明</h4><p>将等式左侧展开</p>
+<h4 id="证明-2">证明</h4>
+<p>将等式左侧展开</p>
 <div class="math">
-
-$$
 \begin{aligned}
 \mathbb{E}_{S \sim d(\cdot)}\left[\mathbb{E}_{A \sim \pi(\cdot | S; \boldsymbol{\theta})}\left[\mathbb{E}_{S' \sim p(\cdot | S, A)}\left[f(S')\right]\right]\right] &= \sum_{s \in \mathcal{S}} d(s) \sum_{a \in \mathcal{A}} \pi(a | s; \boldsymbol{\theta}) \sum_{s' \in \mathcal{S}} p(s' | s, a) f(s') \\
 &= \sum_{s' \in \mathcal{S}} f(s') \underbrace{\sum_{s \in \mathcal{S}} \sum_{a \in \mathcal{A}} p(s' | s, a) \pi(a | s; \boldsymbol{\theta}) d(s)}_{\text{2.2.2}} \\
 \end{aligned} \tag{2.2.1}
-$$
 
 </div>
-
-<p>根据<a href="/2025/08/12/强化学习理论基础(2">马尔可夫链的稳态分布</a>定理(2)马尔可夫链的稳态分布/)，2.2.2</p>
+<p>根据<a href="/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(2)%E5%AE%9A%E7%90%86(2)%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE%E7%9A%84%E7%A8%B3%E6%80%81%E5%88%86%E5%B8%83/">马尔可夫链的稳态分布</a>，2.2.2</p>
 <div class="math">
-
-$$
-\begin{aligned}
-(2.2.2) &= d(s') \\
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtable><mtr><mtd><mrow><mo>(</mo><mn>2</mn><mi mathvariant="normal">.</mi><mn>2</mn><mi mathvariant="normal">.</mi><mn>2</mn><mo>)</mo></mrow></mtd><mtd><mrow><mrow></mrow><mo>=</mo><mi>d</mi><mo>(</mo><msup><mi>s</mi><mrow><mi mathvariant="normal">′</mi></mrow></msup><mo>)</mo></mrow></mtd></mtr><mtr><mtd><mrow></mrow></mtd></mtr></mtable></mrow><annotation encoding="application/x-tex">\begin{aligned}
+(2.2.2) &amp;= d(s&#x27;) \\
 \end{aligned}
-$$
-
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:1.45em;"></span><span class="strut bottom" style="height:2.4000000000000004em;vertical-align:-0.9500000000000004em;"></span><span class="base displaystyle textstyle uncramped"><span class="mord"><span class="mtable"><span class="col-align-r"><span class="vlist"><span style="top:-0.6099999999999999em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord displaystyle textstyle uncramped"><span class="mopen">(</span><span class="mord mathrm">2</span><span class="mord mathrm">.</span><span class="mord mathrm">2</span><span class="mord mathrm">.</span><span class="mord mathrm">2</span><span class="mclose">)</span></span></span><span style="top:0.5900000000000003em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord displaystyle textstyle uncramped"></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="col-align-l"><span class="vlist"><span style="top:-0.6099999999999999em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord displaystyle textstyle uncramped"><span class="mord displaystyle textstyle uncramped"></span><span class="mrel">=</span><span class="mord mathit">d</span><span class="mopen">(</span><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:-0.413em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathrm">′</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span></span></span></span></p>
 </div>
-
 <p>代入2.2.1有</p>
 <div class="math">
-
-$$
 \begin{aligned}
 \mathbb{E}_{S \sim d(\cdot)}\left[\mathbb{E}_{A \sim \pi(\cdot | S; \boldsymbol{\theta})}\left[\mathbb{E}_{S' \sim p(\cdot | S, A)}\left[f(S')\right]\right]\right] &= \sum_{s' \in \mathcal{S}} f(s') d(s') \\
 &= \mathbb{E}_{S' \sim d(\cdot)}\left[f(S')\right]
 \end{aligned} \tag{2.2.1}
-$$
 
 </div>
-
-<h3 id="2-3-迭代公式的累加展开"><a href="#2-3-迭代公式的累加展开" class="headerlink" title="2.3 迭代公式的累加展开"></a>2.3 迭代公式的累加展开</h3><p>重新审视2.1，假定在一个Episode中的状态以$S_1$开始，经过$S_2$、$S_3$、…、$S_{t+1}$，其中的动作为$A_1$、$A_2$、…、$A_t$，从状态$S_1$开始，利用公式2.1的递归可以得到</p>
+<h3 id="2-3-迭代公式的累加展开">2.3 迭代公式的累加展开</h3>
+<p>重新审视2.1，假定在一个Episode中的状态以<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>S</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">S_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.05764em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathrm">1</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>开始，经过<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>S</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">S_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.05764em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathrm">2</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>S</mi><mn>3</mn></msub></mrow><annotation encoding="application/x-tex">S_3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.05764em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathrm">3</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>、…、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>S</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">S_{t+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.05764em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">t</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>，其中的动作为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>A</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">A_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">A</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathrm">1</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>A</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">A_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">A</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathrm">2</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>、…、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>A</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">A_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">A</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>，从状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>S</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">S_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.05764em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathrm">1</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>开始，利用公式2.1的递归可以得到</p>
 <div class="math">
-
-$$
 \begin{aligned}
 \frac{\partial V_\pi(S_1)}{\partial \boldsymbol{\theta}} &= \mathbb{E}_{A_1}\left[\underbrace{\frac{\partial \ln \pi(A_1 | S_1; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} Q_\pi(S_1, A_1)}_{\boldsymbol{g}(S_1, A_1;\boldsymbol{\theta})} + \gamma \mathbb{E}_{S_2}\left[\frac{\partial V_\pi(S_2)}{\partial \boldsymbol{\theta}}\right]\right] \\
 =& \mathbb{E}_{A_1}\left[\boldsymbol{g}(S_1, A_1;\boldsymbol{\theta})\right] + \gamma \mathbb{E}_{A_1,S_2}\left[\frac{\partial V_\pi(S_2)}{\partial \boldsymbol{\theta}}\right] \\
@@ -553,15 +509,11 @@ $$
  &+ \gamma^{n-1} \mathbb{E}_{A_1,S_2,\ldots,S_n,A_n}\left[\boldsymbol{g}(S_n, A_n;\boldsymbol{\theta})\right] \\
  &+ \gamma^n \mathbb{E}_{A_1,S_2,\ldots,S_n,A_n,S_{n+1}}\left[\underbrace{\frac{\partial V_\pi(S_{n+1})}{\partial \boldsymbol{\theta}}}_{\text{=0}}\right] \\
 \end{aligned} \tag{2.3}
-$$
 
 </div>
-
-<p>由于$S_{n+1}$是终止状态，因此$V_\pi(S_{n+1})=0$，所以$\frac{\partial V_\pi(S_{n+1})}{\partial \boldsymbol{\theta}}=0$</p>
+<p>由于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>S</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">S_{n+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.05764em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">n</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>是终止状态，因此<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>V</mi><mi>π</mi></msub><mo>(</mo><msub><mi>S</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>)</mo><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">V_\pi(S_{n+1})=0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.22222em;">V</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.22222em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">π</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.05764em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">n</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span><span class="mrel">=</span><span class="mord mathrm">0</span></span></span></span>，所以\frac{\partial V_\pi(S_{n+1})}{\partial \boldsymbol{\theta}}=0</p>
 <p>根据定义</p>
 <div class="math">
-
-$$
 \begin{aligned}
 \frac{\partial J(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} =& \frac{\partial}{\partial \boldsymbol{\theta}} \mathbb{E}_{S_1 \sim d(\cdot)}\left[V_\pi(S_1)\right] \\
 =& \mathbb{E}_{S_1 \sim d(\cdot)}\left[\frac{\partial V_\pi(S_1)}{\partial \boldsymbol{\theta}}\right] \\
@@ -571,14 +523,10 @@ $$
  &+ \cdots \\
  &+ \gamma^{n-1} \mathbb{E}_{S_1,A_1,S_2,\ldots,S_n,A_n}\left[\boldsymbol{g}(S_n, A_n;\boldsymbol{\theta})\right] \\
 \end{aligned} \tag{2.3.1}
-$$
 
 </div>
-
 <p>对上式中的每一项多次应用2.2中的具有稳态分布的马尔可夫链的状态转移期望引理，可以得到</p>
 <div class="math">
-
-$$
 \begin{aligned}
 \frac{\partial J(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}}
 =& \mathbb{E}_{S_1,A_1}\left[\boldsymbol{g}(S_1, A_1;\boldsymbol{\theta})\right] \\
@@ -594,46 +542,33 @@ $$
 =& \left(1 + \gamma + \gamma^2 + \cdots + \gamma^{n-1}\right) \mathbb{E}_{S \sim d(\cdot)}\left[\mathbb{E}_{A \sim \pi(\cdot | S; \boldsymbol{\theta})}\left[\boldsymbol{g}(S, A;\boldsymbol{\theta})\right]\right] \\
 =& \frac{1 - \gamma^n}{1 - \gamma} \mathbb{E}_{S \sim d(\cdot)}\left[\mathbb{E}_{A \sim \pi(\cdot | S; \boldsymbol{\theta})}\left[ \frac{\partial \ln \pi(A | S; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot Q_{\pi}(S, A) \right]\right]
 \end{aligned} \tag{2.3.2}
-$$
 
 </div>
-
 <p>证明完毕</p>
-<h2 id="3-近似策略梯度"><a href="#3-近似策略梯度" class="headerlink" title="3. 近似策略梯度"></a>3. 近似策略梯度</h2><p>在实际应用中，上述公式1中，一般无法知道状态$S$，因此无法直接利用公式1直接计算代价函数$J$的关于参数$\boldsymbol{\theta}$的梯度$\nabla_{\boldsymbol{\theta}} J(\boldsymbol{\theta})$。为了解决这个问题，可以使用蒙特卡洛法近似。从环境中观测到一个状态$s$，然后根据当前策略网络$\pi({a \mid s;\boldsymbol{\theta}})$随机抽样得到一个动作$a$，接着通过与环境的交互获得该状态下的回报信息，根据这些信息可以计算一个随机策略梯度</p>
+<h2 id="3-近似策略梯度">3. 近似策略梯度</h2>
+<p>在实际应用中，上述公式1中，一般无法知道状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi></mrow><annotation encoding="application/x-tex">S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.05764em;">S</span></span></span></span>，因此无法直接利用公式1直接计算代价函数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>J</mi></mrow><annotation encoding="application/x-tex">J</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.09618em;">J</span></span></span></span>的关于参数\boldsymbol{\theta}的梯度\nabla_{\boldsymbol{\theta}} J(\boldsymbol{\theta})。为了解决这个问题，可以使用蒙特卡洛法近似。从环境中观测到一个状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">s</span></span></span></span>，然后根据当前策略网络\pi({a \mid s;\boldsymbol{\theta}})随机抽样得到一个动作<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">a</span></span></span></span>，接着通过与环境的交互获得该状态下的回报信息，根据这些信息可以计算一个随机策略梯度</p>
 <div class="math">
-
-$$
 \begin{aligned}
    \boldsymbol{g}(s, a; \boldsymbol{\theta}) &\triangleq \frac{\partial \ln \pi(a | s; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot Q_{\pi}(s, a)
 \end{aligned} \tag{3.1}
-$$
 
 </div>
-
-<p>随机策略梯度是策略梯度$\nabla_{\boldsymbol{\theta}} J(\boldsymbol{\theta})$的一个估计。</p>
+<p>随机策略梯度是策略梯度\nabla_{\boldsymbol{\theta}} J(\boldsymbol{\theta})的一个估计。</p>
 <div class="math">
-
-$$
 \begin{aligned}
    \nabla_{\boldsymbol{\theta}} J(\boldsymbol{\theta}) &= \mathbb{E}_{S \sim d(\cdot), A \sim \pi(\cdot | S; \boldsymbol{\theta})}\left[\boldsymbol{g}(S, A; \boldsymbol{\theta})\right] \\
    &= \mathbb{E}_{S \sim d(\cdot), A \sim \pi(\cdot | S; \boldsymbol{\theta})}\left[\frac{\partial \ln \pi(A | S; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot Q_{\pi}(S, A)\right]
 \end{aligned} \tag{3.2}
-$$
 
 </div>
-
-<p>用随机策略梯度上升来更新策略参数$\boldsymbol{\theta}$：</p>
+<p>用随机策略梯度上升来更新策略参数\boldsymbol{\theta}：</p>
 <div class="math">
-
-$$
 \begin{aligned}
    \boldsymbol{\theta} &\leftarrow \boldsymbol{\theta} + \beta \cdot \boldsymbol{g}(s, a; \boldsymbol{\theta})
 \end{aligned} \tag{3.3}
-$$
 
 </div>
-
-<p>上述方法依然不能直接使用，因为其中$Q_{\pi}(S, A)$的值在实际应用中往往是未知的。为了解决这个问题，可以使用一些近似方法来估计$Q_{\pi}(S, A)$的值，例如REINFORCE算法使用观测的回报$u$来近似，Actor-Critic方法使用神经网络$q(s,a;\boldsymbol{\omega})$来近似。</p>
+<p>上述方法依然不能直接使用，因为其中<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>Q</mi><mrow><mi>π</mi></mrow></msub><mo>(</mo><mi>S</mi><mo separator="true">,</mo><mi>A</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">Q_{\pi}(S, A)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">Q</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">π</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="mpunct">,</span><span class="mord mathit">A</span><span class="mclose">)</span></span></span></span>的值在实际应用中往往是未知的。为了解决这个问题，可以使用一些近似方法来估计<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>Q</mi><mrow><mi>π</mi></mrow></msub><mo>(</mo><mi>S</mi><mo separator="true">,</mo><mi>A</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">Q_{\pi}(S, A)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">Q</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">π</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.05764em;">S</span><span class="mpunct">,</span><span class="mord mathit">A</span><span class="mclose">)</span></span></span></span>的值，例如REINFORCE算法使用观测的回报<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">u</span></span></span></span>来近似，Actor-Critic方法使用神经网络q(s,a;\boldsymbol{\omega})来近似。</p>
 <p>未经允许，禁止转载。</p>
 
                 
@@ -806,7 +741,6 @@ $$
 
   
   
-
 
 
 
@@ -1079,49 +1013,6 @@ $$
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-
-        Fluid.events.registerRefreshCallback(function() {
-          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
-            MathJax.startup.document.state(0);
-            MathJax.texReset();
-            MathJax.typeset();
-            MathJax.typesetPromise();
-          }
-        });
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 
