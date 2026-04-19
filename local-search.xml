@@ -539,11 +539,11 @@
     
     <tags>
       
-      <tag>B-Spline</tag>
-      
       <tag>Drake</tag>
       
       <tag>规划算法</tag>
+      
+      <tag>B-Spline</tag>
       
       <tag>轨迹优化</tag>
       
@@ -572,11 +572,11 @@
     
     <tags>
       
-      <tag>B-Spline</tag>
-      
       <tag>Drake</tag>
       
       <tag>规划算法</tag>
+      
+      <tag>B-Spline</tag>
       
       <tag>轨迹优化</tag>
       
@@ -704,9 +704,9 @@
       
       <tag>LQR</tag>
       
-      <tag>变分法</tag>
-      
       <tag>连续系统</tag>
+      
+      <tag>变分法</tag>
       
     </tags>
     
