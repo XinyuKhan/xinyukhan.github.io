@@ -5,13 +5,13 @@ date: 2025-08-12 00:11:00
 
 # 强化学习理论基础-算法-带基线的Actor-Critic算法（A2C算法）
 
-在之前的文章中，我们介绍了[《Actor-Critic算法》](https://xinyukhan.github.io/2025/08/12/强化学习理论基础(3)算法(5)Actor-Critic算法.html)和[《带基线的REINFORCE算法》](https://xinyukhan.github.io/2025/08/12/强化学习理论基础(3)算法(6)带基线的REINFORCE算法.html)。我们知道在策略梯度定理中引入基线（Baseline）可以有效降低方差。
+在之前的文章中，我们介绍了[《Actor-Critic算法》](/2025/08/12/强化学习理论基础(3)算法(5)Actor-Critic算法/)和[《带基线的REINFORCE算法》](/2025/08/12/强化学习理论基础(3)算法(6)带基线的REINFORCE算法/)。我们知道在策略梯度定理中引入基线（Baseline）可以有效降低方差。
 
 如果在Actor-Critic算法中引入状态价值函数 $V_{\pi}(s)$ 作为基线，我们会得到什么样的算法呢？这就是我们要介绍的带基线的Actor-Critic算法，通常被称为优势Actor-Critic（Advantage Actor-Critic，简称A2C）算法。
 
 ## 1. 推导
 
-在[《带基线的策略梯度定理》](https://xinyukhan.github.io/2025/08/12/强化学习理论基础(2)定理(4)带基线的策略梯度定理.html)中，我们得到策略梯度的无偏估计为：
+在[《带基线的策略梯度定理》](/2025/08/12/强化学习理论基础(2)定理(4)带基线的策略梯度定理/)中，我们得到策略梯度的无偏估计为：
 
 <div class="math">
 

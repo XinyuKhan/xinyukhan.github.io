@@ -333,7 +333,7 @@ $$
 
 ### 2.3.3. 关于能量的代价
 
-有关能量的代价，`KinematicTrajectoryOptimization`代码中目前只有一个`TODO`，还没有实现。不过我们可以简单讨论一下这部分内容，出于简化的考虑，我们可以简单实用广义坐标$q$的一阶导的平方来代表能量，即 $ \vert \vert \dot{q} \vert \vert _2^2$ ，这样我们就可以使用一个 **二次型（Quadratic Cost）** 来描述能量代价，即：
+有关能量的代价，`KinematicTrajectoryOptimization`代码中目前只有一个`TODO`，还没有实现。不过我们可以简单讨论一下这部分内容，出于简化的考虑，我们可以简单实用广义坐标$q$的一阶导的平方来代表能量，即 $\vert \vert \dot{q} \vert \vert _2^2$ ，这样我们就可以使用一个 **二次型（Quadratic Cost）** 来描述能量代价，即：
 
 $$
 J_{energy} = w_{energy}\vert \vert\dot{q} \vert \vert _2^2
