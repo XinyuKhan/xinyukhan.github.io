@@ -117,7 +117,11 @@ $$
 
 ## 2. 训练流程
 
-我们把当前策略网络的参数记为 $\boldsymbol{\theta}_{now}$，当前价值网络的参数记为 $\boldsymbol{\omega}_{now}$。A2C算法的单步训练流程如下：
+我们把当前策略网络的参数记为 $\boldsymbol{\theta}_{now}$
+
+当前价值网络的参数记为 $\boldsymbol{\omega}_{now}$
+
+A2C算法的单步训练流程如下：
 
 - 观测到当前状态 $s_t$ ，根据当前策略网络做随机抽样动作：$a_t \sim \pi(\cdot \mid s_t; \boldsymbol{\theta}_{now})$，并让智能体执行该动作 $a_t$ 。
 - 从环境中观测到下一个状态 $s_{t+1}$ 和奖励 $r_t$ 。
@@ -173,4 +177,3 @@ $$
 </div>
 
 未经允许，禁止转载。
-
