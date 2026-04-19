@@ -49,3 +49,11 @@ url: http://example.com
 permalink: :year/:month/:day/:title/
 theme: fluid
 
+markdown:
+  render:
+    html: true
+    breaks: true
+    linkify: true
+    typographer: true
+  plugins:
+    - markdown-it-katex
