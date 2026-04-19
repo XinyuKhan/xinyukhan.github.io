@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Drake B-Spline基础类（bspline_basis） | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Drake B-Spline基础类（bspline_basis）  背景 最近在研究Drake算法库运动轨迹优化部分的代码（kinematic_trajectory_optimization），其中用到了B-Spline曲线，其中有一个类BspineBasis，该类提供一个B-Spine曲线的基底，用于建立参数和曲线空间的映射。 给定一组非递减的断点 t₀ ≤ t₁ ≤ ⋅⋅⋅ ≤ tₘ，阶数为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Drake B-Spline基础类（bspline_basis）">
+<meta property="og:url" content="http://example.com/2023/11/25/Drake%20B-Spline%E5%9F%BA%E7%A1%80%E7%B1%BB%EF%BC%88bspline_basis%EF%BC%89/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Drake B-Spline基础类（bspline_basis）  背景 最近在研究Drake算法库运动轨迹优化部分的代码（kinematic_trajectory_optimization），其中用到了B-Spline曲线，其中有一个类BspineBasis，该类提供一个B-Spine曲线的基底，用于建立参数和曲线空间的映射。 给定一组非递减的断点 t₀ ≤ t₁ ≤ ⋅⋅⋅ ≤ tₘ，阶数为">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-11-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-04-19T09:27:59.291Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Drake B-Spline基础类（bspline_basis）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/11/25/Drake%20B-Spline%E5%9F%BA%E7%A1%80%E7%B1%BB%EF%BC%88bspline_basis%EF%BC%89/" class="article-date">
+  <time class="dt-published" datetime="2023-11-24T16:00:00.000Z" itemprop="datePublished">2023-11-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Drake B-Spline基础类（bspline_basis）
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="drake-b-spline基础类bspline_basis"><a class="markdownIt-Anchor" href="#drake-b-spline基础类bspline_basis"></a> Drake B-Spline基础类（bspline_basis）</h2>
+<h1 id="背景"><a class="markdownIt-Anchor" href="#背景"></a> 背景</h1>
+<p>最近在研究Drake算法库运动轨迹优化部分的代码（kinematic_trajectory_optimization），其中用到了B-Spline曲线，其中有一个类<code>BspineBasis</code>，该类提供一个B-Spine曲线的基底，用于建立参数和曲线空间的映射。</p>
+<p>给定一组非递减的断点 t₀ ≤ t₁ ≤ ⋅⋅⋅ ≤ tₘ，阶数为 k 的 B-样条基是在这些断点上定义的 n + 1 个（其中 n = m - k）阶数为 k - 1 的分段多项式集合。这个集合的元素被称为 “B-样条”。向量 (t₀, t₁, …, tₘ)’ 被称为基的 “节点向量”，其元素被称为 “节点”。</p>
+<p>在具有重数 p 的断点处（即在节点向量中出现 p 次的断点），<strong>B-样条</strong>保证具有 Cᵏ⁻ᵖ⁻¹ 连续性。</p>
+<p>使用 <strong>B-样条基</strong> B 的<strong>B-样条曲线</strong>是将参数值在 [tₖ₋₁, tₙ₊₁] 范围内映射到向量空间 V 的参数化曲线。对于 t ∈ [tₖ₋₁, tₙ₊₁]，曲线的值由在 t 处评估的 B 的元素与 n + 1 个控制点 pᵢ ∈ V 的线性组合给出。</p>
+<p>有关 B-样条及其用途的更多信息，请参阅 Patrikalakis 等人的文献[1]。</p>
+<p>[1] <a target="_blank" rel="noopener" href="https://web.mit.edu/hyperbook/Patrikalakis-Maekawa-Cho/node15.html">https://web.mit.edu/hyperbook/Patrikalakis-Maekawa-Cho/node15.html</a></p>
+<p>本文基于Drake的版本是v1.23.0。</p>
+<h1 id="b-spline基底"><a class="markdownIt-Anchor" href="#b-spline基底"></a> B-Spline基底</h1>
+<h2 id="1-基底的构造"><a class="markdownIt-Anchor" href="#1-基底的构造"></a> 1. 基底的构造</h2>
+<h3 id="11-通过阶数和节点直接构造"><a class="markdownIt-Anchor" href="#11-通过阶数和节点直接构造"></a> 1.1 通过阶数和节点直接构造</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** Constructs a B-spline basis with the specified `order` and `knots`.</span></span><br><span class="line"><span class="comment">@pre `knots` is sorted in non-descending order.</span></span><br><span class="line"><span class="comment">@throws std::exception if knots.size() &lt; 2 * order. */</span></span><br><span class="line"><span class="built_in">BsplineBasis</span>(<span class="type">int</span> order, std::vector&lt;T&gt; knots); </span><br></pre></td></tr></table></figure>
+<p>这种构造方法直接提供了阶数和节点，这里的模板参数T是节点的类型，通常是double。根据定义，需要满足的条件是节点是非递减的，且节点的个数大于等于2*order。</p>
+<h3 id="12-通过阶数-基底函数个数节点类型和区间构造"><a class="markdownIt-Anchor" href="#12-通过阶数-基底函数个数节点类型和区间构造"></a> 1.2 通过阶数、基底函数个数节点类型和区间构造</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** Constructs a B-spline basis with the specified `order`,</span></span><br><span class="line"><span class="comment">`num_basis_functions`, `initial_parameter_value`, `final_parameter_value`,</span></span><br><span class="line"><span class="comment">and an auto-generated knot vector of the specified `type`.</span></span><br><span class="line"><span class="comment">@throws std::exception if num_basis_functions &lt; order</span></span><br><span class="line"><span class="comment">@pre initial_parameter_value ≤ final_parameter_value */</span></span><br><span class="line"><span class="built_in">BsplineBasis</span>(<span class="type">int</span> order, <span class="type">int</span> num_basis_functions,</span><br><span class="line">             KnotVectorType type = KnotVectorType::kClampedUniform,</span><br><span class="line">             <span class="type">const</span> T&amp; initial_parameter_value = <span class="number">0</span>,</span><br><span class="line">             <span class="type">const</span> T&amp; final_parameter_value = <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+<p>根据定义，如果想让k阶的<strong>B-Spline</strong>曲线的起始点和终止点的值等于第一个节点和最后一个节点的值，那么节点的前k个和节点的后k个必须是重复的，剩余中间的节点（m-2*k个）是均匀分布的，这样的类型被称为Clamped Uniform（kClampedUniform），根据上述构造函数，如果总的节点数是m，那么基底函数的个数是n=m-k，因此需要满足m-k=n&gt;=k，即m&gt;=2k，这里的num_basis_functions就是n，order就是k。区间的开始和结束分别是initial_parameter_value和final_parameter_value，默认是归一化的。该构造函数通过调用<code>MakeKnotVector</code>方法去生成节点，具体实现如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function">std::vector&lt;T&gt; <span class="title">MakeKnotVector</span><span class="params">(<span class="type">int</span> order, <span class="type">int</span> num_basis_functions,</span></span></span><br><span class="line"><span class="params"><span class="function">                              KnotVectorType type,</span></span></span><br><span class="line"><span class="params"><span class="function">                              <span class="type">const</span> T&amp; initial_parameter_value,</span></span></span><br><span class="line"><span class="params"><span class="function">                              <span class="type">const</span> T&amp; final_parameter_value)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (num_basis_functions &lt; order) &#123;</span><br><span class="line">    <span class="keyword">throw</span> std::<span class="built_in">invalid_argument</span>(fmt::format(</span><br><span class="line">        <span class="string">&quot;The number of basis functions (&#123;&#125;) should be greater than or &quot;</span></span><br><span class="line">        <span class="string">&quot;equal to the order (&#123;&#125;).&quot;</span>,</span><br><span class="line">        num_basis_functions, order));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 区间的开始不能大于区间的结束</span></span><br><span class="line">  <span class="built_in">DRAKE_DEMAND</span>(initial_parameter_value &lt;= final_parameter_value);</span><br><span class="line">  <span class="comment">// 节点数=基底函数数+阶数，即m=n+k</span></span><br><span class="line">  <span class="type">const</span> <span class="type">int</span> num_knots&#123;num_basis_functions + order&#125;;</span><br><span class="line">  <span class="function">std::vector&lt;T&gt; <span class="title">knots</span><span class="params">(num_knots)</span></span>;</span><br><span class="line">  <span class="comment">// 计算节点间隔，区间被分成m-2*k+1份，每份的长度是区间长度除以m-2*k+1</span></span><br><span class="line">  <span class="type">const</span> T knot_interval = (final_parameter_value - initial_parameter_value) /</span><br><span class="line">                          (num_basis_functions - order + <span class="number">1.0</span>);</span><br><span class="line">  <span class="comment">// 生成节点，如果是Clamped Uniform类型，那么前k个和后k个节点是重复的，中间的节点是均匀分布的</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; num_knots; ++i) &#123;</span><br><span class="line">    <span class="keyword">if</span> (i &lt; order &amp;&amp; type == KnotVectorType::kClampedUniform) &#123;</span><br><span class="line">      knots.<span class="built_in">at</span>(i) = initial_parameter_value;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (i &gt;= num_basis_functions &amp;&amp;</span><br><span class="line">               type == KnotVectorType::kClampedUniform) &#123;</span><br><span class="line">      knots.<span class="built_in">at</span>(i) = final_parameter_value;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      knots.<span class="built_in">at</span>(i) = initial_parameter_value + knot_interval * (i - (order - <span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 返回节点</span></span><br><span class="line">  <span class="keyword">return</span> knots;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-根据基底和参数计算曲线上的点"><a class="markdownIt-Anchor" href="#2-根据基底和参数计算曲线上的点"></a> 2. 根据基底和参数计算曲线上的点</h2>
+<p><code>BsplineBasis</code>类通过<code>EvaluateCurve</code>方法计算曲线上的点，曲线上的点的具体形式通过模板参数<code>T_control_point</code>确定，因此，曲线的具体维度和形式是不固定的。该方法的实现如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** Evaluates the B-spline curve defined by `this` and `control_points` at the</span></span><br><span class="line"><span class="comment">given `parameter_value`.</span></span><br><span class="line"><span class="comment">@param control_points Control points of the B-spline curve.</span></span><br><span class="line"><span class="comment">@param parameter_value Parameter value at which to evaluate the B-spline</span></span><br><span class="line"><span class="comment">curve defined by `this` and `control_points`.</span></span><br><span class="line"><span class="comment">@pre control_points.size() == num_basis_functions()</span></span><br><span class="line"><span class="comment">@pre parameter_value ≥ initial_parameter_value()</span></span><br><span class="line"><span class="comment">@pre parameter_value ≤ final_parameter_value() */</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T_control_point&gt;</span><br><span class="line"><span class="function">T_control_point <span class="title">EvaluateCurve</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="type">const</span> std::vector&lt;T_control_point&gt;&amp; control_points,</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="type">const</span> T&amp; parameter_value)</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">  <span class="comment">/* This function implements the de Boor algorithm. It uses the notation</span></span><br><span class="line"><span class="comment">  from Patrikalakis et al. [1]. Since the depth of recursion is known</span></span><br><span class="line"><span class="comment">  a-priori, the algorithm is flattened along the lines described in [2] to</span></span><br><span class="line"><span class="comment">  avoid duplicate computations.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">   [1] https://web.mit.edu/hyperbook/Patrikalakis-Maekawa-Cho/node18.html</span></span><br><span class="line"><span class="comment">   [2] De Boor, Carl. &quot;On calculating with B-splines.&quot; Journal of</span></span><br><span class="line"><span class="comment">       Approximation theory 6.1 (1972): 50-62.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  <span class="doctag">NOTE:</span> The implementation of this method is included in the header so that</span></span><br><span class="line"><span class="comment">  it can be used with custom values of T_control_point. */</span></span><br><span class="line">  <span class="built_in">DRAKE_DEMAND</span>(<span class="built_in">static_cast</span>&lt;<span class="type">int</span>&gt;(control_points.<span class="built_in">size</span>()) ==</span><br><span class="line">               <span class="built_in">num_basis_functions</span>());</span><br><span class="line">  <span class="built_in">DRAKE_DEMAND</span>(parameter_value &gt;= <span class="built_in">initial_parameter_value</span>());</span><br><span class="line">  <span class="built_in">DRAKE_DEMAND</span>(parameter_value &lt;= <span class="built_in">final_parameter_value</span>());</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Define short names to match notation in [1].</span></span><br><span class="line">  <span class="type">const</span> std::vector&lt;T&gt;&amp; t = <span class="built_in">knots</span>();</span><br><span class="line">  <span class="type">const</span> T&amp; t_bar = parameter_value;</span><br><span class="line">  <span class="type">const</span> <span class="type">int</span> k = <span class="built_in">order</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Find the index, 𝑙, of the greatest knot that is less than or equal to</span></span><br><span class="line"><span class="comment">  t_bar and strictly less than final_parameter_value(). */</span></span><br><span class="line">  <span class="type">const</span> <span class="type">int</span> ell = <span class="built_in">FindContainingInterval</span>(t_bar);</span><br><span class="line">  <span class="comment">// The vector that stores the intermediate de Boor points (the pᵢʲ in [1]).</span></span><br><span class="line">  <span class="function">std::vector&lt;T_control_point&gt; <span class="title">p</span><span class="params">(order())</span></span>;</span><br><span class="line">  <span class="comment">/* For j = 0, i goes from ell down to ell - (k - 1). Define r such that</span></span><br><span class="line"><span class="comment">  i = ell - r. */</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> r = <span class="number">0</span>; r &lt; k; ++r) &#123;</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> i = ell - r;</span><br><span class="line">    p.<span class="built_in">at</span>(r) = control_points.<span class="built_in">at</span>(i);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">/* For j = 1, ..., k - 1, i goes from ell down to ell - (k - j - 1). Again,</span></span><br><span class="line"><span class="comment">  i = ell - r. */</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt; k; ++j) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> r = <span class="number">0</span>; r &lt; k - j; ++r) &#123;</span><br><span class="line">      <span class="type">const</span> <span class="type">int</span> i = ell - r;</span><br><span class="line">      <span class="comment">// α = (t_bar - t[i]) / (t[i + k - j] - t[i]);</span></span><br><span class="line">      <span class="type">const</span> T alpha = (t_bar - t.<span class="built_in">at</span>(i)) / (t.<span class="built_in">at</span>(i + k - j) - t.<span class="built_in">at</span>(i));</span><br><span class="line">      p.<span class="built_in">at</span>(r) = (<span class="number">1.0</span> - alpha) * p.<span class="built_in">at</span>(r + <span class="number">1</span>) + alpha * p.<span class="built_in">at</span>(r);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> p.<span class="built_in">front</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该方法的输入是一个控制点的向量列表（vector）以及一个参数值，输出是该参数值对应的曲线上的一个点，该点的类型是模板参数<code>T_control_point</code>。输入参数需要满足的条件是控制点的个数等于基底函数的个数（即m-k），参数值在区间内。该方法的实现是通过递归的方式实现的，具体的实现细节可以参考文献[1]和[2]。</p>
+<p>下面我们逐一分析该方法的实现细节。</p>
+<h3 id="21-根据参数值找到节点向量中对应的区间索引"><a class="markdownIt-Anchor" href="#21-根据参数值找到节点向量中对应的区间索引"></a> 2.1 根据参数值找到节点向量中对应的区间索引</h3>
+<p>该过程通过成员函数<code>FindContainingInterval</code>实现，该函数的实现如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="type">int</span> BsplineBasis&lt;T&gt;::<span class="built_in">FindContainingInterval</span>(<span class="type">const</span> T&amp; parameter_value) <span class="type">const</span> &#123;</span><br><span class="line">  <span class="built_in">DRAKE_ASSERT</span>(parameter_value &gt;= <span class="built_in">initial_parameter_value</span>());</span><br><span class="line">  <span class="built_in">DRAKE_ASSERT</span>(parameter_value &lt;= <span class="built_in">final_parameter_value</span>());</span><br><span class="line">  <span class="type">const</span> std::vector&lt;T&gt;&amp; t = <span class="built_in">knots</span>();</span><br><span class="line">  <span class="type">const</span> T&amp; t_bar = parameter_value;</span><br><span class="line">  <span class="keyword">return</span> std::<span class="built_in">distance</span>(</span><br><span class="line">      t.<span class="built_in">begin</span>(), std::<span class="built_in">prev</span>(t_bar &lt; <span class="built_in">final_parameter_value</span>()</span><br><span class="line">                               ? std::<span class="built_in">upper_bound</span>(t.<span class="built_in">begin</span>(), t.<span class="built_in">end</span>(), t_bar,</span><br><span class="line">                                                  less_than_with_cast&lt;T&gt;)</span><br><span class="line">                               : std::<span class="built_in">lower_bound</span>(t.<span class="built_in">begin</span>(), t.<span class="built_in">end</span>(), t_bar,</span><br><span class="line">                                                  less_than_with_cast&lt;T&gt;)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>本质上就是一个在knots向量上的二分查找，不过在处理节点向量中最前k（阶数）个和最后k（阶数）个节点的地方有一些特殊的处理，主要针对的是上文提到的Clamped Uniform类型的曲线，主要是为了保证得到的区间索引落在[k,m-k]的范围内。</p>
+<h3 id="22-根据曲线的阶数k迭代计算pij直到jk-1此时p0k就是曲线上的点"><a class="markdownIt-Anchor" href="#22-根据曲线的阶数k迭代计算pij直到jk-1此时p0k就是曲线上的点"></a> 2.2 根据曲线的阶数k迭代计算Pᵢʲ，直到j=k-1，此时P₀ᵏ就是曲线上的点</h3>
+<p>这一步的具体原理可以参考上述的文献[2]，大致过程是这样的：</p>
+<ul>
+<li>首先从上一步找到的区间索引处开始，向前迭代计算Pᵢ⁰，直到i=ell-(k-1)；</li>
+<li>然后从上一步找到的区间索引处开始，向前迭代计算Pᵢ¹，直到i=ell-(k-2)；</li>
+<li>依次类推，每次P的个数减少1，呈现出一种金字塔型的结构，直到Pᵢᵏ-¹；</li>
+<li>最后P只剩下一个，即为曲线上的点。</li>
+</ul>
+<h2 id="3-杂项方法"><a class="markdownIt-Anchor" href="#3-杂项方法"></a> 3. 杂项方法</h2>
+<p><code>BsplineBasis</code>类还提供了一些其他的方法，比如一些基本的get方法、参数检查工具方法比如<code>CheckInvariants</code>等，都相对比较简单，这里不再赘述。</p>
+<p>除此以外，<code>BsplineBasis</code>还提供了一个<code>ComputeActiveBasisFunctionIndices</code>方法，可以根据参数值或者参数区间计算出当前活跃的基底函数的索引的列表向量，其中同样是用到了<code>FindContainingInterval</code>方法，这里不再重复。</p>
+<p>至此，<code>BsplineBasis</code>类的主要内容就分析完了。</p>
+<hr />
+<p>未经允许，禁止转载。</p>
+<p>[1] <a target="_blank" rel="noopener" href="https://web.mit.edu/hyperbook/Patrikalakis-Maekawa-Cho/node15.html">https://web.mit.edu/hyperbook/Patrikalakis-Maekawa-Cho/node15.html</a><br />
+[2] <a target="_blank" rel="noopener" href="https://web.mit.edu/hyperbook/Patrikalakis-Maekawa-Cho/node18.html">https://web.mit.edu/hyperbook/Patrikalakis-Maekawa-Cho/node18.html</a><br />
+[3] De Boor, Carl. “On calculating with B-splines.” Journal of<br />
+Approximation theory 6.1 (1972): 50-62.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/11/25/Drake%20B-Spline%E5%9F%BA%E7%A1%80%E7%B1%BB%EF%BC%88bspline_basis%EF%BC%89/" data-id="cuid3k8x8sFVK6b09pvtHGNhY" data-title="Drake B-Spline基础类（bspline_basis）" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/11/26/Drake%20B-Spline%E8%BD%A8%E8%BF%B9%E7%B1%BB%EF%BC%88bspline_trajectory%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Drake B-Spline轨迹类（bspline_trajectory）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/11/15/%E8%AE%A8%E8%AE%BA%E4%B8%80%E7%A7%8DIMU%E5%8A%A0%E9%80%9F%E5%BA%A6%E6%95%B0%E6%8D%AE%E6%88%96%E8%80%85%E7%A3%81%E7%BD%97%E7%9B%98%E6%95%B0%E6%8D%AE%E7%9A%84%E6%A0%87%E5%AE%9A%E6%96%B9%E5%BC%8F/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">讨论一种IMU加速度数据或者磁罗盘数据的标定方式</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/04/">April 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">August 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">February 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">November 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/04/19/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(3)%E7%AE%97%E6%B3%95(8)%E6%B3%9B%E5%8C%96%E4%BC%98%E5%8A%BF%E4%BC%B0%E8%AE%A1%EF%BC%88GAE%EF%BC%89/">强化学习理论基础(3)算法(8)泛化优势估计（GAE）</a>
+          </li>
+        
+          <li>
+            <a href="/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(3)%E7%AE%97%E6%B3%95(7)%E5%B8%A6%E5%9F%BA%E7%BA%BF%E7%9A%84Actor-Critic%E7%AE%97%E6%B3%95%EF%BC%88A2C%E7%AE%97%E6%B3%95%EF%BC%89/">强化学习理论基础(3)算法(7)带基线的Actor-Critic算法（A2C算法）</a>
+          </li>
+        
+          <li>
+            <a href="/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(3)%E7%AE%97%E6%B3%95(6)%E5%B8%A6%E5%9F%BA%E7%BA%BF%E7%9A%84REINFORCE%E7%AE%97%E6%B3%95/">强化学习理论基础(3)算法(6)带基线的REINFORCE算法</a>
+          </li>
+        
+          <li>
+            <a href="/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(3)%E7%AE%97%E6%B3%95(5)Actor-Critic%E7%AE%97%E6%B3%95/">强化学习理论基础(3)算法(5)Actor-Critic算法</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2026 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
