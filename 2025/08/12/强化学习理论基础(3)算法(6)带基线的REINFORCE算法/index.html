@@ -19,12 +19,12 @@
   <meta name="author" content="Xinyu Han">
   <meta name="keywords" content="">
   
-    <meta name="description" content="强化学习理论基础-算法-带基线的REINFORCE算法 我们在文章《带基线的策略梯度定理》中已经讨论和证明了如下带基线的策略梯度定理：  \begin{aligned}   \frac{\partial J(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} &amp;&#x3D; \frac{1 - \gamma^n}{1 - \gamma} \mathbb{E">
+    <meta name="description" content="强化学习理论基础-算法-带基线的REINFORCE算法我们在文章《带基线的策略梯度定理》定理(4)带基线的策略梯度定理&#x2F;)中已经讨论和证明了如下带基线的策略梯度定理：   $$ \begin{aligned}   \frac{\partial J(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} &amp;&#x3D; \frac{1 - \gamma^n}{1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="强化学习理论基础(3)算法(6)带基线的REINFORCE算法">
 <meta property="og:url" content="http://example.com/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(3)%E7%AE%97%E6%B3%95(6)%E5%B8%A6%E5%9F%BA%E7%BA%BF%E7%9A%84REINFORCE%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="Xinyu&#39;s Blog">
-<meta property="og:description" content="强化学习理论基础-算法-带基线的REINFORCE算法 我们在文章《带基线的策略梯度定理》中已经讨论和证明了如下带基线的策略梯度定理：  \begin{aligned}   \frac{\partial J(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} &amp;&#x3D; \frac{1 - \gamma^n}{1 - \gamma} \mathbb{E">
+<meta property="og:description" content="强化学习理论基础-算法-带基线的REINFORCE算法我们在文章《带基线的策略梯度定理》定理(4)带基线的策略梯度定理&#x2F;)中已经讨论和证明了如下带基线的策略梯度定理：   $$ \begin{aligned}   \frac{\partial J(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} &amp;&#x3D; \frac{1 - \gamma^n}{1">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-08-11T16:10:00.000Z">
 <meta property="article:modified_time" content="2026-04-19T13:07:15.960Z">
@@ -47,8 +47,6 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
 
 
 
@@ -385,154 +383,219 @@
             
               <div class="markdown-body">
                 
-                <h1 id="强化学习理论基础-算法-带基线的reinforce算法">强化学习理论基础-算法-带基线的REINFORCE算法</h1>
-<p>我们在文章<a href="/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(2)%E5%AE%9A%E7%90%86(4)%E5%B8%A6%E5%9F%BA%E7%BA%BF%E7%9A%84%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E5%AE%9A%E7%90%86/">《带基线的策略梯度定理》</a>中已经讨论和证明了如下带基线的策略梯度定理：</p>
+                <h1 id="强化学习理论基础-算法-带基线的REINFORCE算法"><a href="#强化学习理论基础-算法-带基线的REINFORCE算法" class="headerlink" title="强化学习理论基础-算法-带基线的REINFORCE算法"></a>强化学习理论基础-算法-带基线的REINFORCE算法</h1><p>我们在文章<a href="/2025/08/12/强化学习理论基础(2">《带基线的策略梯度定理》</a>定理(4)带基线的策略梯度定理/)中已经讨论和证明了如下带基线的策略梯度定理：</p>
 <div class="math">
+
+$$
 \begin{aligned}
   \frac{\partial J(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} &= \frac{1 - \gamma^n}{1 - \gamma} \mathbb{E}_{S \sim d(\cdot)} \left [\mathbb{E}_{A \sim \pi(\cdot \mid S; \boldsymbol{\theta})} \left[ \frac{\partial \ln \pi(A \mid S; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot \left ( Q_{\pi}(S, A) - b \right ) \right]\right]
 \end{aligned} \tag {0.1}
+$$
 
 </div>
-<p>其中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.69444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">b</span></span></span></span> 是基线（baseline），可以是任意一个和动作 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">a</span></span></span></span> 无关的函数。</p>
-<p>我们在文章<a href="/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(3)%E7%AE%97%E6%B3%95(4)REINFORCE%E7%AE%97%E6%B3%95/">《REINFORCE算法》</a>中讨论了一种近似策略梯度的方法，即使用时刻 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.61508em;"></span><span class="strut bottom" style="height:0.61508em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">t</span></span></span></span> 之后汇报 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>u</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">u_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">u</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 近似动作价值函数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>Q</mi><mrow><mi>π</mi></mrow></msub><mo>(</mo><msub><mi>s</mi><mi>t</mi></msub><mo separator="true">,</mo><msub><mi>a</mi><mi>t</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">Q_{\pi}(s_t, a_t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">Q</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">π</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mpunct">,</span><span class="mord"><span class="mord mathit">a</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span></span></span></span>。进而得到近似随机梯度</p>
+
+<p>其中 $b$ 是基线（baseline），可以是任意一个和动作 $a$ 无关的函数。</p>
+<p>我们在文章<a href="/2025/08/12/强化学习理论基础(3">《REINFORCE算法》</a>算法(4)REINFORCE算法/)中讨论了一种近似策略梯度的方法，即使用时刻 $t$ 之后汇报 $u_t$ 近似动作价值函数 $Q_{\pi}(s_t, a_t)$。进而得到近似随机梯度</p>
 <div class="math">
+
+$$
 \begin{aligned}
    \tilde{\boldsymbol{g}}(s_t, a_t; \boldsymbol{\theta}) &= \frac{\partial \ln \pi(a_t \mid s_t; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot u_t
 \end{aligned} \tag{0.2}
+$$
 
 </div>
-<h2 id="1-推导">1. 推导</h2>
-<p>我们使用状态价值函数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>V</mi><mrow><mi>π</mi></mrow></msub><mo>(</mo><mi>s</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">V_{\pi}(s)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.22222em;">V</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.22222em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">π</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit">s</span><span class="mclose">)</span></span></span></span> 作为基线，来改进REINFORCE算法。至于为什么选择状态价值函数作为基线，简单解释就是如果基线函数如果和动作价值函数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>Q</mi><mrow><mi>π</mi></mrow></msub><mo>(</mo><mi>s</mi><mo separator="true">,</mo><mi>a</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">Q_{\pi}(s, a)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">Q</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">π</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit">s</span><span class="mpunct">,</span><span class="mord mathit">a</span><span class="mclose">)</span></span></span></span> 关于动作 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">a</span></span></span></span> 的期望越接近，那么训练过程中的方差就会越小，这个结论我具体没有推导过，我们暂且认为是对的。</p>
+
+<h2 id="1-推导"><a href="#1-推导" class="headerlink" title="1. 推导"></a>1. 推导</h2><p>我们使用状态价值函数 $V_{\pi}(s)$ 作为基线，来改进REINFORCE算法。至于为什么选择状态价值函数作为基线，简单解释就是如果基线函数如果和动作价值函数 $Q_{\pi}(s, a)$ 关于动作 $a$ 的期望越接近，那么训练过程中的方差就会越小，这个结论我具体没有推导过，我们暂且认为是对的。</p>
 <p>那么我们可以将策略梯度的无偏估计写成</p>
 <div class="math">
+
+$$
 \begin{aligned}
   \boldsymbol g(s, a; \boldsymbol{\theta}) &\triangleq \frac{\partial \ln \pi(a \mid s; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot (Q_{\pi}(s, a) - V_{\pi}(s))
 \end{aligned} \tag{1.1}
+$$
 
 </div>
-<p>这里我们使用一个神经网络 v(s; \boldsymbol{\omega}) 来近似状态价值函数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>V</mi><mrow><mi>π</mi></mrow></msub><mo>(</mo><mi>s</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">V_{\pi}(s)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.22222em;">V</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.22222em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">π</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit">s</span><span class="mclose">)</span></span></span></span> ，然后依然使用回报 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">u</span></span></span></span> 来进替代 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>Q</mi><mrow><mi>π</mi></mrow></msub><mo>(</mo><mi>s</mi><mo separator="true">,</mo><mi>a</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">Q_{\pi}(s, a)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">Q</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">π</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit">s</span><span class="mpunct">,</span><span class="mord mathit">a</span><span class="mclose">)</span></span></span></span>。因此我们使用蒙特卡洛法近似得到随机近似梯度</p>
+
+
+<p>这里我们使用一个神经网络 $v(s; \boldsymbol{\omega})$ 来近似状态价值函数 $V_{\pi}(s)$ ，然后依然使用回报 $u$ 来进替代 $Q_{\pi}(s, a)$。因此我们使用蒙特卡洛法近似得到随机近似梯度</p>
 <div class="math">
+
+$$
 \begin{aligned}
    \tilde{\boldsymbol{g}}(s_t, a_t; \boldsymbol{\theta}) &= \frac{\partial \ln \pi(a_t \mid s_t; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot (u_t - v(s_t; \boldsymbol{\omega}))
 \end{aligned} \tag{1.2}
+$$
 
 </div>
-<h3 id="1-1-训练策略网络">1.1. 训练策略网络</h3>
-<p>我们使用上述随机近似梯度，就可以用梯度上升法来更新策略网络的参数 \boldsymbol{\theta}：</p>
+
+<h3 id="1-1-训练策略网络"><a href="#1-1-训练策略网络" class="headerlink" title="1.1. 训练策略网络"></a>1.1. 训练策略网络</h3><p>我们使用上述随机近似梯度，就可以用梯度上升法来更新策略网络的参数 $\boldsymbol{\theta}$：</p>
 <div class="math">
+
+$$
 \begin{aligned}
    \boldsymbol{\theta} &\leftarrow \boldsymbol{\theta} + \beta \cdot \tilde{\boldsymbol{g}}(s_t, a_t; \boldsymbol{\theta})
 \end{aligned} \tag{1.3}
+$$
 
 </div>
-<p>注意，回忆一下文章<a href="/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(3)%E7%AE%97%E6%B3%95(4)REINFORCE%E7%AE%97%E6%B3%95/">《REINFORCE算法》</a>中的推导，上述更新方式同样是简化版本</p>
-<h3 id="1-2-训练价值网络">1.2. 训练价值网络</h3>
-<p>根据定义，状态价值函数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>V</mi><mrow><mi>π</mi></mrow></msub><mo>(</mo><msub><mi>s</mi><mi>t</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">V_{\pi}(s_t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.22222em;">V</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.22222em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">π</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span></span></span></span> 回报 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>U</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">U_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.10903em;">U</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.10903em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 的期望</p>
+
+<p>注意，回忆一下文章<a href="/2025/08/12/强化学习理论基础(3">《REINFORCE算法》</a>算法(4)REINFORCE算法/)中的推导，上述更新方式同样是简化版本</p>
+<h3 id="1-2-训练价值网络"><a href="#1-2-训练价值网络" class="headerlink" title="1.2. 训练价值网络"></a>1.2. 训练价值网络</h3><p>根据定义，状态价值函数 $V_{\pi}(s_t)$ 回报 $U_t$ 的期望</p>
 <div class="math">
+
+$$
 \begin{aligned}
    V_{\pi}(s_t) &= \mathbb{E}[U_t \mid S_t = s_t]
 \end{aligned} \tag{1.4}
+$$
 
 </div>
-<p>价值网络 v(s_t; \boldsymbol{\omega}) 用来拟合状态价值函数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>V</mi><mrow><mi>π</mi></mrow></msub><mo>(</mo><msub><mi>s</mi><mi>t</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">V_{\pi}(s_t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.22222em;">V</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.22222em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">π</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span></span></span></span>。我们希望它尽可能接近回报 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>U</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">U_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.10903em;">U</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.10903em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 的期望，于是我们用回报 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>U</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">U_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.10903em;">U</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.10903em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 的观测结果 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>u</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">u_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">u</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 来构架如下代价函数</p>
+
+<p>价值网络 $v(s_t; \boldsymbol{\omega})$ 用来拟合状态价值函数 $V_{\pi}(s_t)$。我们希望它尽可能接近回报 $U_t$ 的期望，于是我们用回报 $U_t$ 的观测结果 $u_t$ 来构架如下代价函数</p>
 <div class="math">
+
+$$
 \begin{aligned}
    L(\boldsymbol{\omega}) &= \frac{1}{2n} \sum_{t=1}^{n} \left( v(s_t; \boldsymbol{\omega}) - u_t \right)^2
 \end{aligned} \tag{1.5}
+$$
 
 </div>
+
 <p>于是可以得到损失函数的梯度</p>
 <div class="math">
+
+$$
 \begin{aligned}
    \nabla_{\boldsymbol{\omega}} L(\boldsymbol{\omega}) &= \frac{1}{n} \sum_{t=1}^{n} \left( v(s_t; \boldsymbol{\omega}) - u_t \right) \cdot \nabla v(s_t; \boldsymbol{\omega})
 \end{aligned} \tag{1.6}
+$$
 
 </div>
-<p>于是可以使用梯度下降法更新价值网络的参数 \boldsymbol{\omega}：</p>
+
+<p>于是可以使用梯度下降法更新价值网络的参数 $\boldsymbol{\omega}$：</p>
 <div class="math">
+
+$$
 \begin{aligned}
   \boldsymbol{\omega} &\leftarrow \boldsymbol{\omega} - \alpha \cdot \nabla_{\boldsymbol{\omega}} L(\boldsymbol{\omega})
 \end{aligned} \tag{1.7}
+$$
 
 </div>
-<h2 id="2-训练流程">2. 训练流程</h2>
-<p>我们把当前策略网络的参数记为 \boldsymbol{\theta}_{now}</p>
-<p>当前价值网络的参数分别记为 \boldsymbol{\omega}_{now}</p>
+
+
+<h2 id="2-训练流程"><a href="#2-训练流程" class="headerlink" title="2. 训练流程"></a>2. 训练流程</h2><p>我们把当前策略网络的参数记为 $\boldsymbol{\theta}_{now}$</p>
+<p>当前价值网络的参数分别记为 $\boldsymbol{\omega}_{now}$</p>
 <p>训练过程如下</p>
 <ul>
-<li>使用策略网络\pi(a \mid s; \boldsymbol{\theta}_{now}) 控制智能体和环境交互并完成一个episode，得到一条轨迹</li>
+<li>使用策略网络$\pi(a \mid s; \boldsymbol{\theta}_{now})$ 控制智能体和环境交互并完成一个episode，得到一条轨迹</li>
 </ul>
 <div class="math">
+
+$$
 \begin{aligned}
   s_1, a_1, r_1, \space s_2, a_2, r_2, \space \ldots, \space s_n, a_n, r_n
 \end{aligned} \tag{2.1}
+$$
 
 </div>
+
 <ul>
-<li>计算所有的回报 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>u</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">u_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">u</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span></li>
+<li>计算所有的回报 $u_t$</li>
 </ul>
 <div class="math">
+
+$$
 \begin{aligned}
   u_t &= r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \ldots = \sum_{k=t}^{n} \gamma^{k-t} \cdot r_k, \space \forall t = 1, 2, \ldots, n
 \end{aligned} \tag{2.2}
+$$
 
 </div>
+
 <ul>
 <li>计算当前价值网络的预测值</li>
 </ul>
 <div class="math">
+
+$$
 \begin{aligned}
   \hat v_t &=v(s_t; \boldsymbol{\omega}_{now}), \space \forall t = 1, 2, \ldots, n
 \end{aligned} \tag{2.3}
+$$
 
 </div>
+
 <ul>
 <li>计算误差</li>
 </ul>
 <div class="math">
+
+$$
 \begin{aligned}
   \delta_t &= \hat v_t - u_t, \space \forall t = 1, 2, \ldots, n
 \end{aligned} \tag{2.4}
+$$
 
 </div>
+
 <ul>
 <li>通过反向传播计算价值网络的梯度</li>
 </ul>
 <div class="math">
+
+$$
 \begin{aligned}
   \nabla_{\boldsymbol{\omega}} v(s_t; \boldsymbol{\omega}_{now}), \space \forall t = 1, 2, \ldots, n
 \end{aligned} \tag{2.5}
+$$
 
 </div>
+
 <ul>
 <li>更新价值网络的参数</li>
 </ul>
 <div class="math">
+
+$$
 \begin{aligned}
   \boldsymbol{\omega}_{new} &\leftarrow \boldsymbol{\omega}_{now} - \alpha \cdot \frac{1}{n} \sum_{t=1}^{n} \delta_t \cdot \nabla_{\boldsymbol{\omega}} v(s_t; \boldsymbol{\omega}_{now})
 \end{aligned} \tag{2.6}
+$$
 
 </div>
+
 <ul>
 <li>通过反向传播计算近似策略梯度</li>
 </ul>
 <div class="math">
+
+$$
 \begin{aligned}
   \tilde{\boldsymbol{g}}(s_t, a_t; \boldsymbol{\theta}_{now}) &= \frac{\partial \ln \pi(a_t \mid s_t; \boldsymbol{\theta}_{now})}{\partial \boldsymbol{\theta}} \cdot (u_t - v(s_t; \boldsymbol{\omega}_{now})) \\
   &= -\frac{\partial \ln \pi(a_t \mid s_t; \boldsymbol{\theta}_{now})}{\partial \boldsymbol{\theta}} \cdot \delta_t
 \end{aligned}, \space \forall t = 1, 2, \ldots, n \tag{2.7}
+$$
 
 </div>
+
 <ul>
 <li>更新策略网络的参数</li>
 </ul>
 <div class="math">
+
+$$
 \begin{aligned}
   \boldsymbol{\theta}_{new} &\leftarrow \boldsymbol{\theta}_{now} + \beta \cdot \sum_{t=1}^{n} \gamma^{t-1} \cdot \tilde{\boldsymbol{g}}(s_t, a_t; \boldsymbol{\theta}_{now}) \\
   &\leftarrow \boldsymbol{\theta}_{now} - \beta \cdot \sum_{t=1}^{n} \gamma^{t-1} \cdot \frac{\partial \ln \pi(a_t \mid s_t; \boldsymbol{\theta}_{now})}{\partial \boldsymbol{\theta}} \cdot \delta_t
 \end{aligned} \tag{2.8}
+$$
 
 </div>
+
 <p>未经允许，禁止转载。</p>
 
                 
@@ -707,6 +770,7 @@
 
   
   
+
 
 
 
@@ -979,6 +1043,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

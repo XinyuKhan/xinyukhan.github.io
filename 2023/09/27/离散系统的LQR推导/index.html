@@ -19,12 +19,12 @@
   <meta name="author" content="Xinyu Han">
   <meta name="keywords" content="">
   
-    <meta name="description" content="离散系统的LQR推导 离散的LQR优化问题一般具有如下形式： \min{J&#x3D;\frac{1}{2}x_N^THx_N+\frac{1}{2}\sum_{k&#x3D;0}^{N-1}{[x_k^TQ_kx_k+u_k^TR_ku_k]}}\\ \begin{aligned} \text{subject to}\quad&amp;x_{k+1}&#x3D;A_kx_k+B_ku_k,\\ &amp;x_0\quad\text{give">
+    <meta name="description" content="离散系统的LQR推导离散的LQR优化问题一般具有如下形式：  $$  \min{J&#x3D;\frac{1}{2}x_N^THx_N+\frac{1}{2}\sum_{k&#x3D;0}^{N-1}{[x_k^TQ_kx_k+u_k^TR_ku_k]}}\\ \begin{aligned} \text{subject to}\quad&amp;x_{k+1}&#x3D;A_kx_k+B_ku_k,\\ &amp;x_0\quad\text{">
 <meta property="og:type" content="article">
 <meta property="og:title" content="离散系统的LQR推导">
 <meta property="og:url" content="http://example.com/2023/09/27/%E7%A6%BB%E6%95%A3%E7%B3%BB%E7%BB%9F%E7%9A%84LQR%E6%8E%A8%E5%AF%BC/index.html">
 <meta property="og:site_name" content="Xinyu&#39;s Blog">
-<meta property="og:description" content="离散系统的LQR推导 离散的LQR优化问题一般具有如下形式： \min{J&#x3D;\frac{1}{2}x_N^THx_N+\frac{1}{2}\sum_{k&#x3D;0}^{N-1}{[x_k^TQ_kx_k+u_k^TR_ku_k]}}\\ \begin{aligned} \text{subject to}\quad&amp;x_{k+1}&#x3D;A_kx_k+B_ku_k,\\ &amp;x_0\quad\text{give">
+<meta property="og:description" content="离散系统的LQR推导离散的LQR优化问题一般具有如下形式：  $$  \min{J&#x3D;\frac{1}{2}x_N^THx_N+\frac{1}{2}\sum_{k&#x3D;0}^{N-1}{[x_k^TQ_kx_k+u_k^TR_ku_k]}}\\ \begin{aligned} \text{subject to}\quad&amp;x_{k+1}&#x3D;A_kx_k+B_ku_k,\\ &amp;x_0\quad\text{">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-09-26T16:00:00.000Z">
 <meta property="article:modified_time" content="2026-04-19T13:07:15.959Z">
@@ -47,8 +47,6 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
 
 
 
@@ -330,7 +328,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.9k 字
+          3.8k 字
         
       </span>
     
@@ -341,7 +339,7 @@
         
         
         
-          33 分钟
+          32 分钟
         
       </span>
     
@@ -385,72 +383,122 @@
             
               <div class="markdown-body">
                 
-                <h2 id="离散系统的LQR推导">离散系统的LQR推导</h2>
-<p>离散的LQR优化问题一般具有如下形式：</p>
-\min{J=\frac{1}{2}x_N^THx_N+\frac{1}{2}\sum_{k=0}^{N-1}{[x_k^TQ_kx_k+u_k^TR_ku_k]}}\\ \begin{aligned} \text{subject to}\quad&x_{k+1}=A_kx_k+B_ku_k,\\ &x_0\quad\text{given},\\ &H=H^T\geq0,\\ &Q=Q^T\geq0,\\ &R=R^T>0, \end{aligned} \tag{1}
+                <h2 id="离散系统的LQR推导"><a href="#离散系统的LQR推导" class="headerlink" title="离散系统的LQR推导"></a>离散系统的LQR推导</h2><p>离散的LQR优化问题一般具有如下形式：</p>
 
-<p>优化的目标是已知<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">x</span></span></span></span>的情况下，通过选择控制输入 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>u</mi><mn>0</mn></msub><mo>⋯</mo><msub><mi>u</mi><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">u_0\cdots u_{N-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.638891em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">u</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathrm">0</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="minner">⋯</span><span class="mord"><span class="mord mathit">u</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10903em;">N</span><span class="mbin">−</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 使得代价<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>J</mi></mrow><annotation encoding="application/x-tex">J</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.09618em;">J</span></span></span></span>最小。我们将代价函数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>J</mi></mrow><annotation encoding="application/x-tex">J</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.09618em;">J</span></span></span></span> 分开来看，定义从状态 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">x_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">x</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">i</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>x</mi><mi>N</mi></msub></mrow><annotation encoding="application/x-tex">x_N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">x</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10903em;">N</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 的部分代价函数为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>J</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">J_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.09618em;">J</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.09618em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">i</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> ，除此之外部分的代价函数为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi>J</mi><mi>i</mi><mrow><mi mathvariant="normal">′</mi></mrow></msubsup></mrow><annotation encoding="application/x-tex">J_i^{\prime}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.751892em;"></span><span class="strut bottom" style="height:1.010556em;vertical-align:-0.258664em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.09618em;">J</span><span class="vlist"><span style="top:0.258664em;margin-left:-0.09618em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">i</span></span></span><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathrm">′</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> ，于是有：</p>
+$$
+
+\min{J=\frac{1}{2}x_N^THx_N+\frac{1}{2}\sum_{k=0}^{N-1}{[x_k^TQ_kx_k+u_k^TR_ku_k]}}\\ \begin{aligned} \text{subject to}\quad&x_{k+1}=A_kx_k+B_ku_k,\\ &x_0\quad\text{given},\\ &H=H^T\geq0,\\ &Q=Q^T\geq0,\\ &R=R^T>0, \end{aligned} \tag{1}
+$$
+<p>优化的目标是已知$x$的情况下，通过选择控制输入 $u_0\cdots u_{N-1}$ 使得代价$J$最小。我们将代价函数 $J$ 分开来看，定义从状态 $x_i$ 到 $x_N$ 的部分代价函数为 $J_i$ ，除此之外部分的代价函数为 $J_i^{\prime}$ ，于是有：</p>
+
+$$
+
 \begin{aligned} J_i&=\frac{1}{2}x_N^THx_N+\frac{1}{2}\sum_{k=i}^{N-1}{[x_k^TQ_kx_k+u_k^TR_ku_k]} \quad\text{when}\quad 0 \leq i \leq N-1\\ J_N&=\frac{1}{2}x_N^THx_N \end{aligned} \tag{2}
+$$
+
+$$
 
 \begin{aligned} J_i^{\prime}&=\frac{1}{2}\sum_{k=0}^{i-1}{[x_k^TQ_kx_k+u_k^TR_ku_k]} \quad\text{when}\quad 1 \leq i \leq N-1\\ J_0^{\prime}&=0 \end{aligned} \tag{3}
-
+$$
 <p>显然有：</p>
+
+$$
+
 J=J_i+J_i^{\prime} \tag{4}
+$$
+<p>我们逐步对控制输入 $u$ 进行最小化 $J$ 的操作。考虑控制输入的最后一项是 $u_N$ ，有：</p>
 
-<p>我们逐步对控制输入 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">u</span></span></span></span> 进行最小化 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>J</mi></mrow><annotation encoding="application/x-tex">J</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.09618em;">J</span></span></span></span> 的操作。考虑控制输入的最后一项是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>u</mi><mi>N</mi></msub></mrow><annotation encoding="application/x-tex">u_N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">u</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10903em;">N</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> ，有：</p>
+$$
+
 \min_{u_{N-1}}{J}=\min_{u_{N-1}}{\{J_{N-1}+J_{N-1}^{\prime}\}} \tag{5}
+$$
+<p>根据定义可知， $J_{N-1}^{\prime}$ 与 $u_{N-1}$ 无关，因为它表示的是 $u_{N-1}$ 作用于系统之前的代价，于是有：</p>
 
-<p>根据定义可知， <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi>J</mi><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow><mrow><mi mathvariant="normal">′</mi></mrow></msubsup></mrow><annotation encoding="application/x-tex">J_{N-1}^{\prime}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.751892em;"></span><span class="strut bottom" style="height:1.0855540000000001em;vertical-align:-0.333662em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.09618em;">J</span><span class="vlist"><span style="top:0.275331em;margin-left:-0.09618em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10903em;">N</span><span class="mbin">−</span><span class="mord mathrm">1</span></span></span></span><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathrm">′</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 与 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>u</mi><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">u_{N-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.638891em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">u</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10903em;">N</span><span class="mbin">−</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 无关，因为它表示的是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>u</mi><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">u_{N-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.638891em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">u</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10903em;">N</span><span class="mbin">−</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 作用于系统之前的代价，于是有：</p>
+$$
+
 \begin{aligned} 
 \min_{u_{N-1}}{J}&=J_{N-1}^{\prime}+\min_{u_{N-1}}{J_{N-1}}\\ 
 &=J_{N-1}^{\prime}+\min_{u_{N-1}}{\{\frac{1}{2}[x_{N-1}^TQ_{N-1}x_{N-1}+u_{N-1}^TR_{N-1}u_{N-1}]+J_{N}\}} 
 \end{aligned} 
 \tag{6}
+$$
+<p>接下来在看 $u_{N-2}$：</p>
 
-<p>接下来在看 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>u</mi><mrow><mi>N</mi><mo>−</mo><mn>2</mn></mrow></msub></mrow><annotation encoding="application/x-tex">u_{N-2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.638891em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">u</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10903em;">N</span><span class="mbin">−</span><span class="mord mathrm">2</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>：</p>
+$$
+
 \begin{aligned} \underset{u_{N-2},u_{N-1}}\min{J}&=\underset{u_{N-2}}\min{\{J_{N-1}^{\prime}+\min_{u_{N-1}}{J_{N-1}}\}}\\ &=J_{N-2}^{\prime}+\underset{u_{N-2}}\min{\{\frac{1}{2}[x_{N-2}^TQ_{N-2}x_{N-2}+u_{N-2}^TR_{N-2}u_{N-2}]+\min_{u_{N-1}}{J_{N-1}}\}} \end{aligned} \tag{7}
-
+$$
 <p>根据上述规律，我们定义：</p>
+
+$$
+
 \begin{aligned} \hat{J}_i=\underset{u_i\cdots u_{N-1}}\min{J_i}&=\min_{u_i}{\{\frac{1}{2}[x_i^TQ_ix_i+u_i^TR_iu_i]+\underset{u_{i+1}\cdots u_{N-1}}\min{J_{i+1}}\}}\\ &=\min_{u_i}{\{\frac{1}{2}[x_i^TQ_ix_i+u_i^TR_iu_i]+\hat{J}_{i+1}\}} \end{aligned} \tag{8}
+$$
+<p>现在我们考察 $\hat{J}_{N-1}$ 的具体形式：</p>
 
-<p>现在我们考察 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mover accent="true"><mrow><mi>J</mi></mrow><mo>^</mo></mover><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">\hat{J}_{N-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.9467699999999999em;"></span><span class="strut bottom" style="height:1.155101em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord textstyle cramped"><span class="mord mathit" style="margin-right:0.09618em;">J</span></span></span><span style="top:-0.25233em;margin-left:0.33334em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>^</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10903em;">N</span><span class="mbin">−</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 的具体形式：</p>
+$$
+
 \begin{aligned} \hat{J}_{N-1}=\min_{u_{N-1}}{J_{N-1}}&=\min_{u_{N-1}}{\{\frac{1}{2}[x_{N-1}^TQ_{N-1}x_{N-1}+u_{N-1}^TR_{N-1}u_{N-1}]+J_{N}\}}\\ &=\min_{u_{N-1}}{\{\frac{1}{2}[x_{N-1}^TQ_{N-1}x_{N-1}+u_{N-1}^TR_{N-1}u_{N-1}]+\frac{1}{2}x_N^THx_N\}} \end{aligned} \tag{9}
+$$
+<p>代入 $x_N=A_{N-1}x_{N-1}+B_{N-1}u_{N-1}$ ：</p>
 
-<p>代入 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>x</mi><mi>N</mi></msub><mo>=</mo><msub><mi>A</mi><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></msub><msub><mi>x</mi><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>+</mo><msub><mi>B</mi><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></msub><msub><mi>u</mi><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">x_N=A_{N-1}x_{N-1}+B_{N-1}u_{N-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">x</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10903em;">N</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mrel">=</span><span class="mord"><span class="mord mathit">A</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10903em;">N</span><span class="mbin">−</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mord"><span class="mord mathit">x</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10903em;">N</span><span class="mbin">−</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mbin">+</span><span class="mord"><span class="mord mathit" style="margin-right:0.05017em;">B</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.05017em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10903em;">N</span><span class="mbin">−</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mord"><span class="mord mathit">u</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10903em;">N</span><span class="mbin">−</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> ：</p>
+$$
+
 \begin{aligned} J_{N-1}=\frac{1}{2}[x_{N-1}^TQ_{N-1}x_{N-1}+u_{N-1}^TR_{N-1}u_{N-1}]+\frac{1}{2}(A_{N-1}x_{N-1}+B_{N-1}u_{N-1})^TH(A_{N-1}x_{N-1}+B_{N-1}u_{N-1}) \end{aligned} \tag{10}
+$$
+<p>对 $J_{N-1}$ 对 $u_{N-1}$ 求偏导数，并令其为0，有：</p>
 
-<p>对 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>J</mi><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">J_{N-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.09618em;">J</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.09618em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10903em;">N</span><span class="mbin">−</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 对 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>u</mi><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">u_{N-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.638891em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">u</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10903em;">N</span><span class="mbin">−</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 求偏导数，并令其为0，有：</p>
+$$
+
 \frac{\partial J_{N-1}}{\partial u_{N-1}}=R_{N-1}u_{N-1}+B_{N-1}^THA_{N-1}x_{N-1}+B_{N-1}^THB_{N-1}u_{N-1}=0 \tag{11}
+$$
+<p>因此可以使 $J_{N-1}$ 取最小的 $u_{N-1}$ 满足如下必要条件：</p>
 
-<p>因此可以使 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>J</mi><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">J_{N-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.09618em;">J</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.09618em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10903em;">N</span><span class="mbin">−</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 取最小的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>u</mi><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">u_{N-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.638891em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">u</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10903em;">N</span><span class="mbin">−</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 满足如下必要条件：</p>
+$$
+
 \begin{aligned} \hat{u}_{N-1}&=-(R_{N-1}+B_{N-1}^THB_{N-1})^{-1}B_{N-1}^THA_{N-1}x_{N-1}\\ &=-F_{N-1}x_{N-1} \end{aligned} \tag{12}
-
+$$
 <p>若要使其充分，还需满足：</p>
-\frac{\partial^2 J_{N-1}}{\partial u_{N-1}^2}=R_{N-1}+B_{N-1}^THB_{N-1}>0 \tag{13}
 
-<p>显然 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mover accent="true"><mi>u</mi><mo>^</mo></mover><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">\hat u_{N-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.902771em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord mathit">u</span></span><span style="top:0em;margin-left:0.05556em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>^</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10903em;">N</span><span class="mbin">−</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 确实能使 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>J</mi><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">J_{N-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.09618em;">J</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.09618em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10903em;">N</span><span class="mbin">−</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 取全局最小值。</p>
-<p>将公式（12）式代入到公式（10），可以得到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mover accent="true"><mi>J</mi><mo>^</mo></mover><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">\hat J_{N-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.9467699999999999em;"></span><span class="strut bottom" style="height:1.155101em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord mathit" style="margin-right:0.09618em;">J</span></span><span style="top:-0.25233em;margin-left:0.33334em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>^</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.09618em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10903em;">N</span><span class="mbin">−</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 是一个关于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>x</mi><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">x_{N-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.638891em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">x</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10903em;">N</span><span class="mbin">−</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 的二次型：</p>
+$$
+
+\frac{\partial^2 J_{N-1}}{\partial u_{N-1}^2}=R_{N-1}+B_{N-1}^THB_{N-1}>0 \tag{13}
+$$
+<p>显然 $\hat u_{N-1}$ 确实能使 $J_{N-1}$ 取全局最小值。</p>
+<p>将公式（12）式代入到公式（10），可以得到 $\hat J_{N-1}$ 是一个关于 $x_{N-1}$ 的二次型：</p>
+
+$$
+
 \begin{aligned} 
     \hat{J}_{N-1}&=\frac{1}{2}x_{N-1}^T\{Q_{N-1}+F_{N-1}^TR_{N-1}F_{N-1}+(A_{N-1}-B_{N-1}F_{N-1})^TH(A_{N-1}-B_{N-1}F_{N-1})\}x_{N-1}\\ 
     &=\frac{1}{2}x_{N-1}^TP_{N-1}x_{N-1}
 \end{aligned} 
 \tag{14}
+$$
+<p>如果我们定义初始的 $P_N=H$ ，则上述关系变为：</p>
 
-<p>如果我们定义初始的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>P</mi><mi>N</mi></msub><mo>=</mo><mi>H</mi></mrow><annotation encoding="application/x-tex">P_N=H</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.13889em;">P</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.13889em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10903em;">N</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mrel">=</span><span class="mord mathit" style="margin-right:0.08125em;">H</span></span></span></span> ，则上述关系变为：</p>
+$$
+
 \begin{aligned} \hat{J}_N&=\frac{1}{2}x_N^TP_Nx_N\\ \hat{J}_{N-1}&=\frac{1}{2}x_{N-1}^TP_{N-1}x_{N-1}\\ P_{N-1}&=Q_{N-1}+F_{N-1}^TR_{N-1}F_{N-1}+(A_{N-1}-B_{N-1}F_{N-1})^TP_N(A_{N-1}-B_{N-1}F_{N-1}) \end{aligned} \tag{15}
-
+$$
 <p>将上述关系推广到更一般的情况，则有：</p>
-\begin{aligned} \hat{J}_i&=\frac{1}{2}x_i^TP_ix_i\\ F_{i}&=(R_i+B_i^TP_{i+1}B_i)^{-1}B_iP_{i+1}A_i\\ P_i&=Q_i+F_i^TR_iF_i+(A_i-B_iF_i)^TP_{i+1}(A_i-B_iF_i)\\ &=Q_i+A_i^T\{P_{i+1}-P_{i+1}B_i[R_i+B_i^TP_{i+1}B_i]^{-1}B_i^TP_{i+1}\}A_i\\ \hat{u}_i&=-F_ix_i \end{aligned} \tag{16}
 
+$$
+
+\begin{aligned} \hat{J}_i&=\frac{1}{2}x_i^TP_ix_i\\ F_{i}&=(R_i+B_i^TP_{i+1}B_i)^{-1}B_iP_{i+1}A_i\\ P_i&=Q_i+F_i^TR_iF_i+(A_i-B_iF_i)^TP_{i+1}(A_i-B_iF_i)\\ &=Q_i+A_i^T\{P_{i+1}-P_{i+1}B_i[R_i+B_i^TP_{i+1}B_i]^{-1}B_i^TP_{i+1}\}A_i\\ \hat{u}_i&=-F_ix_i \end{aligned} \tag{16}
+$$
 <p>上述关系即是一般线性离散系统的LQR控制率。</p>
-<p>现在考虑离散线性时不变系统，系统参数不再随角标变化，又考虑到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.13889em;">P</span></span></span></span>最终趋于稳态，则有如下关系:</p>
+<p>现在考虑离散线性时不变系统，系统参数不再随角标变化，又考虑到$P$最终趋于稳态，则有如下关系:</p>
+
+$$
+
 \begin{aligned} 
 P&=Q+A^T\{P-PB[R+B^TPB]^{-1}B^TP\}A\\ 
 F&=(R+B^TPB)^{-1}BPA\\ 
 \hat{u}_i&=-Fx_i 
 \end{aligned}
 \tag{17}
-
+$$
 <p>上式中的第一项是 <strong>离散时间代数黎卡提方程 （Discrete time Algebraic Riccati Equation - DARE）</strong> ,第二项是状态反馈增益，第三项是最优控制率。</p>
 <p>推导完毕。</p>
 <p>未经授权，禁止转载</p>
@@ -627,6 +675,7 @@ F&=(R+B^TPB)^{-1}BPA\\
 
   
   
+
 
 
 
@@ -899,6 +948,49 @@ F&=(R+B^TPB)^{-1}BPA\\
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

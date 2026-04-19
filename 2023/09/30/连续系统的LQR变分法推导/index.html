@@ -19,12 +19,12 @@
   <meta name="author" content="Xinyu Han">
   <meta name="keywords" content="">
   
-    <meta name="description" content="连续系统的LQR变分法推导 优化控制问题 考虑下述优化问题： \begin{aligned} J&#x3D;h(x(t_f),t_f)+\int_{t_0}^{t_f}g(x(t),u(t),t)dt\\ \text{subject to}\quad&amp;\dot{x}(t)&#x3D;a(x(t),u(t),t)\\ &amp;t_0,x(t_0)&amp;\quad\text{fixed}\\ &amp;t_f&amp;\quad\text{fre">
+    <meta name="description" content="连续系统的LQR变分法推导优化控制问题考虑下述优化问题：  $$  \begin{aligned} J&#x3D;h(x(t_f),t_f)+\int_{t_0}^{t_f}g(x(t),u(t),t)dt\\ \text{subject to}\quad&amp;\dot{x}(t)&#x3D;a(x(t),u(t),t)\\ &amp;t_0,x(t_0)&amp;\quad\text{fixed}\\ &amp;t_f&amp;\quad\text{">
 <meta property="og:type" content="article">
 <meta property="og:title" content="连续系统的LQR变分法推导">
 <meta property="og:url" content="http://example.com/2023/09/30/%E8%BF%9E%E7%BB%AD%E7%B3%BB%E7%BB%9F%E7%9A%84LQR%E5%8F%98%E5%88%86%E6%B3%95%E6%8E%A8%E5%AF%BC/index.html">
 <meta property="og:site_name" content="Xinyu&#39;s Blog">
-<meta property="og:description" content="连续系统的LQR变分法推导 优化控制问题 考虑下述优化问题： \begin{aligned} J&#x3D;h(x(t_f),t_f)+\int_{t_0}^{t_f}g(x(t),u(t),t)dt\\ \text{subject to}\quad&amp;\dot{x}(t)&#x3D;a(x(t),u(t),t)\\ &amp;t_0,x(t_0)&amp;\quad\text{fixed}\\ &amp;t_f&amp;\quad\text{fre">
+<meta property="og:description" content="连续系统的LQR变分法推导优化控制问题考虑下述优化问题：  $$  \begin{aligned} J&#x3D;h(x(t_f),t_f)+\int_{t_0}^{t_f}g(x(t),u(t),t)dt\\ \text{subject to}\quad&amp;\dot{x}(t)&#x3D;a(x(t),u(t),t)\\ &amp;t_0,x(t_0)&amp;\quad\text{fixed}\\ &amp;t_f&amp;\quad\text{">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-09-29T16:00:00.000Z">
 <meta property="article:modified_time" content="2026-04-19T13:07:15.958Z">
@@ -48,8 +48,6 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
 
 
 
@@ -331,7 +329,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          8.9k 字
+          8.2k 字
         
       </span>
     
@@ -342,7 +340,7 @@
         
         
         
-          74 分钟
+          68 分钟
         
       </span>
     
@@ -386,9 +384,10 @@
             
               <div class="markdown-body">
                 
-                <h2 id="连续系统的LQR变分法推导">连续系统的LQR变分法推导</h2>
-<h1 id="优化控制问题">优化控制问题</h1>
-<p>考虑下述优化问题：</p>
+                <h2 id="连续系统的LQR变分法推导"><a href="#连续系统的LQR变分法推导" class="headerlink" title="连续系统的LQR变分法推导"></a>连续系统的LQR变分法推导</h2><h1 id="优化控制问题"><a href="#优化控制问题" class="headerlink" title="优化控制问题"></a>优化控制问题</h1><p>考虑下述优化问题：</p>
+
+$$
+
 \begin{aligned}
 J=h(x(t_f),t_f)+\int_{t_0}^{t_f}g(x(t),u(t),t)dt\\
 \text{subject to}\quad&\dot{x}(t)=a(x(t),u(t),t)\\
@@ -397,16 +396,25 @@ J=h(x(t_f),t_f)+\int_{t_0}^{t_f}g(x(t),u(t),t)dt\\
 &x(t_f)&\quad\text{free or fixed}
 \end{aligned}
 \tag{1}
+$$
+<p>其中$\dot{x}(t)=a(x(t),u(t),t)$可以被看作一种约束，因此我们定义拉格朗日乘子$p(t)$，同时对原有的代价函数$J$进行增广，得到如下增广代价函数：</p>
 
-<p>其中<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mrow><mi>x</mi></mrow><mo>˙</mo></mover><mo>(</mo><mi>t</mi><mo>)</mo><mo>=</mo><mi>a</mi><mo>(</mo><mi>x</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo separator="true">,</mo><mi>u</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo separator="true">,</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\dot{x}(t)=a(x(t),u(t),t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord textstyle cramped"><span class="mord mathit">x</span></span></span><span style="top:0em;margin-left:0.05556em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>˙</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span><span class="mrel">=</span><span class="mord mathit">a</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mord mathit">u</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mord mathit">t</span><span class="mclose">)</span></span></span></span>可以被看作一种约束，因此我们定义拉格朗日乘子<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">p(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span></span></span></span>，同时对原有的代价函数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>J</mi></mrow><annotation encoding="application/x-tex">J</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.09618em;">J</span></span></span></span>进行增广，得到如下增广代价函数：</p>
+$$
+
 J_a=h(x(t_f),t_f)+\int_{t_0}^{t_f}[g(x(t),u(t),t)+p(t)^T\{a(x(t),u(t),t)-\dot{x}(t)\}]dt
 \tag{2}
+$$
+<p>对$J_a$取<strong>变分（Variation）</strong>，得到如下表达式：</p>
 
-<p>对<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>J</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">J_a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.09618em;">J</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.09618em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">a</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>取<strong>变分（Variation）</strong>，得到如下表达式：</p>
+$$
+
 \delta J_a=h_{x_f}\delta x_f+h_{t_f}\delta t_f+\int_{t_0}^{t_f}[g_x\delta x+g_u\delta u+(a-\dot{x})^T\delta p(t)+p^T(t){a_x\delta x+a_u\delta u-\delta\dot{x}}]dt+[g+p^T(a-\dot{x})](t_f)\delta t_f
 \tag{3}
-
+$$
 <p>其中：</p>
+
+$$
+
 \begin{aligned}
 x_f&=x(t_f)\\
 \dot x_f&=\dot x(t_f)\\
@@ -419,19 +427,28 @@ g_u&=\frac{\partial g(x,u,t)}{\partial u}\\
 [g+p^T(a-\dot x)](t_f)&=g(x_f,u_f,t_f)+p^T_f(a(x_f,u_f,t_f)-\dot x_f)
 \end{aligned}
 \tag{4}
-
+$$
 <p>下面我们定义<strong>哈密顿量（Hamiltonian）</strong>：</p>
+
+$$
+
 H(x,u,p,t)=g(x(t),u(t),t)+p^T(t)a(x(t),u(t),t)
 \tag{5}
-
+$$
 <p>将定义的哈密顿量代入到公式（3）的变分中可以得到：</p>
+
+$$
+
 \begin{aligned} 
 \delta J_a&=h_{x_f}\delta x_f+[h_{t_f}+g+p^T(a-\dot x)](t_f)\delta t\\
 &+\int_{t_0}^{t_f}[H_x\delta x+H_u\delta u+(a-\dot x)^T\delta p(t)\underbrace{-p^T(t)\delta\dot x}_{(6.1)}]dt
 \end{aligned}
 \tag{6}
+$$
+<p>我们需要将变分表达式中的变分项进行合并，（6.1）中的$\delta\dot x$可以通过<strong>分部积分法（Integragint by Parts</strong>）将导数从变分项中移出，具体操作如下：</p>
 
-<p>我们需要将变分表达式中的变分项进行合并，（6.1）中的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>δ</mi><mover accent="true"><mi>x</mi><mo>˙</mo></mover></mrow><annotation encoding="application/x-tex">\delta\dot x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.69444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.03785em;">δ</span><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord mathit">x</span></span><span style="top:0em;margin-left:0.05556em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>˙</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>可以通过<strong>分部积分法（Integragint by Parts</strong>）将导数从变分项中移出，具体操作如下：</p>
+$$
+
 \begin{aligned}
 -\int_{t_0}^{t_f}p^T(t)\delta\dot xdt&=-\int_{t_0}^{t_f}p^T(t)d\delta x\\
 &=-p^T\delta x\bigg|_{t_0}^{t_f}+\int_{t_0}^{t_f}(\frac{dp(t)}{dt})^T\delta xdt\\
@@ -439,14 +456,20 @@ H(x,u,p,t)=g(x(t),u(t),t)+p^T(t)a(x(t),u(t),t)
 &=-p^T(t_f)(\underbrace{\delta x_f-\dot x(t_f)\delta t_f}_{7.1})+\int_{t_0}^{t_f}\dot{p}^T\delta xdt
 \end{aligned}
 \tag{7}
+$$
+<p>上式中关于分部积分法使用到了公式$\int udv=uv-\int vdu$，还有一个需要注意的点是公式（7）中的（7.1）部分，这个地方看起来那么直观，不过我们只要搞清楚$\delta x(t_f)$和$\delta x_f$的定义，那么这个等式关系就很容易得到了。其中$\delta x(t_f)$表示的函数$x(t)$在时间点$t_f$处的变分（我这个说法可能在数学上并不研究，只是为了方便理解），注意！在这个定义中$t_f$是固定的，该变分只由函数$x(t)$本身的变化决定；而$\delta x_f$的定义则是$x$最终状态的变分，根据定义，该变分由函数$x(t)$变化和终止时间$t_f$的变化共同决定。因此可以认为终末状态$x_f$的变化在小量范围内，约等于函数$x(t)$的变化在时间点$t_f$引起的变化，叠加上由于时间$t_f$本身的变化$\delta t_f$累积上$t_f$处$x(t)$导数$\dot x(t_f)$（时间乘以变化率等于时间引起的变化量）引起的变化，故而有如下关系：</p>
 
-<p>上式中关于分部积分法使用到了公式<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>∫</mo><mi>u</mi><mi>d</mi><mi>v</mi><mo>=</mo><mi>u</mi><mi>v</mi><mo>−</mo><mo>∫</mo><mi>v</mi><mi>d</mi><mi>u</mi></mrow><annotation encoding="application/x-tex">\int udv=uv-\int vdu</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.805em;"></span><span class="strut bottom" style="height:1.11112em;vertical-align:-0.30612em;"></span><span class="base textstyle uncramped"><span class="op-symbol small-op mop" style="margin-right:0.19445em;top:-0.0005599999999999772em;">∫</span><span class="mord mathit">u</span><span class="mord mathit">d</span><span class="mord mathit" style="margin-right:0.03588em;">v</span><span class="mrel">=</span><span class="mord mathit">u</span><span class="mord mathit" style="margin-right:0.03588em;">v</span><span class="mbin">−</span><span class="op-symbol small-op mop" style="margin-right:0.19445em;top:-0.0005599999999999772em;">∫</span><span class="mord mathit" style="margin-right:0.03588em;">v</span><span class="mord mathit">d</span><span class="mord mathit">u</span></span></span></span>，还有一个需要注意的点是公式（7）中的（7.1）部分，这个地方看起来那么直观，不过我们只要搞清楚<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>δ</mi><mi>x</mi><mo>(</mo><msub><mi>t</mi><mi>f</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">\delta x(t_f)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.03785em;">δ</span><span class="mord mathit">x</span><span class="mopen">(</span><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>δ</mi><msub><mi>x</mi><mi>f</mi></msub></mrow><annotation encoding="application/x-tex">\delta x_f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.980548em;vertical-align:-0.286108em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.03785em;">δ</span><span class="mord"><span class="mord mathit">x</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>的定义，那么这个等式关系就很容易得到了。其中<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>δ</mi><mi>x</mi><mo>(</mo><msub><mi>t</mi><mi>f</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">\delta x(t_f)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.03785em;">δ</span><span class="mord mathit">x</span><span class="mopen">(</span><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span></span></span></span>表示的函数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">x(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">x</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span></span></span></span>在时间点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>t</mi><mi>f</mi></msub></mrow><annotation encoding="application/x-tex">t_f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.61508em;"></span><span class="strut bottom" style="height:0.9011879999999999em;vertical-align:-0.286108em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>处的变分（我这个说法可能在数学上并不研究，只是为了方便理解），注意！在这个定义中<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>t</mi><mi>f</mi></msub></mrow><annotation encoding="application/x-tex">t_f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.61508em;"></span><span class="strut bottom" style="height:0.9011879999999999em;vertical-align:-0.286108em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>是固定的，该变分只由函数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">x(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">x</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span></span></span></span>本身的变化决定；而<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>δ</mi><msub><mi>x</mi><mi>f</mi></msub></mrow><annotation encoding="application/x-tex">\delta x_f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.980548em;vertical-align:-0.286108em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.03785em;">δ</span><span class="mord"><span class="mord mathit">x</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>的定义则是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">x</span></span></span></span>最终状态的变分，根据定义，该变分由函数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">x(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">x</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span></span></span></span>变化和终止时间<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>t</mi><mi>f</mi></msub></mrow><annotation encoding="application/x-tex">t_f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.61508em;"></span><span class="strut bottom" style="height:0.9011879999999999em;vertical-align:-0.286108em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>的变化共同决定。因此可以认为终末状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>x</mi><mi>f</mi></msub></mrow><annotation encoding="application/x-tex">x_f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">x</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>的变化在小量范围内，约等于函数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">x(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">x</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span></span></span></span>的变化在时间点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>t</mi><mi>f</mi></msub></mrow><annotation encoding="application/x-tex">t_f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.61508em;"></span><span class="strut bottom" style="height:0.9011879999999999em;vertical-align:-0.286108em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>引起的变化，叠加上由于时间<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>t</mi><mi>f</mi></msub></mrow><annotation encoding="application/x-tex">t_f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.61508em;"></span><span class="strut bottom" style="height:0.9011879999999999em;vertical-align:-0.286108em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>本身的变化<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>δ</mi><msub><mi>t</mi><mi>f</mi></msub></mrow><annotation encoding="application/x-tex">\delta t_f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.980548em;vertical-align:-0.286108em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.03785em;">δ</span><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>累积上<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>t</mi><mi>f</mi></msub></mrow><annotation encoding="application/x-tex">t_f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.61508em;"></span><span class="strut bottom" style="height:0.9011879999999999em;vertical-align:-0.286108em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>处<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">x(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">x</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span></span></span></span>导数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mi>x</mi><mo>˙</mo></mover><mo>(</mo><msub><mi>t</mi><mi>f</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">\dot x(t_f)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="base textstyle uncramped"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord mathit">x</span></span><span style="top:0em;margin-left:0.05556em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>˙</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span></span></span></span>（时间乘以变化率等于时间引起的变化量）引起的变化，故而有如下关系：</p>
+$$
+
 \begin{aligned}
 \delta x_f=\delta x(t_f) + \dot x(t_f)\delta t_f
 \end{aligned}
 \tag{8}
-
+$$
 <p>下面，我们可以将公式（7）的结果代入到公式（6），可以得到：</p>
+
+$$
+
 \begin{aligned} 
 \delta J_a&=h_{x_f}\delta x_f+[h_{t_f}+g+p^T(a-\dot x)](t_f)\delta t\\
 &+\int_{t_0}^{t_f}[H_x\delta x+H_u\delta u+(a-\dot x)^T\delta p(t)]dt-\int_{t_0}^{t_f}p^T(t)\delta\dot xdt\\
@@ -457,113 +480,154 @@ H(x,u,p,t)=g(x(t),u(t),t)+p^T(t)a(x(t),u(t),t)
 &+\int_{t_0}^{t_f}[\underbrace{(H_x+\dot p^T)}_{9.3}\delta x+\underbrace{H_u}_{9.4}\delta u+\underbrace{(a-\dot x)^T}_{9.5}\delta p(t)]dt
 \end{aligned}
 \tag{9}
+$$
+<p>综上所述，使得$\delta J_a=0$在$t \in [t_0,t_f]$成立的必要条件是上述（9.1-9.5）都等于0（其中在$t_f$是固定的（fixed）的时候（9.2）不需要满足），如下：</p>
 
-<p>综上所述，使得<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>δ</mi><msub><mi>J</mi><mi>a</mi></msub><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\delta J_a=0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.03785em;">δ</span><span class="mord"><span class="mord mathit" style="margin-right:0.09618em;">J</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.09618em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">a</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mrel">=</span><span class="mord mathrm">0</span></span></span></span>在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mo>∈</mo><mo>[</mo><msub><mi>t</mi><mn>0</mn></msub><mo separator="true">,</mo><msub><mi>t</mi><mi>f</mi></msub><mo>]</mo></mrow><annotation encoding="application/x-tex">t \in [t_0,t_f]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="base textstyle uncramped"><span class="mord mathit">t</span><span class="mrel">∈</span><span class="mopen">[</span><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathrm">0</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mpunct">,</span><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">]</span></span></span></span>成立的必要条件是上述（9.1-9.5）都等于0（其中在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>t</mi><mi>f</mi></msub></mrow><annotation encoding="application/x-tex">t_f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.61508em;"></span><span class="strut bottom" style="height:0.9011879999999999em;vertical-align:-0.286108em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>是固定的（fixed）的时候（9.2）不需要满足），如下：</p>
+$$
+
 \begin{aligned}
 \dot x&=a(x,u,t)\\
 \dot p&=-H_x^T\\
 H_u&=0
 \end{aligned}
 \tag{10}
-
+$$
 <p>以下是边界条件和约束：</p>
 <ul>
-<li>当<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>t</mi><mi>f</mi></msub></mrow><annotation encoding="application/x-tex">t_f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.61508em;"></span><span class="strut bottom" style="height:0.9011879999999999em;vertical-align:-0.286108em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>是自由的，需满足：</li>
+<li>当$t_f$是自由的，需满足：</li>
 </ul>
+
+$$
+
 [h_{t_f}+g+p^Ta](t_f)=h_{t_f}+H(t_f)=0
 \tag{11}
-
+$$
 <ul>
 <li>需满足边界条：</li>
 </ul>
+
+$$
 x(t_0)=x_0\tag{12}
-
+$$
 <ul>
-<li>当<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>(</mo><msub><mi>t</mi><mi>f</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">x(t_f)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="base textstyle uncramped"><span class="mord mathit">x</span><span class="mopen">(</span><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span></span></span></span>固定时，需满足：</li>
+<li>当$x(t_f)$固定时，需满足：</li>
 </ul>
+
+$$
 x(t_f)=x_f\tag{13}
-
+$$
 <ul>
-<li>当<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>(</mo><msub><mi>t</mi><mi>f</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">x(t_f)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="base textstyle uncramped"><span class="mord mathit">x</span><span class="mopen">(</span><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span></span></span></span>自由时，需满足：</li>
+<li>当$x(t_f)$自由时，需满足：</li>
 </ul>
-p^T(t_f)=h_{x_f}\tag{14}
 
+$$
+p^T(t_f)=h_{x_f}\tag{14}
+$$
 <p>我们把公式（10）中的第二项进一步展开，会有一些额外的发现：</p>
+
+$$
+
 \begin{aligned}
 \dot{p}=-H_x^T=-\left(\frac{\partial H}{\partial x}\right)^T&=-\left(\frac{\partial(g+p^Ta)}{\partial x}\right)^T\\
 &=-\left(\frac{\partial a}{\partial x}\right)^Tp-\left(\frac{\partial g}{\partial x}\right)
 \end{aligned}
 \tag{15}
+$$
+<p>有上述方程我们可以发现如果把$p$也当作一种状态，那上述方程就可以当作它的状态状态转移方程，由状态$p$构成的系统是一个线性系统。<br>除此之外我们还很容易发现如下关系：</p>
 
-<p>有上述方程我们可以发现如果把<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span></span></span></span>也当作一种状态，那上述方程就可以当作它的状态状态转移方程，由状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span></span></span></span>构成的系统是一个线性系统。<br>
-除此之外我们还很容易发现如下关系：</p>
+$$
+
 \begin{aligned}
 \dot{x}=a(x,u,t)=-\left(\frac{\partial H}{\partial p}\right)^T
 \end{aligned}
 \tag{16}
+$$
+<p>由此，我们可以发现$x$和$p$具有某种对称性，他们的维度是一样的，又都可以当作状态变量，同时又拥有各自的状态转移矩阵，因此，一般我们把$p$称作<strong>协态（Costate）</strong>，公式（15）又被称作<strong>协态方程（Costate Equation）</strong>,或者被称作<strong>辅助方程（Auxiliary Equation）</strong>、<strong>伴随方程（Adjoin Equation）</strong>、<strong>影响方程（Influence Equation）</strong>或<strong>乘数方程（Multiplier Equation）</strong>。</p>
+<h1 id="LQR的变分法推导"><a href="#LQR的变分法推导" class="headerlink" title="LQR的变分法推导"></a>LQR的变分法推导</h1><p>我们考虑确定性的线性二次型调节器（Deterministic Quadratic Regulator），被控对象如下：</p>
 
-<p>由此，我们可以发现<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">x</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span></span></span></span>具有某种对称性，他们的维度是一样的，又都可以当作状态变量，同时又拥有各自的状态转移矩阵，因此，一般我们把<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span></span></span></span>称作<strong>协态（Costate）</strong>，公式（15）又被称作<strong>协态方程（Costate Equation）</strong>,或者被称作<strong>辅助方程（Auxiliary Equation）</strong>、<strong>伴随方程（Adjoin Equation）</strong>、<strong>影响方程（Influence Equation）<strong>或</strong>乘数方程（Multiplier Equation）</strong>。</p>
-<h1 id="lqr的变分法推导">LQR的变分法推导</h1>
-<p>我们考虑确定性的线性二次型调节器（Deterministic Quadratic Regulator），被控对象如下：</p>
+$$
+
 \begin{aligned}
 &\dot x(t)=A(t)x(t)+B_u(t)u(t),\quad x(t_0)=x_0\\
 &z(t)=C_z(t)x(t)
 \end{aligned}
 \tag{17}
-
+$$
 <p>代价函数如下：</p>
+
+$$
+
 \begin{aligned}
 J_{LQR}&=\frac{1}{2}\int_{t_0}^{t_f}[z^T(t)R_{zz}z(t)+u^T(t)R_{uu}u(t)]dt+x^T(t_f)P_{t_f}x(t_f)\\
 \end{aligned}
 \tag{18}
-
+$$
 <p>上述表达式满足如下条件：</p>
 <ul>
-<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>P</mi><mrow><msub><mi>t</mi><mi>f</mi></msub></mrow></msub><mo>≥</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">P_{t_f}\geq0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:1.03641em;vertical-align:-0.35307999999999995em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.13889em;">P</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.13889em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15122857142857138em;margin-right:0.07142857142857144em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mrel">≥</span><span class="mord mathrm">0</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>R</mi><mrow><mi>z</mi><mi>z</mi></mrow></msub><mo>(</mo><mi>t</mi><mo>)</mo><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">R_{zz}(t)&gt;0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.00773em;">R</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.00773em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.04398em;">z</span><span class="mord mathit" style="margin-right:0.04398em;">z</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span><span class="mrel">&gt;</span><span class="mord mathrm">0</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>R</mi><mrow><mi>u</mi><mi>u</mi></mrow></msub><mo>(</mo><mi>t</mi><mo>)</mo><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">R_{uu}(t)&gt;0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.00773em;">R</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.00773em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">u</span><span class="mord mathit">u</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span><span class="mrel">&gt;</span><span class="mord mathrm">0</span></span></span></span></li>
-<li>我们定义<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>R</mi><mrow><mi>x</mi><mi>x</mi></mrow></msub><mo>=</mo><msubsup><mi>C</mi><mi>z</mi><mi>T</mi></msubsup><msub><mi>R</mi><mrow><mi>z</mi><mi>z</mi></mrow></msub><msub><mi>C</mi><mi>z</mi></msub><mo>≥</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">R_{xx}=C_z^TR_{zz}C_z\geq0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.8413309999999999em;"></span><span class="strut bottom" style="height:1.088331em;vertical-align:-0.247em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.00773em;">R</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.00773em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">x</span><span class="mord mathit">x</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mrel">=</span><span class="mord"><span class="mord mathit" style="margin-right:0.07153em;">C</span><span class="vlist"><span style="top:0.247em;margin-left:-0.07153em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.04398em;">z</span></span></span><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord mathit" style="margin-right:0.13889em;">T</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mord"><span class="mord mathit" style="margin-right:0.00773em;">R</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.00773em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.04398em;">z</span><span class="mord mathit" style="margin-right:0.04398em;">z</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mord"><span class="mord mathit" style="margin-right:0.07153em;">C</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.07153em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.04398em;">z</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mrel">≥</span><span class="mord mathrm">0</span></span></span></span></li>
-<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>A</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">A(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">A</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span></span></span></span>是时间连续函数</li>
-<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>B</mi><mi>u</mi></msub><mo>(</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">B_u(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.05017em;">B</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.05017em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">u</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>C</mi><mi>z</mi></msub><mo>(</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">C_z(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.07153em;">C</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.07153em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.04398em;">z</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>R</mi><mrow><mi>z</mi><mi>z</mi></mrow></msub><mo>(</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">R_{zz}(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.00773em;">R</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.00773em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.04398em;">z</span><span class="mord mathit" style="margin-right:0.04398em;">z</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>R</mi><mrow><mi>u</mi><mi>u</mi></mrow></msub><mo>(</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">R_{uu}(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.00773em;">R</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.00773em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">u</span><span class="mord mathit">u</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span></span></span></span>是时间上的分段连续函数，并且有界。</li>
+<li>$P_{t_f}\geq0$，$R_{zz}(t)&gt;0$和$R_{uu}(t)&gt;0$</li>
+<li>我们定义$R_{xx}=C_z^TR_{zz}C_z\geq0$</li>
+<li>$A(t)$是时间连续函数</li>
+<li>$B_u(t)$，$C_z(t)$，$R_{zz}(t)$，$R_{uu}(t)$是时间上的分段连续函数，并且有界。</li>
 </ul>
-<p>根据上述定义，我们可以将问题描述为：寻找<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo separator="true">,</mo><mi mathvariant="normal">∀</mi><mi>t</mi><mo>∈</mo><mo>[</mo><msub><mi>t</mi><mn>0</mn></msub><mo separator="true">,</mo><msub><mi>t</mi><mi>f</mi></msub><mo>]</mo></mrow><annotation encoding="application/x-tex">u(t),\forall t \in[t_0,t_f]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="base textstyle uncramped"><span class="mord mathit">u</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mord mathrm">∀</span><span class="mord mathit">t</span><span class="mrel">∈</span><span class="mopen">[</span><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathrm">0</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mpunct">,</span><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">]</span></span></span></span>使得代价函数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>J</mi><mrow><mi>L</mi><mi>Q</mi><mi>R</mi></mrow></msub></mrow><annotation encoding="application/x-tex">J_{LQR}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.09618em;">J</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.09618em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">L</span><span class="mord mathit">Q</span><span class="mord mathit" style="margin-right:0.00773em;">R</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>最小。<br>
-为了优化代价函数，我们使用拉格朗日乘子法对代价函数进行增广，我们定义增广之后的代价函数为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>J</mi><mrow><mi>A</mi><mi>L</mi><mi>Q</mi><mi>R</mi></mrow></msub></mrow><annotation encoding="application/x-tex">J_{ALQR}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.09618em;">J</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.09618em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">A</span><span class="mord mathit">L</span><span class="mord mathit">Q</span><span class="mord mathit" style="margin-right:0.00773em;">R</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>：</p>
+<p>根据上述定义，我们可以将问题描述为：寻找$u(t),\forall t \in[t_0,t_f]$使得代价函数$J_{LQR}$最小。<br>为了优化代价函数，我们使用拉格朗日乘子法对代价函数进行增广，我们定义增广之后的代价函数为$J_{ALQR}$：</p>
+
+$$
+
 \begin{aligned}
 J_{ALQR}&=\int_{t_0}^{t_f}\left\{\frac{1}{2}[z^T(t)R_{zz}z(t)+u^T(t)R_{uu}u(t)]+p^T(t)(Ax(t)+B_uu(t))\right\}dt+x^T(t_f)P_{t_f}x(t_f)\\
 \end{aligned}
 \tag{19}
-
+$$
 <p>根据公式（5）的定义，我们可以得到哈密顿量：</p>
+
+$$
+
 \begin{aligned}
 H&=\frac{1}{2}[z^T(t)R_{zz}z(t)+u^T(t)R_{uu}u(t)]+p^T(t)(Ax(t)+B_uu(t))\\
 \end{aligned}
 \tag{20}
-
+$$
 <p>根据公式（10）中的必要条件，可以得到：</p>
+
+$$
 \dot x(t)=\frac{\partial H^T}{\partial p}=Ax(t)+B_uu(t),\quad x(t_0)=x_0\tag{21}
+$$
 
+$$
 \dot p(t)=-\frac{\partial H^T}{\partial x}=-R_{xx}x(t)-A^Tp(t),\quad p(t_f)=P_{t_f}x(t_f)\tag{22}
+$$
 
+$$
 \frac{\partial H}{\partial u}=0 \Rightarrow R_{uu}u+B_u^Tp(t)=0\tag{23}
+$$
+<p>根据公式（23）可以得到最优控制率$\hat{u}$的必要条件是：</p>
 
-<p>根据公式（23）可以得到最优控制率<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mrow><mi>u</mi></mrow><mo>^</mo></mover></mrow><annotation encoding="application/x-tex">\hat{u}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.69444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord textstyle cramped"><span class="mord mathit">u</span></span></span><span style="top:0em;margin-left:0.05556em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>^</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>的必要条件是：</p>
+$$
 \hat{u}=-R_{uu}^{-1}B_u^Tp(t)\tag{24}
+$$
+<p>为了使其成为充分必要条件，还需要满足$\frac{\partial^2H}{\partial u^2}\geq 0$。<br>显然有：</p>
 
-<p>为了使其成为充分必要条件，还需要满足<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mfrac><mrow><msup><mi mathvariant="normal">∂</mi><mn>2</mn></msup><mi>H</mi></mrow><mrow><mi mathvariant="normal">∂</mi><msup><mi>u</mi><mn>2</mn></msup></mrow></mfrac><mo>≥</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\frac{\partial^2H}{\partial u^2}\geq 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.97032em;"></span><span class="strut bottom" style="height:1.3153199999999998em;vertical-align:-0.345em;"></span><span class="base textstyle uncramped"><span class="mord reset-textstyle textstyle uncramped"><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span><span class="mfrac"><span class="vlist"><span style="top:0.345em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathrm" style="margin-right:0.05556em;">∂</span><span class="mord"><span class="mord mathit">u</span><span class="vlist"><span style="top:-0.289em;margin-right:0.07142857142857144em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord mathrm">2</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span><span style="top:-0.22999999999999998em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle textstyle uncramped frac-line"></span></span><span style="top:-0.394em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord"><span class="mord mathrm" style="margin-right:0.05556em;">∂</span><span class="vlist"><span style="top:-0.363em;margin-right:0.07142857142857144em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle uncramped"><span class="mord mathrm">2</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mord mathit" style="margin-right:0.08125em;">H</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span></span><span class="mrel">≥</span><span class="mord mathrm">0</span></span></span></span>。<br>
-显然有：</p>
+$$
+
 \begin{aligned}
 \frac{\partial^2H}{\partial u^2}=R_{uu}\geq0
 \end{aligned}
 \tag{25}
+$$
+<p>因此可以得知公式（24）是充分且必要的。<br>现在我们可以联系在《连续系统的LQR推导》这篇文章中的讨论，会发现$p(t)$扮演着和$\hat{J}_x(x(t),t)^T$同样的角色，其中最主要的区别在于我们不需要去大胆假设$\hat{J}(x(t),t)$的解是一个二次型了！接下来我们可以证明这一点。<br>显然有：</p>
 
-<p>因此可以得知公式（24）是充分且必要的。<br>
-现在我们可以联系在《连续系统的LQR推导》这篇文章中的讨论，会发现<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">p(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span></span></span></span>扮演着和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mover accent="true"><mrow><mi>J</mi></mrow><mo>^</mo></mover><mi>x</mi></msub><mo>(</mo><mi>x</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo separator="true">,</mo><mi>t</mi><msup><mo>)</mo><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">\hat{J}_x(x(t),t)^T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.9467699999999999em;"></span><span class="strut bottom" style="height:1.19677em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord textstyle cramped"><span class="mord mathit" style="margin-right:0.09618em;">J</span></span></span><span style="top:-0.25233em;margin-left:0.33334em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>^</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">x</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mord mathit">t</span><span class="mclose"><span class="mclose">)</span><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord mathit" style="margin-right:0.13889em;">T</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>同样的角色，其中最主要的区别在于我们不需要去大胆假设<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mrow><mi>J</mi></mrow><mo>^</mo></mover><mo>(</mo><mi>x</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo separator="true">,</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\hat{J}(x(t),t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.9467699999999999em;"></span><span class="strut bottom" style="height:1.19677em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord textstyle cramped"><span class="mord mathit" style="margin-right:0.09618em;">J</span></span></span><span style="top:-0.25233em;margin-left:0.33334em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>^</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mord mathit">t</span><span class="mclose">)</span></span></span></span>的解是一个二次型了！接下来我们可以证明这一点。<br>
-显然有：</p>
+$$
+
 \begin{aligned}
 \dot x(t)&=-Ax(t)+B_u\hat u(t)=Ax(t)-B_uR_{uu}^{-1}B_u^Tp(t)\\
 \dot p(t)&=-R_{xx}x(t)-A^Tp(t)=-C_z^TR_{zz}C_zx(t)-A^Tp(t)\\
 \end{aligned}
 \tag{26}
-
+$$
 <p>综上我们可以得到如下关系：</p>
+
+$$
+
 \begin{bmatrix}
 \dot x(t)\\
 \dot p(t)\\
@@ -579,9 +643,11 @@ H&=\frac{1}{2}[z^T(t)R_{zz}z(t)+u^T(t)R_{uu}u(t)]+p^T(t)(Ax(t)+B_uu(t))\\
     p(t)\\
   \end{bmatrix}
 \tag{27}
+$$
+<p>我们将上述$H$矩阵称为<strong>哈密顿矩阵（Hamiltonian Matrix）</strong>。我们发现，$x$和$p$的状态转移矩阵存在耦合，同时，对于$x$我们只知道它的初始状态$x_0$，而对于$p$我们只知道它的终末状态$p(t_f)=P_{t_f}x(t_f)$。这是一个难以解决并且比较典型的<strong>两点边值问题（Two-Point Boundary Problem）</strong>。<br>根据公式（27），可以发现它是一个线性常微分方程组。根据相关理论，如果已知一个在时间$t_0$的状态$[x(t_0),p(t_0)]^T$，其任意时间点状态$[x(t),p(t)]^T$满足如下关系：</p>
 
-<p>我们将上述<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>H</mi></mrow><annotation encoding="application/x-tex">H</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.08125em;">H</span></span></span></span>矩阵称为<strong>哈密顿矩阵（Hamiltonian Matrix）</strong>。我们发现，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">x</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span></span></span></span>的状态转移矩阵存在耦合，同时，对于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">x</span></span></span></span>我们只知道它的初始状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">x_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">x</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathrm">0</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>，而对于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span></span></span></span>我们只知道它的终末状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo>(</mo><msub><mi>t</mi><mi>f</mi></msub><mo>)</mo><mo>=</mo><msub><mi>P</mi><mrow><msub><mi>t</mi><mi>f</mi></msub></mrow></msub><mi>x</mi><mo>(</mo><msub><mi>t</mi><mi>f</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">p(t_f)=P_{t_f}x(t_f)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.1030799999999998em;vertical-align:-0.35307999999999995em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span><span class="mopen">(</span><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span><span class="mrel">=</span><span class="mord"><span class="mord mathit" style="margin-right:0.13889em;">P</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.13889em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15122857142857138em;margin-right:0.07142857142857144em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mord mathit">x</span><span class="mopen">(</span><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span></span></span></span>。这是一个难以解决并且比较典型的<strong>两点边值问题（Two-Point Boundary Problem）</strong>。<br>
-根据公式（27），可以发现它是一个线性常微分方程组。根据相关理论，如果已知一个在时间<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>t</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">t_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.61508em;"></span><span class="strut bottom" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathrm">0</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>的状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>x</mi><mo>(</mo><msub><mi>t</mi><mn>0</mn></msub><mo>)</mo><mo separator="true">,</mo><mi>p</mi><mo>(</mo><msub><mi>t</mi><mn>0</mn></msub><mo>)</mo><msup><mo>]</mo><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">[x(t_0),p(t_0)]^T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.8413309999999999em;"></span><span class="strut bottom" style="height:1.0913309999999998em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mopen">[</span><span class="mord mathit">x</span><span class="mopen">(</span><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathrm">0</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span><span class="mpunct">,</span><span class="mord mathit">p</span><span class="mopen">(</span><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathrm">0</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span><span class="mclose"><span class="mclose">]</span><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord mathit" style="margin-right:0.13889em;">T</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>，其任意时间点状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>x</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo separator="true">,</mo><mi>p</mi><mo>(</mo><mi>t</mi><mo>)</mo><msup><mo>]</mo><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">[x(t),p(t)]^T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.8413309999999999em;"></span><span class="strut bottom" style="height:1.0913309999999998em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mopen">[</span><span class="mord mathit">x</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mord mathit">p</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span><span class="mclose"><span class="mclose">]</span><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord mathit" style="margin-right:0.13889em;">T</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>满足如下关系：</p>
+$$
+
 \begin{bmatrix}
 x(t)\\
 p(t)\\
@@ -599,19 +665,27 @@ x(t_0)\\
 p(t_0)\\
 \end{bmatrix}
 \tag{28}
+$$
+<p>上式证明比较复杂，在此不打算着墨太多（主要是我不会），不过大概可以确定的是在给定初始状态$t_0$时，$F(t,t_0)$只与时间$t$有关，这一点可以将公式（28）代入到公式（27）中，可以得到：</p>
 
-<p>上式证明比较复杂，在此不打算着墨太多（主要是我不会），不过大概可以确定的是在给定初始状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>t</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">t_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.61508em;"></span><span class="strut bottom" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathrm">0</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>时，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>F</mi><mo>(</mo><mi>t</mi><mo separator="true">,</mo><msub><mi>t</mi><mn>0</mn></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">F(t,t_0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.13889em;">F</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mpunct">,</span><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathrm">0</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span></span></span></span>只与时间<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.61508em;"></span><span class="strut bottom" style="height:0.61508em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">t</span></span></span></span>有关，这一点可以将公式（28）代入到公式（27）中，可以得到：</p>
+$$
+
 \dot F(t, t_0)=F(t, t_0)\begin{bmatrix}
 x(t_0)\\
 p(t_0)\\
 \end{bmatrix}
 \tag{29}
+$$
+<p>根据相关理论可以得到$F(t,t_0)$的解的形式如下：</p>
 
-<p>根据相关理论可以得到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>F</mi><mo>(</mo><mi>t</mi><mo separator="true">,</mo><msub><mi>t</mi><mn>0</mn></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">F(t,t_0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.13889em;">F</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mpunct">,</span><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathrm">0</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span></span></span></span>的解的形式如下：</p>
-<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>F</mi><mo>(</mo><mi>t</mi><mo separator="true">,</mo><msub><mi>t</mi><mn>0</mn></msub><mo>)</mo><mo>=</mo><mrow><mi mathvariant="script">T</mi></mrow><msup><mi>e</mi><mrow><msubsup><mo>∫</mo><mrow><msub><mi>t</mi><mn>0</mn></msub></mrow><mrow><mi>t</mi></mrow></msubsup><mi>A</mi><mo>(</mo><mi>τ</mi><mo>)</mo><mi>d</mi><mi>τ</mi></mrow></msup></mrow><annotation encoding="application/x-tex">F(t,t_0)=\mathcal{T}e^{\int_{t_0}^{t}A(\tau)d\tau}
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:1.107694em;"></span><span class="strut bottom" style="height:1.357694em;vertical-align:-0.25em;"></span><span class="base displaystyle textstyle uncramped"><span class="mord mathit" style="margin-right:0.13889em;">F</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mpunct">,</span><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathrm">0</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span><span class="mrel">=</span><span class="mord displaystyle textstyle uncramped"><span class="mord mathcal" style="margin-right:0.25417em;">T</span></span><span class="mord"><span class="mord mathit">e</span><span class="vlist"><span style="top:-0.506854em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mop"><span class="op-symbol small-op mop" style="margin-right:0.19445em;top:0.07444000000000003em;">∫</span><span class="vlist"><span style="top:0.35612em;margin-left:-0.19445em;margin-right:0.07142857142857144em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord scriptscriptstyle cramped"><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.29964em;margin-right:0.1em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptscriptstyle scriptscriptstyle cramped"><span class="mord mathrm">0</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span><span style="top:-0.41900000000000004em;margin-right:0.07142857142857144em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle uncramped"><span class="mord scriptscriptstyle uncramped"><span class="mord mathit">t</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mord mathit">A</span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.1132em;">τ</span><span class="mclose">)</span><span class="mord mathit">d</span><span class="mord mathit" style="margin-right:0.1132em;">τ</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span></span></p>
-<p>其中时间排序算符<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mrow><mi mathvariant="script">T</mi></mrow></mrow><annotation encoding="application/x-tex">\mathcal{T}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord textstyle uncramped"><span class="mord mathcal" style="margin-right:0.25417em;">T</span></span></span></span></span>用来保证矩阵<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>A</mi><mo>(</mo><mi>τ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">A(\tau)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">A</span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.1132em;">τ</span><span class="mclose">)</span></span></span></span>按照时间顺序正确地作用。<br>
-根据公式（28），考虑任意时间<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.61508em;"></span><span class="strut bottom" style="height:0.61508em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">t</span></span></span></span>和终末时间<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>t</mi><mi>f</mi></msub></mrow><annotation encoding="application/x-tex">t_f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.61508em;"></span><span class="strut bottom" style="height:0.9011879999999999em;vertical-align:-0.286108em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>，有：</p>
+$$
+
+F(t,t_0)=\mathcal{T}e^{\int_{t_0}^{t}A(\tau)d\tau}
+$$
+<p>其中时间排序算符$\mathcal{T}$用来保证矩阵$A(\tau)$按照时间顺序正确地作用。<br>根据公式（28），考虑任意时间$t$和终末时间$t_f$，有：</p>
+
+$$
+
 \begin{bmatrix}
 x(t)\\
 p(t)\\
@@ -629,8 +703,11 @@ x(t_f)\\
 p(t_f)\\
 \end{bmatrix}
 \tag{30}
-
+$$
 <p>于是很容易得到如下关系：</p>
+
+$$
+
 \begin{aligned}
 x(t)&=F_{11}(t,t_f)x(t_f)+F_{12}(t,t_f)p(t_f)\\
 &=[F_{11}(t,t_f)+F_{12}(t,t_f)P_{t_f}]x(t_f)\\
@@ -638,19 +715,28 @@ p(t)&=F_{21}(t,t_f)x(t_f)+F_{22}(t,t_f)p(t_f)\\
 &=[F_{21}(t,t_f)+F_{22}(t,t_f)P_{t_f}]x(t_f)
 \end{aligned}
 \tag{31}
-
+$$
 <p>于是有：</p>
+
+$$
+
 \begin{aligned}
 p(t)&=[F_{21}(t,t_f)+F_{22}(t,t_f)P_{t_f}][F_{11}(t,t_f)+F_{12}(t,t_f)P_{t_f}]^{-1}x(t)\\
 &\triangleq P(t)x(t)
 \end{aligned}
 \tag{32}
+$$
+<p>现在我们得了$p(t)=P(t)x(t)$了，下面我们看一看$P(t)$是如何变化的，根据公式（32）我们有：</p>
 
-<p>现在我们得了<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo>=</mo><mi>P</mi><mo>(</mo><mi>t</mi><mo>)</mo><mi>x</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">p(t)=P(t)x(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span><span class="mrel">=</span><span class="mord mathit" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span><span class="mord mathit">x</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span></span></span></span>了，下面我们看一看<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">P(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span></span></span></span>是如何变化的，根据公式（32）我们有：</p>
+$$
+
 \dot p(t)=\dot P(t)x(t)+P(t)\dot x(t)
 \tag{33}
-
+$$
 <p>根据公式（33）、（22）、（21）、（24）、（32）有：</p>
+
+$$
+
 \begin{aligned}
 -\dot P(t)x(t)&=-\dot p(t)+P(t)\dot x(t)\\
 &=C_z^TR_{zz}C_zx(t)+A^Tp(t)+P(t)(Ax(t)-B_uR_{uu}^{-1}B_u^Tp(t))\\
@@ -659,15 +745,21 @@ p(t)&=[F_{21}(t,t_f)+F_{22}(t,t_f)P_{t_f}][F_{11}(t,t_f)+F_{12}(t,t_f)P_{t_f}]^{
 &=[A^TP(t)+P(t)A+C_z^TR_{zz}C_z-P(t)B_uR_{uu}^{-1}B_u^TP(t)]x(t)
 \end{aligned}
 \tag{34}
-
+$$
 <p>于是我们得到了<strong>连续时间代数黎卡提方程（continuous time algebraic Riccati equation-CARE）</strong>：</p>
+
+$$
+
 -\dot P(t)=A^TP(t)+P(t)A+C_z^TR_{zz}C_z-P(t)B_uR_{uu}^{-1}B_u^TP(t)
 \tag{35}
+$$
+<p>我们可以从终末时间点$t_f$的$P(t_f)=P_{t_f}$反向求解最优的$P(t)$，同时可以据此得到最优控制输入：</p>
 
-<p>我们可以从终末时间点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>t</mi><mi>f</mi></msub></mrow><annotation encoding="application/x-tex">t_f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.61508em;"></span><span class="strut bottom" style="height:0.9011879999999999em;vertical-align:-0.286108em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi><mo>(</mo><msub><mi>t</mi><mi>f</mi></msub><mo>)</mo><mo>=</mo><msub><mi>P</mi><mrow><msub><mi>t</mi><mi>f</mi></msub></mrow></msub></mrow><annotation encoding="application/x-tex">P(t_f)=P_{t_f}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1.1030799999999998em;vertical-align:-0.35307999999999995em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span><span class="mrel">=</span><span class="mord"><span class="mord mathit" style="margin-right:0.13889em;">P</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.13889em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord"><span class="mord mathit">t</span><span class="vlist"><span style="top:0.15122857142857138em;margin-right:0.07142857142857144em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>反向求解最优的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">P(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span></span></span></span>，同时可以据此得到最优控制输入：</p>
+$$
+
 \hat{u}=-R_{uu}^{-1}B_u^Tp(t)=-R_{uu}^{-1}B_u^TP(t)x(t)\triangleq-K(t)x(t)
 \tag{36}
-
+$$
 <p>推导完毕。</p>
 <p>未经授权，禁止转载</p>
 
@@ -714,9 +806,9 @@ p(t)&=[F_{21}(t,t_f)+F_{22}(t,t_f)P_{t_f}][F_{11}(t,t_f)+F_{12}(t,t_f)P_{t_f}]^{
       
         <a href="/tags/LQR/" class="print-no-link">#LQR</a>
       
-        <a href="/tags/%E8%BF%9E%E7%BB%AD%E7%B3%BB%E7%BB%9F/" class="print-no-link">#连续系统</a>
-      
         <a href="/tags/%E5%8F%98%E5%88%86%E6%B3%95/" class="print-no-link">#变分法</a>
+      
+        <a href="/tags/%E8%BF%9E%E7%BB%AD%E7%B3%BB%E7%BB%9F/" class="print-no-link">#连续系统</a>
       
     </div>
   
@@ -845,6 +937,7 @@ p(t)&=[F_{21}(t,t_f)+F_{22}(t,t_f)P_{t_f}][F_{11}(t,t_f)+F_{12}(t,t_f)P_{t_f}]^{
 
   
   
+
 
 
 
@@ -1117,6 +1210,49 @@ p(t)&=[F_{21}(t,t_f)+F_{22}(t,t_f)P_{t_f}][F_{11}(t,t_f)+F_{12}(t,t_f)P_{t_f}]^{
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

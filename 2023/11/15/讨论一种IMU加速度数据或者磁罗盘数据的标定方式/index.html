@@ -19,12 +19,12 @@
   <meta name="author" content="Xinyu Han">
   <meta name="keywords" content="">
   
-    <meta name="description" content="讨论一种IMU加速度数据或者磁罗盘数据的标定方式 现在讨论一种IMU加速度数据或者磁罗盘数据的标定方法。 问题描述 由于IMU传感器的制造工艺和精度的限制，IMU的加速度计和磁罗盘的输出值会存在一定的误差，这些误差会对姿态解算的精度造成影响。IMU数据的误差来源主要有以下几个方面：  零偏误差 比例误差 非正交误差 随机误差 温度漂移误差  其中，零偏误差、比例误差和非正交误差都可以通过标定得到，">
+    <meta name="description" content="讨论一种IMU加速度数据或者磁罗盘数据的标定方式现在讨论一种IMU加速度数据或者磁罗盘数据的标定方法。 问题描述由于IMU传感器的制造工艺和精度的限制，IMU的加速度计和磁罗盘的输出值会存在一定的误差，这些误差会对姿态解算的精度造成影响。IMU数据的误差来源主要有以下几个方面：  零偏误差 比例误差 非正交误差 随机误差 温度漂移误差  其中，零偏误差、比例误差和非正交误差都可以通过标定得到，随机">
 <meta property="og:type" content="article">
 <meta property="og:title" content="讨论一种IMU加速度数据或者磁罗盘数据的标定方式">
 <meta property="og:url" content="http://example.com/2023/11/15/%E8%AE%A8%E8%AE%BA%E4%B8%80%E7%A7%8DIMU%E5%8A%A0%E9%80%9F%E5%BA%A6%E6%95%B0%E6%8D%AE%E6%88%96%E8%80%85%E7%A3%81%E7%BD%97%E7%9B%98%E6%95%B0%E6%8D%AE%E7%9A%84%E6%A0%87%E5%AE%9A%E6%96%B9%E5%BC%8F/index.html">
 <meta property="og:site_name" content="Xinyu&#39;s Blog">
-<meta property="og:description" content="讨论一种IMU加速度数据或者磁罗盘数据的标定方式 现在讨论一种IMU加速度数据或者磁罗盘数据的标定方法。 问题描述 由于IMU传感器的制造工艺和精度的限制，IMU的加速度计和磁罗盘的输出值会存在一定的误差，这些误差会对姿态解算的精度造成影响。IMU数据的误差来源主要有以下几个方面：  零偏误差 比例误差 非正交误差 随机误差 温度漂移误差  其中，零偏误差、比例误差和非正交误差都可以通过标定得到，">
+<meta property="og:description" content="讨论一种IMU加速度数据或者磁罗盘数据的标定方式现在讨论一种IMU加速度数据或者磁罗盘数据的标定方法。 问题描述由于IMU传感器的制造工艺和精度的限制，IMU的加速度计和磁罗盘的输出值会存在一定的误差，这些误差会对姿态解算的精度造成影响。IMU数据的误差来源主要有以下几个方面：  零偏误差 比例误差 非正交误差 随机误差 温度漂移误差  其中，零偏误差、比例误差和非正交误差都可以通过标定得到，随机">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-11-14T16:00:00.000Z">
 <meta property="article:modified_time" content="2026-04-19T13:07:15.960Z">
@@ -47,8 +47,6 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
 
 
 
@@ -330,7 +328,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3k 字
+          2.8k 字
         
       </span>
     
@@ -341,7 +339,7 @@
         
         
         
-          25 分钟
+          24 分钟
         
       </span>
     
@@ -385,10 +383,8 @@
             
               <div class="markdown-body">
                 
-                <h2 id="讨论一种IMU加速度数据或者磁罗盘数据的标定方式">讨论一种IMU加速度数据或者磁罗盘数据的标定方式</h2>
-<p>现在讨论一种IMU加速度数据或者磁罗盘数据的标定方法。</p>
-<h1 id="问题描述">问题描述</h1>
-<p>由于IMU传感器的制造工艺和精度的限制，IMU的加速度计和磁罗盘的输出值会存在一定的误差，这些误差会对姿态解算的精度造成影响。IMU数据的误差来源主要有以下几个方面：</p>
+                <h2 id="讨论一种IMU加速度数据或者磁罗盘数据的标定方式"><a href="#讨论一种IMU加速度数据或者磁罗盘数据的标定方式" class="headerlink" title="讨论一种IMU加速度数据或者磁罗盘数据的标定方式"></a>讨论一种IMU加速度数据或者磁罗盘数据的标定方式</h2><p>现在讨论一种IMU加速度数据或者磁罗盘数据的标定方法。</p>
+<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>由于IMU传感器的制造工艺和精度的限制，IMU的加速度计和磁罗盘的输出值会存在一定的误差，这些误差会对姿态解算的精度造成影响。IMU数据的误差来源主要有以下几个方面：</p>
 <ol>
 <li>零偏误差</li>
 <li>比例误差</li>
@@ -397,30 +393,40 @@
 <li>温度漂移误差</li>
 </ol>
 <p>其中，零偏误差、比例误差和非正交误差都可以通过标定得到，随机误差可以通过滤波算法进行抑制，温度漂移误差可以通过温度补偿进行抑制。我们这次主要讨论前三种误差的标定方法。由于原理一致，因此只讨论加速度计的标定方法。</p>
-<h1 id="误差模型">误差模型</h1>
-<p>根据零偏误差、比例误差和非正交误差的定义，我们可以得到如下的误差模型：</p>
+<h1 id="误差模型"><a href="#误差模型" class="headerlink" title="误差模型"></a>误差模型</h1><p>根据零偏误差、比例误差和非正交误差的定义，我们可以得到如下的误差模型：</p>
+
+$$
+
 \begin{aligned}
 \mathbf{a}_{s} &=\mathbf{M}_{a}(\mathbf{a}_{m} - \mathbf{b}_a - \mathbf{w}_{a}) \\
 \end{aligned}
 \tag{1}
+$$
+<p>其中， $\mathbf a_m$ 是加速度计的测量值， $\mathbf a_s$ 是加速度计的真实值，$\mathbf M_a$ 是加速度计的比例和非正交误差矩阵，$\mathbf b_a$ 是加速度计的零偏误差向量，$\mathbf w_a$ 是加速度计的随机误差向量，我们假设它满足高斯分布，即 $\mathbf w_a \sim \mathcal N \left(\mathbf 0, \mathbf Q_a\right)$ ，其中 $\mathbf Q_a$ 是加速度计的随机误差协方差矩阵。</p>
+<p>误差模型中的 $\mathbf M_a$ 和 $\mathbf b_a$ 是我们需要标定的参数，其中 $\mathbf M_a$ 是一个 $3 \times 3$ 的矩阵，$\mathbf b_a$ 是一个 $3 \times 1$ 的向量。</p>
+<h1 id="代价函数"><a href="#代价函数" class="headerlink" title="代价函数"></a>代价函数</h1><p>如果我们想得到 $\mathbf M_a$ 和 $\mathbf b_a$ 的最优解，我们需要定义一个代价函数，然后通过最小化代价函数来得到最优解。显然在静态情况下 $\mathbf a_s$ 的模长应该等于重力加速度的模长，即：</p>
 
-<p>其中， <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">a</mi><mi>m</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf a_m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.44444em;"></span><span class="strut bottom" style="height:0.59444em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class=""><span class="mord mathbf">a</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">m</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 是加速度计的测量值， <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">a</mi><mi>s</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf a_s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.44444em;"></span><span class="strut bottom" style="height:0.59444em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class=""><span class="mord mathbf">a</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">s</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 是加速度计的真实值，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">M</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf M_a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68611em;"></span><span class="strut bottom" style="height:0.83611em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class=""><span class="mord mathbf">M</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">a</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 是加速度计的比例和非正交误差矩阵，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">b</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf b_a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class=""><span class="mord mathbf">b</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">a</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 是加速度计的零偏误差向量，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">w</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf w_a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.44444em;"></span><span class="strut bottom" style="height:0.59444em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class=""><span class="mord mathbf" style="margin-right:0.01597em;">w</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.01597em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">a</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 是加速度计的随机误差向量，我们假设它满足高斯分布，即 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">w</mi><mi>a</mi></msub><mo>∼</mo><mi mathvariant="script">N</mi><mrow><mo fence="true">(</mo><mn mathvariant="bold">0</mn><mo separator="true">,</mo><msub><mi mathvariant="bold">Q</mi><mi>a</mi></msub><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathbf w_a \sim \mathcal N \left(\mathbf 0, \mathbf Q_a\right)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class=""><span class="mord mathbf" style="margin-right:0.01597em;">w</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.01597em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">a</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mrel">∼</span><span class="mord mathcal" style="margin-right:0.14736em;">N</span><span class="minner textstyle uncramped"><span class="style-wrap reset-textstyle textstyle uncramped" style="top:0em;">(</span><span class="mord mathbf">0</span><span class="mpunct">,</span><span class=""><span class="mord mathbf">Q</span><span class="vlist"><span style="top:0.24444em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">a</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="style-wrap reset-textstyle textstyle uncramped" style="top:0em;">)</span></span></span></span></span> ，其中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">Q</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf Q_a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68611em;"></span><span class="strut bottom" style="height:0.93055em;vertical-align:-0.24444em;"></span><span class="base textstyle uncramped"><span class=""><span class="mord mathbf">Q</span><span class="vlist"><span style="top:0.24444em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">a</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 是加速度计的随机误差协方差矩阵。</p>
-<p>误差模型中的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">M</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf M_a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68611em;"></span><span class="strut bottom" style="height:0.83611em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class=""><span class="mord mathbf">M</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">a</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">b</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf b_a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class=""><span class="mord mathbf">b</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">a</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 是我们需要标定的参数，其中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">M</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf M_a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68611em;"></span><span class="strut bottom" style="height:0.83611em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class=""><span class="mord mathbf">M</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">a</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 是一个 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn><mo>×</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">3 \times 3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span><span class="mbin">×</span><span class="mord mathrm">3</span></span></span></span> 的矩阵，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">b</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf b_a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class=""><span class="mord mathbf">b</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">a</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 是一个 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn><mo>×</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">3 \times 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span><span class="mbin">×</span><span class="mord mathrm">1</span></span></span></span> 的向量。</p>
-<h1 id="代价函数">代价函数</h1>
-<p>如果我们想得到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">M</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf M_a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68611em;"></span><span class="strut bottom" style="height:0.83611em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class=""><span class="mord mathbf">M</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">a</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">b</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf b_a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class=""><span class="mord mathbf">b</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">a</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 的最优解，我们需要定义一个代价函数，然后通过最小化代价函数来得到最优解。显然在静态情况下 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">a</mi><mi>s</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf a_s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.44444em;"></span><span class="strut bottom" style="height:0.59444em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class=""><span class="mord mathbf">a</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">s</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 的模长应该等于重力加速度的模长，即：</p>
+$$
+
 \begin{aligned}
 \left\|\mathbf{a}_{s}\right\| &= g
 \end{aligned}
 \tag{2}
-
+$$
 <p>因此我们可以构建如下代价函数：</p>
+
+$$
+
 \begin{aligned}
 \mathbf{J} &= \sum_{i=1}^{N}({\mathbf{a}_{s}^{i}}^T\mathbf{a}_{s}^{i} - g^2)^2
 \end{aligned}
 \tag{3}
+$$
+<p>其中， $N$ 是数据的个数， $\mathbf a_s^{i}$ 是第 $i$ 个数据点的真实加速度值， $g$ 是重力加速度的模长。</p>
+<p>通过上述代价函数不难发现，如果对 $\mathbf a_s^{i}$ 做一个给定的单位正交变换 $\mathbf A$ ，则有如下关系：</p>
 
-<p>其中， <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.10903em;">N</span></span></span></span> 是数据的个数， <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi mathvariant="bold">a</mi><mi>s</mi><mrow><mi>i</mi></mrow></msubsup></mrow><annotation encoding="application/x-tex">\mathbf a_s^{i}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.824664em;"></span><span class="strut bottom" style="height:1.071664em;vertical-align:-0.247em;"></span><span class="base textstyle uncramped"><span class=""><span class="mord mathbf">a</span><span class="vlist"><span style="top:0.247em;margin-left:0em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">s</span></span></span><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathit">i</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 是第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.65952em;"></span><span class="strut bottom" style="height:0.65952em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">i</span></span></span></span> 个数据点的真实加速度值， <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>g</mi></mrow><annotation encoding="application/x-tex">g</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.03588em;">g</span></span></span></span> 是重力加速度的模长。</p>
-<p>通过上述代价函数不难发现，如果对 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi mathvariant="bold">a</mi><mi>s</mi><mrow><mi>i</mi></mrow></msubsup></mrow><annotation encoding="application/x-tex">\mathbf a_s^{i}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.824664em;"></span><span class="strut bottom" style="height:1.071664em;vertical-align:-0.247em;"></span><span class="base textstyle uncramped"><span class=""><span class="mord mathbf">a</span><span class="vlist"><span style="top:0.247em;margin-left:0em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">s</span></span></span><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathit">i</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 做一个给定的单位正交变换 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="bold">A</mi></mrow><annotation encoding="application/x-tex">\mathbf A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68611em;"></span><span class="strut bottom" style="height:0.68611em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathbf">A</span></span></span></span> ，则有如下关系：</p>
+$$
+
 \begin{aligned}
 \mathbf{A}\mathbf{a}_{s}^{i} &= \mathbf{A}\mathbf{M}_{a}(\mathbf{a}_{m}^{i} - \mathbf{b}_a - \mathbf{w}_{a}^{i}) \\
 \mathbf{J}^{'} &= \sum_{i=1}^{N}({\mathbf{A}\mathbf{a}_{s}^{i}}^T\mathbf{A}\mathbf{a}_{s}^{i} - g^2)^2 \\
@@ -429,12 +435,15 @@
 &\equiv \mathbf{J}
 \end{aligned}
 \tag{4}
-
-<p>由此可知，对于一个 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">M</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf M_a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68611em;"></span><span class="strut bottom" style="height:0.83611em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class=""><span class="mord mathbf">M</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">a</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> ，它的任意单位正交变换 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi mathvariant="bold">M</mi><mi>a</mi><mrow><msup><mrow></mrow><mrow><mi mathvariant="normal">′</mi></mrow></msup></mrow></msubsup><mo>=</mo><mi mathvariant="bold">A</mi><msub><mi mathvariant="bold">M</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf M_a^{&#x27;}=\mathbf A \mathbf M_a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.89488em;"></span><span class="strut bottom" style="height:1.14188em;vertical-align:-0.247em;"></span><span class="base textstyle uncramped"><span class=""><span class="mord mathbf">M</span><span class="vlist"><span style="top:0.247em;margin-left:0em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">a</span></span></span><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord"><span></span><span class="vlist"><span style="top:-0.363em;margin-right:0.07142857142857144em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle uncramped"><span class="mord scriptscriptstyle uncramped"><span class="mord mathrm">′</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mrel">=</span><span class="mord mathbf">A</span><span class=""><span class="mord mathbf">M</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">a</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 其代价和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">M</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf M_a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68611em;"></span><span class="strut bottom" style="height:0.83611em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class=""><span class="mord mathbf">M</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">a</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 的代价是一样的，因此如果不对 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">M</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf M_a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68611em;"></span><span class="strut bottom" style="height:0.83611em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class=""><span class="mord mathbf">M</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">a</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 做约束，那么我们可以得到无穷多个解。为了得到唯一的解，我们需要对 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">M</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf M_a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68611em;"></span><span class="strut bottom" style="height:0.83611em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class=""><span class="mord mathbf">M</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">a</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 做约束。约束的方式如下：</p>
+$$
+<p>由此可知，对于一个 $\mathbf M_a$ ，它的任意单位正交变换 $\mathbf M_a^{‘}=\mathbf A \mathbf M_a$ 其代价和 $\mathbf M_a$ 的代价是一样的，因此如果不对 $\mathbf M_a$ 做约束，那么我们可以得到无穷多个解。为了得到唯一的解，我们需要对 $\mathbf M_a$ 做约束。约束的方式如下：</p>
 <ul>
 <li><strong>三角约束</strong></li>
 </ul>
-<p>这种情况约束 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">M</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf M_a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68611em;"></span><span class="strut bottom" style="height:0.83611em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class=""><span class="mord mathbf">M</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">a</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 是一个三角矩阵，上三角或者下三角是等价的，我们以下三角为例，具有如下形式：</p>
+<p>这种情况约束 $\mathbf M_a$ 是一个三角矩阵，上三角或者下三角是等价的，我们以下三角为例，具有如下形式：</p>
+
+$$
+
 \begin{aligned}
 \mathbf{M}_{a} &= \left[\begin{array}{ccc}
 m_{11} & 0 & 0 \\
@@ -443,12 +452,15 @@ m_{31} & m_{32} & m_{33}
 \end{array}\right]
 \end{aligned}
 \tag{5}
-
+$$
 <p>我们可以比较形象的想象出上述约束的具体几何意义：首先通过第一行，我们可以知道我们约束测量轴x和真实轴x对准，然后第二行我们约束了测量轴y一定落在真实的xy平面上，最后第三行对于测量轴z则没有更多的约束，这就好比把一个非正交坐标架在正交坐标架中进行了“固定”，不让其随意转动产生无穷多解。</p>
 <ul>
 <li><strong>对称约束</strong></li>
 </ul>
-<p>这种情况约束 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">M</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf M_a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68611em;"></span><span class="strut bottom" style="height:0.83611em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class=""><span class="mord mathbf">M</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">a</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 是一个对称矩阵，具有如下形式：</p>
+<p>这种情况约束 $\mathbf M_a$ 是一个对称矩阵，具有如下形式：</p>
+
+$$
+
 \begin{aligned}
 \mathbf{M}_{a} &= \left[\begin{array}{ccc}
 m_{11} & m_{12} & m_{13} \\
@@ -457,18 +469,24 @@ m_{13} & m_{23} & m_{33}
 \end{array}\right]
 \end{aligned}
 \tag{6}
-
+$$
 <p>我认为其实这样的约束不能体现非正交误差，因为对于与对称矩阵，我们可以对其进行对角化：</p>
+
+$$
+
 \begin{aligned}
 \mathbf{M}_{a} &= \mathbf{P}\mathbf{D}\mathbf{P}^{-1}
 \end{aligned}
 \tag{7}
-
-<p>其中， <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="bold">P</mi></mrow><annotation encoding="application/x-tex">\mathbf P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68611em;"></span><span class="strut bottom" style="height:0.68611em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathbf">P</span></span></span></span> 是一个正交矩阵， <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="bold">D</mi></mrow><annotation encoding="application/x-tex">\mathbf D</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68611em;"></span><span class="strut bottom" style="height:0.68611em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathbf">D</span></span></span></span> 是一个对角矩阵，因此一个对称矩阵相当于正交变换+缩放变换+正交变换，因此对称矩阵的约束实际上是对比例误差的约束。那如果我们只考虑比例误差，那对称矩阵在这种情况下也是存在无穷多解。</p>
+$$
+<p>其中， $\mathbf P$ 是一个正交矩阵， $\mathbf D$ 是一个对角矩阵，因此一个对称矩阵相当于正交变换+缩放变换+正交变换，因此对称矩阵的约束实际上是对比例误差的约束。那如果我们只考虑比例误差，那对称矩阵在这种情况下也是存在无穷多解。</p>
 <ul>
 <li><strong>对角约束</strong></li>
 </ul>
-<p>因此综上所属，如果确实想只考虑比例误差，那对 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="bold">M</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf M_a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68611em;"></span><span class="strut bottom" style="height:0.83611em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class=""><span class="mord mathbf">M</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">a</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 的约束应该是一个对角矩阵。即：</p>
+<p>因此综上所属，如果确实想只考虑比例误差，那对 $\mathbf M_a$ 的约束应该是一个对角矩阵。即：</p>
+
+$$
+
 \begin{aligned}
 \mathbf{M}_{a} &= \left[\begin{array}{ccc}
 m_{11} & 0 & 0 \\
@@ -477,9 +495,8 @@ m_{11} & 0 & 0 \\
 \end{array}\right]
 \end{aligned}
 \tag{8}
-
-<h1 id="优化方法">优化方法</h1>
-<p>根据代价函数，我们可以手动求导得到雅可比矩阵，然后通过优化方法求解最优解，例如可以使用<strong>ceres</strong>或者<strong>g2o</strong></p>
+$$
+<h1 id="优化方法"><a href="#优化方法" class="headerlink" title="优化方法"></a>优化方法</h1><p>根据代价函数，我们可以手动求导得到雅可比矩阵，然后通过优化方法求解最优解，例如可以使用<strong>ceres</strong>或者<strong>g2o</strong></p>
 <hr>
 <p>未经授权，禁止转载</p>
 
@@ -655,6 +672,7 @@ m_{11} & 0 & 0 \\
 
   
   
+
 
 
 
@@ -927,6 +945,49 @@ m_{11} & 0 & 0 \\
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

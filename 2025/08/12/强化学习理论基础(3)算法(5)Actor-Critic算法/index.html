@@ -19,12 +19,12 @@
   <meta name="author" content="Xinyu Han">
   <meta name="keywords" content="">
   
-    <meta name="description" content="强化学习理论基础-算法-Actor-Critic算法 在《策略梯度定理》一文中我们证明推导了策略梯度定理，现在把它抄到下边以供回忆  \begin{aligned}   \frac{\partial J(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} &amp;&#x3D; \frac{1 - \gamma^n}{1 - \gamma} \mathbb{E}_">
+    <meta name="description" content="强化学习理论基础-算法-Actor-Critic算法在《策略梯度定理》定理(3)策略梯度定理&#x2F;)一文中我们证明推导了策略梯度定理，现在把它抄到下边以供回忆   $$ \begin{aligned}   \frac{\partial J(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} &amp;&#x3D; \frac{1 - \gamma^n}{1 - \ga">
 <meta property="og:type" content="article">
 <meta property="og:title" content="强化学习理论基础(3)算法(5)Actor-Critic算法">
 <meta property="og:url" content="http://example.com/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(3)%E7%AE%97%E6%B3%95(5)Actor-Critic%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="Xinyu&#39;s Blog">
-<meta property="og:description" content="强化学习理论基础-算法-Actor-Critic算法 在《策略梯度定理》一文中我们证明推导了策略梯度定理，现在把它抄到下边以供回忆  \begin{aligned}   \frac{\partial J(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} &amp;&#x3D; \frac{1 - \gamma^n}{1 - \gamma} \mathbb{E}_">
+<meta property="og:description" content="强化学习理论基础-算法-Actor-Critic算法在《策略梯度定理》定理(3)策略梯度定理&#x2F;)一文中我们证明推导了策略梯度定理，现在把它抄到下边以供回忆   $$ \begin{aligned}   \frac{\partial J(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} &amp;&#x3D; \frac{1 - \gamma^n}{1 - \ga">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-08-11T16:09:00.000Z">
 <meta property="article:modified_time" content="2026-04-19T13:07:15.959Z">
@@ -47,8 +47,6 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
 
 
 
@@ -330,7 +328,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.7k 字
+          4.5k 字
         
       </span>
     
@@ -341,7 +339,7 @@
         
         
         
-          40 分钟
+          38 分钟
         
       </span>
     
@@ -385,159 +383,219 @@
             
               <div class="markdown-body">
                 
-                <h1 id="强化学习理论基础-算法-actor-critic算法">强化学习理论基础-算法-Actor-Critic算法</h1>
-<p>在<a href="/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(2)%E5%AE%9A%E7%90%86(3)%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E5%AE%9A%E7%90%86/">《策略梯度定理》</a>一文中我们证明推导了策略梯度定理，现在把它抄到下边以供回忆</p>
+                <h1 id="强化学习理论基础-算法-Actor-Critic算法"><a href="#强化学习理论基础-算法-Actor-Critic算法" class="headerlink" title="强化学习理论基础-算法-Actor-Critic算法"></a>强化学习理论基础-算法-Actor-Critic算法</h1><p>在<a href="/2025/08/12/强化学习理论基础(2">《策略梯度定理》</a>定理(3)策略梯度定理/)一文中我们证明推导了策略梯度定理，现在把它抄到下边以供回忆</p>
 <div class="math">
+
+$$
 \begin{aligned}
   \frac{\partial J(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} &= \frac{1 - \gamma^n}{1 - \gamma} \mathbb{E}_{S \sim d(\cdot)} \left [\mathbb{E}_{A \sim \pi(\cdot \mid S; \boldsymbol{\theta})} \left[ \frac{\partial \ln \pi(A \mid S; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot Q_{\pi}(S, A) \right]\right]
 \end{aligned} \tag {0.1}
+$$
 
 </div>
-<p>同时我们介绍了近似策略梯度，即使用蒙特卡洛近似表示上述期望，得到一个随机策略梯度函数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>g</mi></mrow><annotation encoding="application/x-tex">g</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.03588em;">g</span></span></span></span></p>
+
+<p>同时我们介绍了近似策略梯度，即使用蒙特卡洛近似表示上述期望，得到一个随机策略梯度函数$g$</p>
 <div class="math">
+
+$$
 \begin{aligned}
    \boldsymbol{g}(s, a; \boldsymbol{\theta}) &\triangleq \frac{\partial \ln \pi(a \mid s; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot Q_{\pi}(s, a)
 \end{aligned} \tag{0.2}
+$$
 
 </div>
+
+
 <p>接下来我们使用上述方法来推导Actor-Critic算法。</p>
-<h2 id="1-推导">1. 推导</h2>
-<p>Actor-Critic算法中有一个价值网络q(s, a; \boldsymbol{\omega})和一个策略网络\pi(a \mid s; \boldsymbol{\theta})，其中价值网络q(s, a; \boldsymbol{\omega})用来近似随机策略梯度中的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>Q</mi><mrow><mi>π</mi></mrow></msub><mo>(</mo><mi>s</mi><mo separator="true">,</mo><mi>a</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">Q_{\pi}(s, a)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">Q</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">π</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit">s</span><span class="mpunct">,</span><span class="mord mathit">a</span><span class="mclose">)</span></span></span></span>，来解决<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>Q</mi><mrow><mi>π</mi></mrow></msub><mo>(</mo><mi>s</mi><mo separator="true">,</mo><mi>a</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">Q_{\pi}(s, a)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">Q</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">π</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit">s</span><span class="mpunct">,</span><span class="mord mathit">a</span><span class="mclose">)</span></span></span></span>无法被直接观测到的问题。策略网络\pi(a \mid s; \boldsymbol{\theta})用来生成动作。Actor-Critic算法可以翻译成“演员-评委”算法，策略网络\pi(a \mid s; \boldsymbol{\theta})充当“演员”，生成动作；而价值网络q(s, a; \boldsymbol{\omega})充当“评委”，评估动作的价值。</p>
-<h3 id="1-1-训练策略网络">1.1 训练策略网络</h3>
-<p>将上述随机策略梯度函数g(s, a; \boldsymbol{\theta})中的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>Q</mi><mrow><mi>π</mi></mrow></msub><mo>(</mo><mi>s</mi><mo separator="true">,</mo><mi>a</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">Q_{\pi}(s, a)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">Q</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit" style="margin-right:0.03588em;">π</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mopen">(</span><span class="mord mathit">s</span><span class="mpunct">,</span><span class="mord mathit">a</span><span class="mclose">)</span></span></span></span>替换为价值网络q(s, a; \boldsymbol{\omega})，得到对随机策略梯度的估计<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mi>g</mi><mo>^</mo></mover></mrow><annotation encoding="application/x-tex">\hat g</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord mathit" style="margin-right:0.03588em;">g</span></span><span style="top:0em;margin-left:0.05556em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>^</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>：</p>
+<h2 id="1-推导"><a href="#1-推导" class="headerlink" title="1. 推导"></a>1. 推导</h2><p>Actor-Critic算法中有一个价值网络$q(s, a; \boldsymbol{\omega})$和一个策略网络$\pi(a \mid s; \boldsymbol{\theta})$，其中价值网络$q(s, a; \boldsymbol{\omega})$用来近似随机策略梯度中的$Q_{\pi}(s, a)$，来解决$Q_{\pi}(s, a)$无法被直接观测到的问题。策略网络$\pi(a \mid s; \boldsymbol{\theta})$用来生成动作。Actor-Critic算法可以翻译成“演员-评委”算法，策略网络$\pi(a \mid s; \boldsymbol{\theta})$充当“演员”，生成动作；而价值网络$q(s, a; \boldsymbol{\omega})$充当“评委”，评估动作的价值。</p>
+<h3 id="1-1-训练策略网络"><a href="#1-1-训练策略网络" class="headerlink" title="1.1 训练策略网络"></a>1.1 训练策略网络</h3><p>将上述随机策略梯度函数$g(s, a; \boldsymbol{\theta})$中的$Q_{\pi}(s, a)$替换为价值网络$q(s, a; \boldsymbol{\omega})$，得到对随机策略梯度的估计$\hat g$：</p>
 <div class="math">
+
+$$
 \begin{aligned}
    \hat g(s, a; \boldsymbol{\theta}) &\triangleq \frac{\partial \ln \pi(a \mid s; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot q(s, a; \boldsymbol{\omega})
 \end{aligned}  \tag{1.1.1}
+$$
 
 </div>
-<p>然后使用该估计通过梯度上升的方法来更新策略网络的参数\boldsymbol{\theta}：</p>
+
+<p>然后使用该估计通过梯度上升的方法来更新策略网络的参数$\boldsymbol{\theta}$：</p>
 <div class="math">
+
+$$
 \begin{aligned}
    \boldsymbol{\theta} &\leftarrow \boldsymbol{\theta} + \beta \cdot \hat g(s, a; \boldsymbol{\theta})
 \end{aligned} \tag{1.1.2}
+$$
 
 </div>
-<h3 id="1-2-训练价值网络">1.2 训练价值网络</h3>
-<p>价值网络的训练使用的是SARSA算法，在之前的文章<a href="/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(3)%E7%AE%97%E6%B3%95(3)SARSA%E7%AE%97%E6%B3%95/">《SARSA算法》</a>中有详细介绍。</p>
-<p>首先在当前时刻观测到状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>s</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">s_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>，然后根据当前策略选择动作<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">a_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">a</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>，并执行该动作，获得奖励<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>r</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">r_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.02778em;">r</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.02778em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>和下一个状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>s</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">s_{t+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.638891em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">t</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>，接着在状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>s</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">s_{t+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.638891em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">t</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>下模拟选择动作<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mover accent="true"><mrow><mi>a</mi></mrow><mo>~</mo></mover><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">\tilde{a}_{t+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.6678599999999999em;"></span><span class="strut bottom" style="height:0.8761909999999999em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord textstyle cramped"><span class="mord mathit">a</span></span></span><span style="top:-0.35em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>~</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">t</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>，据此我们可以计算<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.61508em;"></span><span class="strut bottom" style="height:0.61508em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">t</span></span></span></span>时刻的价值网络输出和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathit">t</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span>时刻（模拟）的价值网络输出并计算TD目标和TD误差：</p>
+
+<h3 id="1-2-训练价值网络"><a href="#1-2-训练价值网络" class="headerlink" title="1.2 训练价值网络"></a>1.2 训练价值网络</h3><p>价值网络的训练使用的是SARSA算法，在之前的文章<a href="/2025/08/12/强化学习理论基础(3">《SARSA算法》</a>算法(3)SARSA算法/)中有详细介绍。</p>
+<p>首先在当前时刻观测到状态$s_t$，然后根据当前策略选择动作$a_t$，并执行该动作，获得奖励$r_t$和下一个状态$s_{t+1}$，接着在状态$s_{t+1}$下模拟选择动作$\tilde{a}_{t+1}$，据此我们可以计算$t$时刻的价值网络输出和$t+1$时刻（模拟）的价值网络输出并计算TD目标和TD误差：</p>
 <div class="math">
+
+$$
 \begin{aligned}
    \hat q_t &= q(s_t, a_t; \boldsymbol{\omega}) \\
    \hat q_{t+1} &= q(s_{t+1}, \tilde{a}_{t+1}; \boldsymbol{\omega}) \\
    \hat y_t &\triangleq r_t + \gamma \cdot \hat q_{t+1} \\
    \delta_t &\triangleq \hat q_t - \hat y_t
 \end{aligned} \tag{1.2.1}
+$$
 
 </div>
-<p>根据SARSA算法的更新公式，价值网络的参数\boldsymbol{\omega}通过梯度下降的方法进行更新：</p>
+
+<p>根据SARSA算法的更新公式，价值网络的参数$\boldsymbol{\omega}$通过梯度下降的方法进行更新：</p>
 <div class="math">
+
+$$
 \omega \leftarrow \omega - \alpha \cdot \delta_t \cdot \nabla_{\boldsymbol{\omega}} q(s_t, a_t; \boldsymbol{\omega}) \tag{1.2.2}
+$$
 
 </div>
-<h2 id="2-训练流程">2. 训练流程</h2>
-<p>我们假定当前的策略网络的参数是 \boldsymbol \theta_{now} ，当前的价值网络的参数是 \boldsymbol \omega_{now} ，通过以下步骤更新这些参数</p>
+
+
+<h2 id="2-训练流程"><a href="#2-训练流程" class="headerlink" title="2. 训练流程"></a>2. 训练流程</h2><p>我们假定当前的策略网络的参数是 $\boldsymbol \theta_{now}$ ，当前的价值网络的参数是 $\boldsymbol \omega_{now}$ ，通过以下步骤更新这些参数</p>
 <ul>
-<li>观测到当前状态 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>s</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">s_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> ，根据当前策略做随机抽样： <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>t</mi></msub><mo>∼</mo><mi>π</mi><mo>(</mo><mo>⋅</mo><mo>∣</mo><msub><mi>s</mi><mi>t</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">a_t \sim \pi(\cdot \mid s_t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">a</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mrel">∼</span><span class="mord mathit" style="margin-right:0.03588em;">π</span><span class="mopen">(</span><span class="mord">⋅</span><span class="mrel">∣</span><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span></span></span></span> ，并让智能体执行该动作 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">a_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">a</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 。</li>
-<li>从环境中观测到下一个状态 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>s</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">s_{t+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.638891em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">t</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 和奖励 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>r</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">r_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.02778em;">r</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.02778em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 。</li>
-<li>在状态 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>s</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">s_{t+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.638891em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">t</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 下，根据当前策略 \pi(a \mid s; \boldsymbol \theta_{now}) （模拟）选择动作 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mover accent="true"><mi>a</mi><mo>~</mo></mover><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">\tilde a_{t+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.6678599999999999em;"></span><span class="strut bottom" style="height:0.8761909999999999em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord mathit">a</span></span><span style="top:-0.35em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>~</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">t</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 。</li>
-<li>让价值网络对 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><msub><mi>s</mi><mi>t</mi></msub><mo separator="true">,</mo><msub><mi>a</mi><mi>t</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">(s_t, a_t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mopen">(</span><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mpunct">,</span><span class="mord"><span class="mord mathit">a</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><msub><mi>s</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo separator="true">,</mo><msub><mover accent="true"><mi>a</mi><mo>~</mo></mover><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">(s_{t+1}, \tilde a_{t+1})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mopen">(</span><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">t</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mpunct">,</span><span class="mord"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord mathit">a</span></span><span style="top:-0.35em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>~</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">t</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span></span></span></span> 进行打分</li>
+<li>观测到当前状态 $s_t$ ，根据当前策略做随机抽样： $a_t \sim \pi(\cdot \mid s_t)$ ，并让智能体执行该动作 $a_t$ 。</li>
+<li>从环境中观测到下一个状态 $s_{t+1}$ 和奖励 $r_t$ 。</li>
+<li>在状态 $s_{t+1}$ 下，根据当前策略 $\pi(a \mid s; \boldsymbol \theta_{now})$ （模拟）选择动作 $\tilde a_{t+1}$ 。</li>
+<li>让价值网络对 $(s_t, a_t)$ 和 $(s_{t+1}, \tilde a_{t+1})$ 进行打分</li>
 </ul>
 <div class="math">
+
+$$
 \begin{aligned}
    \hat q_t &= q(s_t, a_t; \boldsymbol{\omega}_{now}) \\
    \hat q_{t+1} &= q(s_{t+1}, \tilde a_{t+1}; \boldsymbol{\omega}_{now})
 \end{aligned} \tag{2.1}
+$$
 
 </div>
+
 <ul>
 <li>计算TD目标和TD误差</li>
 </ul>
 <div class="math">
+
+$$
 \begin{aligned}
    \hat y_t &= r_t + \gamma \cdot \hat q_{t+1} \\
    \delta_t &= \hat q_t - \hat y_t
 \end{aligned} \tag{2.2}
+$$
 
 </div>
+
 <ul>
 <li>更新价值网络</li>
 </ul>
 <div class="math">
+
+$$
 \begin{aligned}
    \boldsymbol{\omega}_{new} &\leftarrow \boldsymbol{\omega}_{now} - \alpha \cdot \delta_t \cdot \nabla_{\boldsymbol{\omega}} q(s_t, a_t; \boldsymbol{\omega}_{now})
 \end{aligned} \tag{2.3}
+$$
 
 </div>
+
 <ul>
 <li>更新策略网络</li>
 </ul>
 <div class="math">
+
+$$
 \begin{aligned}
    \boldsymbol{\theta}_{new} &\leftarrow \boldsymbol{\theta}_{now} + \beta \cdot \hat q_t \cdot \nabla_{\boldsymbol{\theta}} \ln \pi(a_t \mid s_t; \boldsymbol{\theta}_{now})
 \end{aligned} \tag{2.4}
+$$
 
 </div>
-<h2 id="3-目标网络改进训练流程">3. 目标网络改进训练流程</h2>
-<p>在<a href="/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(3)%E7%AE%97%E6%B3%95(2)%E4%BD%BF%E7%94%A8TD%E7%AE%97%E6%B3%95%E8%AE%AD%E7%BB%83DQN%E6%96%B9%E6%B3%95%E6%94%B9%E8%BF%9B/">《使用TD算法训练DQN方法改进》</a>一文中，我们介绍了如何用目标网络解决DQN训练过程中由于自举导致的高估问题。类似的在上述SARSA算法的训练过程中也同样存在自举，因此也同样存在高估问题，因此，类似地，我们可以引入目标网络来缓解这一问题。我们把目标网络表示为 q(s, a; \boldsymbol{\omega}^{-}) ，那么由目标网络改进的训练流程如下</p>
+
+<h2 id="3-目标网络改进训练流程"><a href="#3-目标网络改进训练流程" class="headerlink" title="3. 目标网络改进训练流程"></a>3. 目标网络改进训练流程</h2><p>在<a href="/2025/08/12/强化学习理论基础(3">《使用TD算法训练DQN方法改进》</a>算法(2)使用TD算法训练DQN方法改进/)一文中，我们介绍了如何用目标网络解决DQN训练过程中由于自举导致的高估问题。类似的在上述SARSA算法的训练过程中也同样存在自举，因此也同样存在高估问题，因此，类似地，我们可以引入目标网络来缓解这一问题。我们把目标网络表示为 $q(s, a; \boldsymbol{\omega}^{-})$ ，那么由目标网络改进的训练流程如下</p>
 <ul>
-<li>观测到当前状态 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>s</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">s_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> ，根据当前策略做随机抽样： <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>t</mi></msub><mo>∼</mo><mi>π</mi><mo>(</mo><mo>⋅</mo><mo>∣</mo><msub><mi>s</mi><mi>t</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">a_t \sim \pi(\cdot \mid s_t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">a</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mrel">∼</span><span class="mord mathit" style="margin-right:0.03588em;">π</span><span class="mopen">(</span><span class="mord">⋅</span><span class="mrel">∣</span><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span></span></span></span> ，并让智能体执行该动作 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">a_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">a</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 。</li>
-<li>从环境中观测到下一个状态 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>s</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">s_{t+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.638891em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">t</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 和奖励 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>r</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">r_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.02778em;">r</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.02778em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 。</li>
-<li>在状态 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>s</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">s_{t+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.638891em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">t</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 下，根据当前策略 \pi(a \mid s; \boldsymbol \theta_{now}) （模拟）选择动作 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mover accent="true"><mi>a</mi><mo>~</mo></mover><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">\tilde a_{t+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.6678599999999999em;"></span><span class="strut bottom" style="height:0.8761909999999999em;vertical-align:-0.208331em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord mathit">a</span></span><span style="top:-0.35em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>~</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">t</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 。</li>
-<li>让价值网络对 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><msub><mi>s</mi><mi>t</mi></msub><mo separator="true">,</mo><msub><mi>a</mi><mi>t</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">(s_t, a_t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mopen">(</span><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mpunct">,</span><span class="mord"><span class="mord mathit">a</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span></span></span></span> 进行打分</li>
+<li>观测到当前状态 $s_t$ ，根据当前策略做随机抽样： $a_t \sim \pi(\cdot \mid s_t)$ ，并让智能体执行该动作 $a_t$ 。</li>
+<li>从环境中观测到下一个状态 $s_{t+1}$ 和奖励 $r_t$ 。</li>
+<li>在状态 $s_{t+1}$ 下，根据当前策略 $\pi(a \mid s; \boldsymbol \theta_{now})$ （模拟）选择动作 $\tilde a_{t+1}$ 。</li>
+<li>让价值网络对 $(s_t, a_t)$ 进行打分</li>
 </ul>
 <div class="math">
+
+$$
 \begin{aligned}
    \hat q_t &= q(s_t, a_t; \boldsymbol{\omega}_{now}) \\
 \end{aligned} \tag{3.1}
+$$
 
 </div>
+
 <ul>
-<li>让目标网络对 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><msub><mi>s</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo separator="true">,</mo><msub><mover accent="true"><mi>a</mi><mo>~</mo></mover><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">(s_{t+1}, \tilde a_{t+1})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mopen">(</span><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">t</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mpunct">,</span><span class="mord"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord mathit">a</span></span><span style="top:-0.35em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>~</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">t</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span></span></span></span> 进行打分</li>
+<li>让目标网络对 $(s_{t+1}, \tilde a_{t+1})$ 进行打分</li>
 </ul>
 <div class="math">
+
+$$
 \begin{aligned}
    \hat q_{t+1}^{-} &= q(s_{t+1}, \tilde a_{t+1}; \boldsymbol{\omega}^{-})
 \end{aligned} \tag{3.2}
+$$
 
 </div>
+
 <ul>
 <li>计算TD目标和TD误差</li>
 </ul>
 <div class="math">
+
+$$
 \begin{aligned}
    \hat y_t^{-} &= r_t + \gamma \cdot \hat q_{t+1}^{-} \\
    \delta_t &= \hat q_t - \hat y_t^{-}
 \end{aligned} \tag{3.3}
+$$
 
 </div>
+
 <ul>
 <li>更新价值网络</li>
 </ul>
 <div class="math">
+
+$$
 \begin{aligned}
    \boldsymbol{\omega}_{new} &\leftarrow \boldsymbol{\omega}_{now} - \alpha \cdot \delta_t \cdot \nabla_{\boldsymbol{\omega}} q(s_t, a_t; \boldsymbol{\omega}_{now})
 \end{aligned} \tag{3.4}
+$$
 
 </div>
+
 <ul>
 <li>更新策略网络</li>
 </ul>
 <div class="math">
+
+$$
 \begin{aligned}
    \boldsymbol{\theta}_{new} &\leftarrow \boldsymbol{\theta}_{now} + \beta \cdot \hat q_t \cdot \nabla_{\boldsymbol{\theta}} \ln \pi(a_t \mid s_t; \boldsymbol{\theta}_{now})
 \end{aligned} \tag{3.5}
+$$
 
 </div>
+
 <ul>
-<li>更新目标网络，其中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>τ</mi></mrow><annotation encoding="application/x-tex">\tau</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.1132em;">τ</span></span></span></span> 是一个需要调节的超参数</li>
+<li>更新目标网络，其中 $\tau$ 是一个需要调节的超参数</li>
 </ul>
 <div class="math">
+
+$$
 \begin{aligned}
    \boldsymbol{\omega}^{-}_{new} &\leftarrow \tau \cdot \boldsymbol{\omega}_{new} + (1 - \tau) \cdot \boldsymbol{\omega}^{-}_{now}
 \end{aligned} \tag{3.6}
+$$
 
 </div>
+
 <p>未经允许，禁止转载。</p>
 
                 
@@ -712,6 +770,7 @@
 
   
   
+
 
 
 
@@ -984,6 +1043,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 
