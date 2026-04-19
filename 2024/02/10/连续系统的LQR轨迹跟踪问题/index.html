@@ -19,12 +19,12 @@
   <meta name="author" content="Xinyu Han">
   <meta name="keywords" content="">
   
-    <meta name="description" content="连续系统的LQR轨迹跟踪问题背景在前边的文章《连续系统的LQR推导》以及《连续系统的LQR变分法推导》中，我们已经推导出了连续系统的LQR控制器。不过在上述推导中，我们都假定控制目标是 $0$（这从其中代价函数的形式中就可以看出来）。但是在实际应用中，我们往往需要系统能够跟踪某个给定的轨迹。因此，本文将讨论连续系统的LQR轨迹跟踪问题。 问题描述连续系统的LQR轨迹跟踪问题可以用如下方式描述： 给">
+    <meta name="description" content="连续系统的LQR轨迹跟踪问题 背景 在前边的文章《连续系统的LQR推导》以及《连续系统的LQR变分法推导》中，我们已经推导出了连续系统的LQR控制器。不过在上述推导中，我们都假定控制目标是 000（这从其中代价函数的形式中就可以看出来）。但是在实际应用中，我们往往需要系统能够跟踪某个给定的轨迹。因此，本文将讨论连续系统的LQR轨迹跟踪问题。 问题描述 连续系统的LQR轨迹跟踪问题可以用如下方式描述">
 <meta property="og:type" content="article">
 <meta property="og:title" content="连续系统的LQR轨迹跟踪问题">
 <meta property="og:url" content="http://example.com/2024/02/10/%E8%BF%9E%E7%BB%AD%E7%B3%BB%E7%BB%9F%E7%9A%84LQR%E8%BD%A8%E8%BF%B9%E8%B7%9F%E8%B8%AA%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="Xinyu&#39;s Blog">
-<meta property="og:description" content="连续系统的LQR轨迹跟踪问题背景在前边的文章《连续系统的LQR推导》以及《连续系统的LQR变分法推导》中，我们已经推导出了连续系统的LQR控制器。不过在上述推导中，我们都假定控制目标是 $0$（这从其中代价函数的形式中就可以看出来）。但是在实际应用中，我们往往需要系统能够跟踪某个给定的轨迹。因此，本文将讨论连续系统的LQR轨迹跟踪问题。 问题描述连续系统的LQR轨迹跟踪问题可以用如下方式描述： 给">
+<meta property="og:description" content="连续系统的LQR轨迹跟踪问题 背景 在前边的文章《连续系统的LQR推导》以及《连续系统的LQR变分法推导》中，我们已经推导出了连续系统的LQR控制器。不过在上述推导中，我们都假定控制目标是 000（这从其中代价函数的形式中就可以看出来）。但是在实际应用中，我们往往需要系统能够跟踪某个给定的轨迹。因此，本文将讨论连续系统的LQR轨迹跟踪问题。 问题描述 连续系统的LQR轨迹跟踪问题可以用如下方式描述">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-02-09T16:00:00.000Z">
 <meta property="article:modified_time" content="2026-04-19T13:07:15.960Z">
@@ -48,6 +48,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
 
 
 
@@ -329,7 +331,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.3k 字
+          2.4k 字
         
       </span>
     
@@ -384,77 +386,59 @@
             
               <div class="markdown-body">
                 
-                <h2 id="连续系统的LQR轨迹跟踪问题"><a href="#连续系统的LQR轨迹跟踪问题" class="headerlink" title="连续系统的LQR轨迹跟踪问题"></a>连续系统的LQR轨迹跟踪问题</h2><h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在前边的文章<a target="_blank" rel="noopener" href="https://xinyukhan.github.io/2023/09/25/连续系统的LQR推导">《连续系统的LQR推导》</a>以及<a target="_blank" rel="noopener" href="https://xinyukhan.github.io/2023/09/30/连续系统的LQR变分法推导">《连续系统的LQR变分法推导》</a>中，我们已经推导出了连续系统的LQR控制器。不过在上述推导中，我们都假定控制目标是 $0$（这从其中代价函数的形式中就可以看出来）。但是在实际应用中，我们往往需要系统能够跟踪某个给定的轨迹。因此，本文将讨论连续系统的LQR轨迹跟踪问题。</p>
-<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>连续系统的LQR轨迹跟踪问题可以用如下方式描述：</p>
+                <h2 id="连续系统的LQR轨迹跟踪问题">连续系统的LQR轨迹跟踪问题</h2>
+<h1 id="背景">背景</h1>
+<p>在前边的文章<a target="_blank" rel="noopener" href="https://xinyukhan.github.io/2023/09/25/%E8%BF%9E%E7%BB%AD%E7%B3%BB%E7%BB%9F%E7%9A%84LQR%E6%8E%A8%E5%AF%BC">《连续系统的LQR推导》</a>以及<a target="_blank" rel="noopener" href="https://xinyukhan.github.io/2023/09/30/%E8%BF%9E%E7%BB%AD%E7%B3%BB%E7%BB%9F%E7%9A%84LQR%E5%8F%98%E5%88%86%E6%B3%95%E6%8E%A8%E5%AF%BC">《连续系统的LQR变分法推导》</a>中，我们已经推导出了连续系统的LQR控制器。不过在上述推导中，我们都假定控制目标是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">0</span></span></span></span>（这从其中代价函数的形式中就可以看出来）。但是在实际应用中，我们往往需要系统能够跟踪某个给定的轨迹。因此，本文将讨论连续系统的LQR轨迹跟踪问题。</p>
+<h1 id="问题描述">问题描述</h1>
+<p>连续系统的LQR轨迹跟踪问题可以用如下方式描述：</p>
 <p>给定一个连续系统：</p>
 <div class="math">
-
-$$
 \begin{aligned}
     \dot{x}(t) = Ax(t) + Bu(t)
 \end{aligned}
 \tag{1}
-$$
 
 </div>
-
 <p>我们定义LQR轨迹跟踪问题的代价函数为：</p>
 <div class="math">
-
-$$
 \begin{aligned}
     J &= \frac{1}{2}(x(t_f)-r(t_f))^TP_f(x(t_f)-r(t_f))\\
     &+\frac{1}{2}\int_{t_0}^{t_f} \left( (x(t)-r(t))^TQ(x(t)-r(t)) + u^T(t)Ru(t) \right) dt
 \end{aligned}
 \tag{2}
-$$
 
 </div>
-
-<p>其中 $r(t)$ 是给定的轨迹，$P_f$ 是最终状态的权重矩阵，$Q$ 是状态的权重矩阵，$R$ 是控制的权重矩阵。</p>
-<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><p>根据前述文章中的结论，我们可以得到上述问题的哈密顿量（Hamiltonian）：</p>
+<p>其中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">r(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.02778em;">r</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span></span></span></span> 是给定的轨迹，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>P</mi><mi>f</mi></msub></mrow><annotation encoding="application/x-tex">P_f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.13889em;">P</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.13889em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 是最终状态的权重矩阵，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>Q</mi></mrow><annotation encoding="application/x-tex">Q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">Q</span></span></span></span> 是状态的权重矩阵，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>R</mi></mrow><annotation encoding="application/x-tex">R</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.68333em;"></span><span class="strut bottom" style="height:0.68333em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.00773em;">R</span></span></span></span> 是控制的权重矩阵。</p>
+<h1 id="解决方案">解决方案</h1>
+<p>根据前述文章中的结论，我们可以得到上述问题的哈密顿量（Hamiltonian）：</p>
 <div class="math">
-
-$$
 \begin{aligned}
     \mathscr{H} &= \frac{1}{2}(x(t)-r(t))^TQ(x(t)-r(t)) + \frac{1}{2}u^TRu + p^T(Ax+Bu)\\
     &= \frac{1}{2}x^TQx - x^TQr + \frac{1}{2}u^TRu + p^T(Ax+Bu)
 \end{aligned}
 \tag{3}
-$$
 
 </div>
-
-<p>其中 $p$ 是拉格朗日乘子。</p>
-<p>根据变分法的结论，我们可以得到最优控制率 $\hat{u}$：</p>
+<p>其中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span></span></span></span> 是拉格朗日乘子。</p>
+<p>根据变分法的结论，我们可以得到最优控制率 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mrow><mi>u</mi></mrow><mo>^</mo></mover></mrow><annotation encoding="application/x-tex">\hat{u}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.69444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord textstyle cramped"><span class="mord mathit">u</span></span></span><span style="top:0em;margin-left:0.05556em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>^</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>：</p>
 <div class="math">
-
-$$
 \begin{aligned}
     \hat{u} &= -R^{-1}B^Tp
 \end{aligned}
 \tag{4}
-$$
 
 </div>
-
 <p>除此之外还可以得到最优控制率下的状态和协状态的微分方程：</p>
 <div class="math">
-
-$$
 \begin{aligned}
     \dot{\hat x} &= \frac{\partial \hat{\mathscr{H}}}{\partial p} = A\hat x + B\hat u = A\hat x - BR^{-1}B^Tp\\
     \dot{\hat p} &= -\frac{\partial \hat{\mathscr{H}}}{\partial x} = -Q\hat x + Qr - A^T\hat p
 \end{aligned}
 \tag{5}
-$$
 
 </div>
-
 <p>我们将上述状态和协状态的微分方程写成矩阵形式：</p>
 <div class="math">
-
-$$
 \begin{aligned}
     \begin{bmatrix}
         \dot{\hat x}\\
@@ -471,110 +455,75 @@ $$
     \end{bmatrix}
 \end{aligned}
 \tag{6}
-$$
 
 </div>
-
-<p>上述形式在<a target="_blank" rel="noopener" href="https://xinyukhan.github.io/2023/09/30/连续系统的LQR变分法推导">《连续系统的LQR变分法推导》</a>中已经见过类似的形式，我们通过简单的变量替换，不难发现上述微分方程的解具有如下形式：</p>
+<p>上述形式在<a target="_blank" rel="noopener" href="https://xinyukhan.github.io/2023/09/30/%E8%BF%9E%E7%BB%AD%E7%B3%BB%E7%BB%9F%E7%9A%84LQR%E5%8F%98%E5%88%86%E6%B3%95%E6%8E%A8%E5%AF%BC">《连续系统的LQR变分法推导》</a>中已经见过类似的形式，我们通过简单的变量替换，不难发现上述微分方程的解具有如下形式：</p>
 <div class="math">
-
-$$
 \begin{aligned}
     \hat p(t) = P(t)\hat x(t) + s(t)
 \end{aligned}
 \tag{7}
-$$
 
 </div>
-
-<p>其中关于 $P(t)$ 可以得到同样形式的Riccati方程：</p>
+<p>其中关于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">P(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span></span></span></span> 可以得到同样形式的Riccati方程：</p>
 <div class="math">
-
-$$
 \begin{aligned}
     -\dot P(t)&=A^TP(t)+P(t)A+Q-P(t)BR^{-1}B^TP(t)\\
     P(t_f) &= P_f
 \end{aligned}
 \tag{8}
-$$
 
 </div>
-
-<p>下面我们需要做的就是求解变量 $s(t)$ 。对公式 $(7)$ 两边同时求微分：</p>
+<p>下面我们需要做的就是求解变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">s(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">s</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span></span></span></span> 。对公式 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mn>7</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(7)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mopen">(</span><span class="mord mathrm">7</span><span class="mclose">)</span></span></span></span> 两边同时求微分：</p>
 <div class="math">
-
-$$
 \begin{aligned}
     \dot{\hat p}(t) &= \dot P(t)\hat x(t) + P(t)\dot{\hat x}(t) + \dot s(t)
 \end{aligned}
 \tag{9}
-$$
 
 </div>
-
-<p>我们将其代入到公式 $(6)$ 中：</p>
+<p>我们将其代入到公式 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mn>6</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(6)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mopen">(</span><span class="mord mathrm">6</span><span class="mclose">)</span></span></span></span> 中：</p>
 <div class="math">
-
-$$
 \begin{aligned}
     \dot P \hat x + P\dot{\hat x} + \dot s = \dot P \hat x + PA\hat x - PBR^{-1}B^TP\hat x - PBR^{-1}B^Ts + \dot s &= -Q\hat x + Qr - A^TP\hat x - A^Ts  \Rightarrow \\
     (\dot P + PA + A^TP - PBR^{-1}B^TP + Q)\hat x &= Qr - A^Ts + PBR^{-1}B^Ts - \dot s \\
 \end{aligned}
 \tag{10}
-$$
 
 </div>
-
-<p>带入Riccati方程 $(8)$ ，可以得到：</p>
+<p>带入Riccati方程 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mn>8</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(8)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mopen">(</span><span class="mord mathrm">8</span><span class="mclose">)</span></span></span></span> ，可以得到：</p>
 <div class="math">
-
-$$
 \begin{aligned}
     \dot s = -(A^T - PBR^{-1}B^T)s + Qr
 \end{aligned}
 \tag{11}
-$$
 
 </div>
-
-<p>这就是变量 $s(t)$ 的微分方程。</p>
+<p>这就是变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">s(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">s</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span></span></span></span> 的微分方程。</p>
 <p>下边我们根据边界条件，有：</p>
 <div class="math">
-
-$$
 \begin{aligned}
     \hat p_f = P_f\hat x(t_f) - P_f r(t_f)
 \end{aligned}
 \tag{12}
-$$
 
 </div>
-
 <p>于是有：</p>
 <div class="math">
-
-$$
 \begin{aligned}
     s(t_f) = -P_f r(t_f)
 \end{aligned}
 \tag{13}
-$$
 
 </div>
-
-<p>因此可以根据边界条件和微分方程 $(11)$ 和 $(8)$ 求解变量 $s(t)$ 和 $P(t)$。最后我们可以得到最优控制率 $\hat u$ 为：</p>
+<p>因此可以根据边界条件和微分方程 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mn>1</mn><mn>1</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(11)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mopen">(</span><span class="mord mathrm">1</span><span class="mord mathrm">1</span><span class="mclose">)</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mn>8</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(8)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mopen">(</span><span class="mord mathrm">8</span><span class="mclose">)</span></span></span></span> 求解变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">s(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">s</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">P(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathit">t</span><span class="mclose">)</span></span></span></span>。最后我们可以得到最优控制率 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mi>u</mi><mo>^</mo></mover></mrow><annotation encoding="application/x-tex">\hat u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.69444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord mathit">u</span></span><span style="top:0em;margin-left:0.05556em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>^</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span> 为：</p>
 <div class="math">
-
-$$
 \begin{aligned}
     \hat u = -R^{-1}B^T\hat p = -R^{-1}B^T(P\hat x + s)
 \end{aligned}
 \tag{14}
-$$
 
 </div>
-
-
 <p>未经允许，禁止转载。</p>
 
                 
@@ -751,7 +700,6 @@ $$
 
   
   
-
 
 
 
@@ -1024,49 +972,6 @@ $$
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-
-        Fluid.events.registerRefreshCallback(function() {
-          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
-            MathJax.startup.document.state(0);
-            MathJax.texReset();
-            MathJax.typeset();
-            MathJax.typesetPromise();
-          }
-        });
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

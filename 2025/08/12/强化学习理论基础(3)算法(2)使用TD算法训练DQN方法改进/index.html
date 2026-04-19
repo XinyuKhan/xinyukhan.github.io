@@ -19,12 +19,12 @@
   <meta name="author" content="Xinyu Han">
   <meta name="keywords" content="">
   
-    <meta name="description" content="强化学习理论基础-算法-使用TD算法训练DQN方法改进1. 改进1.1. 多步TD单步TD算法通过当前状态和动作与下一个状态的价值进行比较来更新Q值，而多步TD算法则考虑多个时间步的奖励和价值，从而更全面地评估动作的价值。这种方法可以加速学习过程，提高策略的稳定性。 训练过程如下  假设智能体和环境交互得到如下轨迹    $$ (s_1, a_1, r_1, s_2, a_2, r_2, \ldo">
+    <meta name="description" content="强化学习理论基础-算法-使用TD算法训练DQN方法改进 1. 改进 1.1. 多步TD 单步TD算法通过当前状态和动作与下一个状态的价值进行比较来更新Q值，而多步TD算法则考虑多个时间步的奖励和价值，从而更全面地评估动作的价值。这种方法可以加速学习过程，提高策略的稳定性。 训练过程如下  假设智能体和环境交互得到如下轨迹   (s_1, a_1, r_1, s_2, a_2, r_2, \ldot">
 <meta property="og:type" content="article">
 <meta property="og:title" content="强化学习理论基础(3)算法(2)使用TD算法训练DQN方法改进">
 <meta property="og:url" content="http://example.com/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(3)%E7%AE%97%E6%B3%95(2)%E4%BD%BF%E7%94%A8TD%E7%AE%97%E6%B3%95%E8%AE%AD%E7%BB%83DQN%E6%96%B9%E6%B3%95%E6%94%B9%E8%BF%9B/index.html">
 <meta property="og:site_name" content="Xinyu&#39;s Blog">
-<meta property="og:description" content="强化学习理论基础-算法-使用TD算法训练DQN方法改进1. 改进1.1. 多步TD单步TD算法通过当前状态和动作与下一个状态的价值进行比较来更新Q值，而多步TD算法则考虑多个时间步的奖励和价值，从而更全面地评估动作的价值。这种方法可以加速学习过程，提高策略的稳定性。 训练过程如下  假设智能体和环境交互得到如下轨迹    $$ (s_1, a_1, r_1, s_2, a_2, r_2, \ldo">
+<meta property="og:description" content="强化学习理论基础-算法-使用TD算法训练DQN方法改进 1. 改进 1.1. 多步TD 单步TD算法通过当前状态和动作与下一个状态的价值进行比较来更新Q值，而多步TD算法则考虑多个时间步的奖励和价值，从而更全面地评估动作的价值。这种方法可以加速学习过程，提高策略的稳定性。 训练过程如下  假设智能体和环境交互得到如下轨迹   (s_1, a_1, r_1, s_2, a_2, r_2, \ldot">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-08-11T16:06:00.000Z">
 <meta property="article:modified_time" content="2026-04-19T13:07:15.957Z">
@@ -47,6 +47,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
 
 
 
@@ -383,374 +385,254 @@
             
               <div class="markdown-body">
                 
-                <h1 id="强化学习理论基础-算法-使用TD算法训练DQN方法改进"><a href="#强化学习理论基础-算法-使用TD算法训练DQN方法改进" class="headerlink" title="强化学习理论基础-算法-使用TD算法训练DQN方法改进"></a>强化学习理论基础-算法-使用TD算法训练DQN方法改进</h1><h2 id="1-改进"><a href="#1-改进" class="headerlink" title="1. 改进"></a>1. 改进</h2><h3 id="1-1-多步TD"><a href="#1-1-多步TD" class="headerlink" title="1.1. 多步TD"></a>1.1. 多步TD</h3><p>单步TD算法通过当前状态和动作与下一个状态的价值进行比较来更新Q值，而多步TD算法则考虑多个时间步的奖励和价值，从而更全面地评估动作的价值。这种方法可以加速学习过程，提高策略的稳定性。</p>
+                <h1 id="强化学习理论基础-算法-使用td算法训练dqn方法改进">强化学习理论基础-算法-使用TD算法训练DQN方法改进</h1>
+<h2 id="1-改进">1. 改进</h2>
+<h3 id="1-1-多步TD">1.1. 多步TD</h3>
+<p>单步TD算法通过当前状态和动作与下一个状态的价值进行比较来更新Q值，而多步TD算法则考虑多个时间步的奖励和价值，从而更全面地评估动作的价值。这种方法可以加速学习过程，提高策略的稳定性。</p>
 <p>训练过程如下</p>
 <ol>
 <li>假设智能体和环境交互得到如下轨迹</li>
 </ol>
 <div class="math">
-
-$$
 (s_1, a_1, r_1, s_2, a_2, r_2, \ldots, s_n, a_n, r_n) \tag{1.1.1}
-$$
 
 </div>
-
-<ol>
-<li>选取轨迹上的一个点$t$，使用动作价值网络对其进行估计得到$\hat q_t$</li>
+<ol start="2">
+<li>选取轨迹上的一个点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.61508em;"></span><span class="strut bottom" style="height:0.61508em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">t</span></span></span></span>，使用动作价值网络对其进行估计得到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mover accent="true"><mi>q</mi><mo>^</mo></mover><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">\hat q_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord mathit" style="margin-right:0.03588em;">q</span></span><span style="top:0em;margin-left:0.16668em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>^</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.03588em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span></li>
 </ol>
 <div class="math">
-
-$$
 \hat q_t = Q(s_t, a_t; \boldsymbol{\omega}), t \in \{1, 2, \ldots, n-m\} \tag{1.1.2}
-$$
 
 </div>
-
-<ol>
+<ol start="3">
 <li>计算多步TD目标和多步TD误差</li>
 </ol>
 <div class="math">
-
-$$
 \begin{aligned}
 \hat y_t &= \sum_{i=0}^{m-1} \gamma^i r_{t+i} + \gamma^m \hat q_{t+m} \\
 \delta_t &= \hat q_t - \hat y_t
 \end{aligned} \tag{1.1.3}
-$$
 
 </div>
-
-<ol>
+<ol start="4">
 <li>更新参数</li>
 </ol>
 <div class="math">
-
-$$
 \boldsymbol{\omega} \leftarrow \boldsymbol{\omega} - \alpha \cdot \delta_t \cdot \nabla_{\boldsymbol{\omega}} Q(s_t, a_t; \boldsymbol{\omega}) \tag{1.1.4}
-$$
 
 </div>
-
-<h3 id="1-2-优先经验回放"><a href="#1-2-优先经验回放" class="headerlink" title="1.2. 优先经验回放"></a>1.2. 优先经验回放</h3><p>优先经验回放和普通经验回放的不同点在于会根据TD误差$\delta_t$的绝对值来调整样本的采样概率$p_t$，从而更频繁地采样那些具有较大TD误差的样本</p>
+<h3 id="1-2-优先经验回放">1.2. 优先经验回放</h3>
+<p>优先经验回放和普通经验回放的不同点在于会根据TD误差<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>δ</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">\delta_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.03785em;">δ</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.03785em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>的绝对值来调整样本的采样概率<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">p_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">p</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>，从而更频繁地采样那些具有较大TD误差的样本</p>
 <div class="math">
-
-$$
 p_t \propto |\delta_t| + \epsilon \tag{1.2.1}
-$$
 
 </div>
-
-<p>或者也可以对$\lvert\delta_t\rvert$进行排序之后根据序号来确定样本采样概率</p>
+<p>或者也可以对<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>∣</mo><msub><mi>δ</mi><mi>t</mi></msub><mo>∣</mo></mrow><annotation encoding="application/x-tex">\lvert\delta_t\rvert</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mopen">∣</span><span class="mord"><span class="mord mathit" style="margin-right:0.03785em;">δ</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.03785em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">∣</span></span></span></span>进行排序之后根据序号来确定样本采样概率</p>
 <div class="math">
-
-$$
 p_t \propto \frac{1}{\text{rank}(|\delta_t|)} \tag{1.2.2}
-$$
 
 </div>
-
-<p>同时还会根据$p_t$动态调整不同样本的学习率</p>
+<p>同时还会根据<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">p_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit">p</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span>动态调整不同样本的学习率</p>
 <div class="math">
-
-$$
 \alpha_t = \frac{\alpha}{(b \cdot p_t)^\beta} \tag{1.2.3}
-$$
 
 </div>
-
-<p>其中$b$是经验回放中的样本总数，$\beta \in (0, 1)$是一个超参数。</p>
-<h3 id="1-3-目标网络"><a href="#1-3-目标网络" class="headerlink" title="1.3. 目标网络"></a>1.3. 目标网络</h3><p>引入目标网络是为了解决自举导致的偏差传播，该方法通过另一个和DQN相同结构但是不同参数的网络来计算目标值，从而减少了自举的影响。</p>
+<p>其中<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.69444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">b</span></span></span></span>是经验回放中的样本总数，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>β</mi><mo>∈</mo><mo>(</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">\beta \in (0, 1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.05278em;">β</span><span class="mrel">∈</span><span class="mopen">(</span><span class="mord mathrm">0</span><span class="mpunct">,</span><span class="mord mathrm">1</span><span class="mclose">)</span></span></span></span>是一个超参数。</p>
+<h3 id="1-3-目标网络">1.3. 目标网络</h3>
+<p>引入目标网络是为了解决自举导致的偏差传播，该方法通过另一个和DQN相同结构但是不同参数的网络来计算目标值，从而减少了自举的影响。</p>
 <p>训练过程如下：</p>
 <ol>
-<li>使用DQN计算动作价值函数的估计$\hat q_t$</li>
+<li>使用DQN计算动作价值函数的估计<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mover accent="true"><mi>q</mi><mo>^</mo></mover><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">\hat q_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord mathit" style="margin-right:0.03588em;">q</span></span><span style="top:0em;margin-left:0.16668em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>^</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.03588em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span></li>
 </ol>
 <div class="math">
-
-$$
 \hat q_t = Q(s_t, a_t; \boldsymbol{\omega}_{now}) \tag{1.3.1}
-$$
 
 </div>
-
-<ol>
-<li>使用目标网络估计目标网络价值$\hat q_{t+1}^-$</li>
+<ol start="2">
+<li>使用目标网络估计目标网络价值<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mover accent="true"><mi>q</mi><mo>^</mo></mover><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow><mo>−</mo></msubsup></mrow><annotation encoding="application/x-tex">\hat q_{t+1}^-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.811462em;"></span><span class="strut bottom" style="height:1.136101em;vertical-align:-0.324639em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord mathit" style="margin-right:0.03588em;">q</span></span><span style="top:0em;margin-left:0.16668em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>^</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="vlist"><span style="top:0.266308em;margin-left:-0.03588em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">t</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span><span style="top:-0.403131em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord">−</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span></li>
 </ol>
 <div class="math">
-
-$$
 \hat q_{t+1}^- = \max_{a \in \mathcal{A}} Q(s_{t+1}, a; \boldsymbol{\omega}_{now}^-) \tag{1.3.2}
-$$
 
 </div>
-
 <ol>
 <li>计算TD目标和TD误差</li>
 </ol>
 <div class="math">
-
-$$
 \begin{aligned}
 \hat y_t &= r_t + \gamma \hat q_{t+1}^- \\
 \delta_t &= \hat q_t - \hat y_t
 \end{aligned} \tag{1.3.3}
-$$
 
 </div>
-
-<ol>
+<ol start="4">
 <li>更新参数</li>
 </ol>
 <div class="math">
-
-$$
 \boldsymbol{\omega}_{new} \leftarrow \boldsymbol{\omega}_{now} - \alpha \cdot \delta_t \cdot \nabla_{\boldsymbol{\omega}_{now}} Q(s_t, a_t; \boldsymbol{\omega}_{now}) \tag{1.3.4}
-$$
 
 </div>
-
-<ol>
-<li>通过参数$\tau \in (0, 1)$对目标网络进行加权平均更新</li>
+<ol start="5">
+<li>通过参数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>τ</mi><mo>∈</mo><mo>(</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">\tau \in (0, 1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.1132em;">τ</span><span class="mrel">∈</span><span class="mopen">(</span><span class="mord mathrm">0</span><span class="mpunct">,</span><span class="mord mathrm">1</span><span class="mclose">)</span></span></span></span>对目标网络进行加权平均更新</li>
 </ol>
 <div class="math">
-
-$$
 \boldsymbol{\omega}_{new}^- \leftarrow \tau \cdot \boldsymbol{\omega}_{new} + (1 - \tau) \cdot \boldsymbol{\omega}_{now}^- \tag{1.3.5}
-$$
 
 </div>
-
-<h3 id="1-4-双Q学习法"><a href="#1-4-双Q学习法" class="headerlink" title="1.4. 双Q学习法"></a>1.4. 双Q学习法</h3><p>目标网络只解决了自举导致的偏差传播问题，但仍然存最大化导致的高估，将上述目标网络改进中的第2步中的最大化拆分成两步</p>
+<h3 id="1-4-双Q学习法">1.4. 双Q学习法</h3>
+<p>目标网络只解决了自举导致的偏差传播问题，但仍然存最大化导致的高估，将上述目标网络改进中的第2步中的最大化拆分成两步</p>
 <ol>
 <li>选择动作</li>
 </ol>
 <div class="math">
-
-$$
 a_t = \arg\max_{a \in \mathcal{A}} Q(s_t, a; \boldsymbol{\omega}_{now}^-) \tag{1.4.1}
-$$
 
 </div>
-
-<ol>
+<ol start="2">
 <li>计算估计</li>
 </ol>
 <div class="math">
-
-$$
 \hat q_{t+1}^- = \max_{a \in \mathcal{A}} Q(s_{t+1}, a; \boldsymbol{\omega}_{now}^-) \tag{1.4.2}
-$$
 
 </div>
-
 <p>双Q学习法的不同在于通过DQN选择动作，然后使用目标网络计算估计值，从而避免了最大化导致的高估。</p>
 <p>训练过程如下</p>
 <ol>
-<li>使用DQN计算动作价值函数的估计$\hat q_t$</li>
+<li>使用DQN计算动作价值函数的估计<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mover accent="true"><mi>q</mi><mo>^</mo></mover><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">\hat q_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="mord mathit" style="margin-right:0.03588em;">q</span></span><span style="top:0em;margin-left:0.16668em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="accent-body"><span>^</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.03588em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span></li>
 </ol>
 <div class="math">
-
-$$
 \hat q_t = Q(s_t, a_t; \boldsymbol{\omega}_{now}) \tag{1.4.3}
-$$
 
 </div>
-
-<ol>
+<ol start="2">
 <li>选择动作</li>
 </ol>
 <div class="math">
-
-$$
 a^* = \arg\max_{a \in \mathcal{A}} Q(s_t, a; \boldsymbol{\omega}_{now}) \tag{1.4.4}
-$$
 
 </div>
-
-<ol>
+<ol start="3">
 <li>计算估计</li>
 </ol>
 <div class="math">
-
-$$
 \hat q_{t+1}^- = Q(s_{t+1}, a^*; \boldsymbol{\omega}_{now}^-) \tag{1.4.5}
-$$
 
 </div>
-
-<ol>
+<ol start="4">
 <li>计算TD目标和TD误差</li>
 </ol>
 <div class="math">
-
-$$
 \begin{aligned}
 \hat y_t &= r_t + \gamma \hat q_{t+1}^- \\
 \delta_t &= \hat q_t - \hat y_t
 \end{aligned} \tag{1.4.6}
-$$
 
 </div>
-
-<ol>
+<ol start="5">
 <li>更新参数</li>
 </ol>
 <div class="math">
-
-$$
 \boldsymbol{\omega}_{new} \leftarrow \boldsymbol{\omega}_{now} - \alpha \cdot \delta_t \cdot \nabla_{\boldsymbol{\omega}_{now}} Q(s_t, a_t; \boldsymbol{\omega}_{now}) \tag{1.4.7}
-$$
 
 </div>
-
-<ol>
+<ol start="6">
 <li>计算目标网络的更新</li>
 </ol>
 <div class="math">
-
-$$
 \boldsymbol{\omega}_{new}^- \leftarrow \tau \cdot \boldsymbol{\omega}_{new} + (1 - \tau) \cdot \boldsymbol{\omega}_{now}^- \tag{1.4.8}
-$$
 
 </div>
-
-<h3 id="1-5-对决网络"><a href="#1-5-对决网络" class="headerlink" title="1.5. 对决网络"></a>1.5. 对决网络</h3><p>对决网络是对DQN结构的改进，具体表达式如下</p>
+<h3 id="1-5-对决网络">1.5. 对决网络</h3>
+<p>对决网络是对DQN结构的改进，具体表达式如下</p>
 <div class="math">
-
-$$
 Q(s, a; \boldsymbol{\omega}) = V(s; \boldsymbol{\omega}^V) + D(s, a; \boldsymbol{\omega}^D) - \max_{a' \in \mathcal{A}} D(s, a'; \boldsymbol{\omega}^D) \tag{1.5.1}
-$$
 
 </div>
-
 <p>其训练方法和DQN完全一样</p>
-<h3 id="1-6-噪声DQN"><a href="#1-6-噪声DQN" class="headerlink" title="1.6. 噪声DQN"></a>1.6. 噪声DQN</h3><p>噪声网络的定义如下</p>
+<h3 id="1-6-噪声DQN">1.6. 噪声DQN</h3>
+<p>噪声网络的定义如下</p>
 <div class="math">
-
-$$
 \widetilde{Q}(s, a, \boldsymbol{\xi}; \boldsymbol{\mu}, \boldsymbol{\sigma}) = Q(s, a; \boldsymbol{\mu} + \boldsymbol{\sigma} \circ  \boldsymbol{\xi}) \tag{1.6.1}
-$$
 
 </div>
-
-<p>TD目标的计算方式和DQN一样，只不过随机变量需要重新采样为$\xi’$</p>
+<p>TD目标的计算方式和DQN一样，只不过随机变量需要重新采样为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>ξ</mi><mrow><mi mathvariant="normal">′</mi></mrow></msup></mrow><annotation encoding="application/x-tex">\xi&#x27;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.751892em;"></span><span class="strut bottom" style="height:0.946332em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord"><span class="mord mathit" style="margin-right:0.04601em;">ξ</span><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathrm">′</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span></p>
 <div class="math">
-
-$$
 \hat{y}_t = r_t + \gamma \max_{a \in \mathcal{A}} \widetilde{Q}(s_{t+1}, a, \boldsymbol{\xi}'; \boldsymbol{\mu}, \boldsymbol{\sigma}) \tag{1.6.2}
-$$
 
 </div>
-
 <p>损失函数为</p>
 <div class="math">
-
-$$
 L(\boldsymbol{\mu}, \boldsymbol{\sigma}) = \frac{1}{2} \left[\widetilde{Q}(s_t, a_t, \boldsymbol{\xi}; \boldsymbol{\mu}, \boldsymbol{\sigma})  - \hat{y}_t \right]^2 \tag{1.6.3}
-$$
 
 </div>
-
 <p>更新参数的方式为</p>
 <div class="math">
-
-$$
 \begin{aligned}
 \boldsymbol{\mu} &\leftarrow \boldsymbol{\mu} - \alpha_\mu \cdot \nabla_{\boldsymbol{\mu}} L(\boldsymbol{\mu}, \boldsymbol{\sigma}) \\
 \boldsymbol{\sigma} &\leftarrow \boldsymbol{\sigma} - \alpha_\sigma \cdot \nabla_{\boldsymbol{\sigma}} L(\boldsymbol{\mu}, \boldsymbol{\sigma})
 \end{aligned} \tag{1.6.4}
-$$
 
 </div>
-
-<h3 id="1-7-综合应用"><a href="#1-7-综合应用" class="headerlink" title="1.7. 综合应用"></a>1.7. 综合应用</h3><p>综合应用上述方法之后的TD算法的训练过程如下</p>
+<h3 id="1-7-综合应用">1.7. 综合应用</h3>
+<p>综合应用上述方法之后的TD算法的训练过程如下</p>
 <ol>
 <li>使用优先经验回放抽取一个四元组</li>
 </ol>
 <div class="math">
-
-$$
-(s_t, a_t, r_t, s_{t+1})
-$$
-
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><msub><mi>s</mi><mi>t</mi></msub><mo separator="true">,</mo><msub><mi>a</mi><mi>t</mi></msub><mo separator="true">,</mo><msub><mi>r</mi><mi>t</mi></msub><mo separator="true">,</mo><msub><mi>s</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">(s_t, a_t, r_t, s_{t+1})
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base displaystyle textstyle uncramped"><span class="mopen">(</span><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mpunct">,</span><span class="mord"><span class="mord mathit">a</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mpunct">,</span><span class="mord"><span class="mord mathit" style="margin-right:0.02778em;">r</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:-0.02778em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathit">t</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mpunct">,</span><span class="mord"><span class="mord mathit">s</span><span class="vlist"><span style="top:0.15em;margin-right:0.05em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathit">t</span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mclose">)</span></span></span></span></span></p>
 </div>
-
-<ol>
-<li>使用正态分布生成噪声$\boldsymbol{\xi}$，通过噪声DQN计算动作价值函数的估计</li>
+<ol start="2">
+<li>使用正态分布生成噪声\boldsymbol{\xi}，通过噪声DQN计算动作价值函数的估计</li>
 </ol>
 <div class="math">
-
-$$
 \hat q_t = \widetilde{Q}(s_t, a_t, \boldsymbol{\xi}; \boldsymbol{\mu}_{now}, \boldsymbol{\sigma}_{now}) \tag{1.7.1}
-$$
 
 </div>
-
-<ol>
+<ol start="3">
 <li>使用噪声DQN选择动作</li>
 </ol>
 <div class="math">
-
-$$
 \widetilde a_{t+1} = \arg\max_{a \in \mathcal{A}} \widetilde{Q}(s_t, a, \boldsymbol{\xi}; \boldsymbol{\mu}_{now}, \boldsymbol{\sigma}_{now}) \tag{1.7.2}
-$$
 
 </div>
-
-<ol>
-<li>使用标准正态分布生成$\boldsymbol{\xi}’$，用目标网络计算价值</li>
+<ol start="4">
+<li>使用标准正态分布生成\boldsymbol{\xi}'，用目标网络计算价值</li>
 </ol>
 <div class="math">
-
-$$
 \hat q_{t+1}^- = \widetilde{Q}(s_{t+1}, \widetilde a_{t+1}, \boldsymbol{\xi}'; \boldsymbol{\mu}_{now}^-, \boldsymbol{\sigma}_{now}^-) \tag{1.7.3}
-$$
 
 </div>
-
-<ol>
+<ol start="5">
 <li>计算TD目标和TD误差</li>
 </ol>
 <div class="math">
-
-$$
 \begin{aligned}
 \hat y_t^- &= r_t + \gamma \hat q_{t+1}^- \\
 \delta_t &= \hat q_t - \hat y_t^-
 \end{aligned} \tag{1.7.4}
-$$
 
 </div>
-
-<ol>
+<ol start="6">
 <li>更新噪声DQN的参数</li>
 </ol>
 <div class="math">
-
-$$
 \begin{aligned}
 \boldsymbol{\mu}_{new} &\leftarrow \boldsymbol{\mu}_{now} - \alpha_\mu \cdot \delta_t \cdot \nabla_{\boldsymbol{\mu}} \widetilde{Q}(s_t, a_t, \boldsymbol{\xi}; \boldsymbol{\mu}_{now}, \boldsymbol{\sigma}_{now}) \\
 \boldsymbol{\sigma}_{new} &\leftarrow \boldsymbol{\sigma}_{now} - \alpha_\sigma \cdot \delta_t \cdot \nabla_{\boldsymbol{\sigma}} \widetilde{Q}(s_t, a_t, \boldsymbol{\xi}; \boldsymbol{\mu}_{now}, \boldsymbol{\sigma}_{now})
 \end{aligned} \tag{1.7.5}
-$$
 
 </div>
-
-
-<ol>
+<ol start="7">
 <li>更新目标网络的参数</li>
 </ol>
 <div class="math">
-
-$$
 \begin{aligned}
 \boldsymbol{\mu}_{new}^- \leftarrow \tau \cdot \boldsymbol{\mu}_{new} + (1 - \tau) \cdot \boldsymbol{\mu}_{now}^- \\
 \boldsymbol{\sigma}_{new}^- \leftarrow \tau \cdot \boldsymbol{\sigma}_{new} + (1 - \tau) \cdot \boldsymbol{\sigma}_{now}^-
 \end{aligned} \tag{1.7.6}
-$$
 
 </div>
-
 <p>未经允许，禁止转载。</p>
 
                 
@@ -925,7 +807,6 @@ $$
 
   
   
-
 
 
 
@@ -1198,49 +1079,6 @@ $$
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-
-        Fluid.events.registerRefreshCallback(function() {
-          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
-            MathJax.startup.document.state(0);
-            MathJax.texReset();
-            MathJax.typeset();
-            MathJax.typesetPromise();
-          }
-        });
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 
