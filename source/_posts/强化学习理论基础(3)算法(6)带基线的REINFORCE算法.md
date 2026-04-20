@@ -8,6 +8,8 @@ tags:
 - Baseline
 - REINFORCE
 - 强化学习
+description: "强化学习理论基础-算法-带基线的REINFORCE算法 我们在文章《带基线的策略梯度定理》定理(4)带基线的策略梯度定理/)中已经讨论和证明了如下带基线的策略梯度定理： 其中 是基线（baseline），可以是任意一个和动作 无关的函数。"
+keywords: "强化学习,理论基础,Baseline,REINFORCE"
 ---
 
 # 强化学习理论基础-算法-带基线的REINFORCE算法

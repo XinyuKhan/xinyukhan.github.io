@@ -8,6 +8,8 @@ tags:
 - iLQR
 - 最优控制
 - 轨迹优化
+description: "iLQR算法公式推导 背景 在之前的文章《离散系统的LQR推导》中，我们讨论了LQR在线性系统中的应用，我们讨论了该算法在线性时变系统中的一般情况，也讨论了在线性时不变系统中的特殊情况；以及有限时域（Finite Horizon）和无限时域（Infinite Horizon）这两种情况。"
+keywords: "控制理论,最优控制,iLQR,轨迹优化"
 ---
 
 ## iLQR算法公式推导

@@ -9,6 +9,8 @@ tags:
 - Actor-Critic
 - Baseline
 - 强化学习
+description: "强化学习理论基础-算法-带基线的Actor-Critic算法（A2C算法） 在之前的文章中，我们介绍了《Actor-Critic算法》算法(5)Actor-Critic算法/)和《带基线的REINFORCE算法》算法(6)带基线的REINFORCE算法/)。"
+keywords: "强化学习,理论基础,A2C,Actor-Critic,Baseline"
 ---
 
 # 强化学习理论基础-算法-带基线的Actor-Critic算法（A2C算法）

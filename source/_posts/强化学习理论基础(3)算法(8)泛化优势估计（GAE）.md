@@ -7,6 +7,8 @@ categories:
 tags:
 - GAE
 - 强化学习
+description: "强化学习理论基础-算法-泛化优势估计（GAE） 在之前的文章《带基线的Actor-Critic算法（A2C算法）》算法(7)带基线的Actor-Critic算法（A2C算法）/)中，我们引入了优势函数（Advantage Function） ，并得出单步 TD 误差 可以作为优势函数的一个无偏估计：..."
+keywords: "强化学习,理论基础,GAE"
 ---
 
 # 强化学习理论基础-算法-泛化优势估计（GAE）

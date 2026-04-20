@@ -9,6 +9,8 @@ tags:
 - Drake
 - 规划算法
 - 轨迹优化
+description: "Drake B-Spline基础类（bsplinebasis） 背景 最近在研究Drake算法库运动轨迹优化部分的代码（kinematictrajectoryoptimization），其中用到了B-Spline曲线，其中有一个类BspineBasis，该类提供一个B-Spine曲线的基底，用于建立..."
+keywords: "轨迹规划,Drake,B-Spline,规划算法,轨迹优化"
 ---
 
 ## Drake B-Spline基础类（bspline_basis）

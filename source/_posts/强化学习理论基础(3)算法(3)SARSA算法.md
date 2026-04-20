@@ -7,6 +7,8 @@ categories:
 tags:
 - SARSA
 - 强化学习
+description: "强化学习理论基础-算法-SARSA算法 前面我们介绍了如何用TD算法训练DQN，具体内容参见《使用TD算法训练DQN》算法(1)使用TD算法训练DQN/)和《使用TD算法训练DQN方法改进》算法(2)使用TD算法训练DQN方法/)，该方法被称为Q学习算法，根据介绍我们不难发现，Q学习算法的目标是去近..."
+keywords: "强化学习,理论基础,SARSA"
 ---
 
 # 强化学习理论基础-算法-SARSA算法

@@ -7,6 +7,8 @@ categories:
 tags:
 - Bellman方程
 - 强化学习
+description: "强化学习理论基础-定理-Bellman方程 本文将推导Bellman方程在RL中的几种形式 将 表示成 的递归形式 证明 根据定义 其中 代入可得到 其中1.3.1中的 是在智能体以状态 作为输入应用策略 得到动作 后，环境反馈转移到状态 的时候获得的奖励。"
+keywords: "强化学习,理论基础,Bellman方程"
 ---
 
 # 强化学习理论基础-定理-Bellman方程

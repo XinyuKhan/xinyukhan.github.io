@@ -8,6 +8,8 @@ tags:
 - Drake
 - 规划算法
 - 运动学
+description: "Drake 运动学轨迹优化类（kinematictrajectoryoptimization）（二） 背景 本文继续上文的话题，继续分析kinematictrajectoryoptimization类的具体代码实现。"
+keywords: "轨迹规划,Drake,规划算法,运动学"
 ---
 
 ## Drake 运动学轨迹优化类（kinematic_trajectory_optimization）（二）

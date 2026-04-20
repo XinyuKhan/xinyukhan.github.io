@@ -8,6 +8,8 @@ tags:
 - A2C
 - Actor-Critic
 - 强化学习
+description: "强化学习理论基础-算法-Actor-Critic算法 在《策略梯度定理》定理(3)策略梯度定理/)一文中我们证明推导了策略梯度定理，现在把它抄到下边以供回忆 同时我们介绍了近似策略梯度，即使用蒙特卡洛近似表示上述期望，得到一个随机策略梯度函数 接下来我们使用上述方法来推导Actor-Critic算法..."
+keywords: "强化学习,理论基础,A2C,Actor-Critic"
 ---
 
 # 强化学习理论基础-算法-Actor-Critic算法

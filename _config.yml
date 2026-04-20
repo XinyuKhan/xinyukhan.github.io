@@ -10,7 +10,8 @@ deploy:
   branch: main
   repo: https://github.com/XinyuKhan/xinyukhan.github.io.git
   type: git
-description: ''
+description: "Xinyu Han 的技术博客，专注于最优控制、轨迹优化、强化学习、卡尔曼滤波、iLQR、LQR、MPC、Drake 等方向的理论推导与工程实现。A technical blog on optimal control, trajectory optimization, reinforcement learning, state estimation and robotics."
+subtitle: "控制理论 · 轨迹优化 · 强化学习 · 状态估计"
 exclude: null
 external_link:
   enable: true
@@ -31,7 +32,7 @@ index_generator:
   order_by: -date
   path: ''
   per_page: 10
-keywords: null
+keywords: "iLQR,LQR,MPC,最优控制,轨迹优化,强化学习,Drake,卡尔曼滤波,B-Spline,状态估计,机器人控制,动态规划,Bellman方程,策略梯度,Actor-Critic,optimal control,trajectory optimization,reinforcement learning,robotics"
 language: en
 
 
@@ -57,3 +58,23 @@ markdown:
     typographer: true
   plugins:
     - "@iktakahiro/markdown-it-katex"
+
+# --- SEO ---
+# 站点地图（需要 `npm install --save hexo-generator-sitemap`）
+sitemap:
+  path: sitemap.xml
+  rel: false
+  tags: true
+  categories: true
+
+# RSS 订阅（需要 `npm install --save hexo-generator-feed`）
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+  hub:
+  content: true
+  content_limit: 240
+  content_limit_delim: ' '
+  order_by: -date
+

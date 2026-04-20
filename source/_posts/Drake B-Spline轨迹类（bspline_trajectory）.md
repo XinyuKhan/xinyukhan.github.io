@@ -9,6 +9,8 @@ tags:
 - Drake
 - 规划算法
 - 轨迹优化
+description: "Drake B-Spline轨迹类（bsplinetrajectory） 背景 之前我们已经详细介绍过了Drake库中的BsplineBasisB-Spline基础类，这里我们将介绍BsplineTrajectoryB-Spline轨迹类，该类继承自抽象类Trajectory。"
+keywords: "轨迹规划,Drake,B-Spline,规划算法,轨迹优化"
 ---
 
 ## Drake B-Spline轨迹类（bspline_trajectory）
