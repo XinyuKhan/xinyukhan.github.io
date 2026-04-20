@@ -601,10 +601,26 @@ html[data-user-color-scheme="dark"] .board,
   text-shadow: none;
 }
 
-/* 移动端不渲染 VANTA，切换器也不显示 */
+/* 移动端切换器缩小 + 靠近边缘（不遮挡正文），避开 Fluid 的回到顶部按钮 */
 @media (max-width: 768px) {
   #vanta-switcher {
-    display: none !important;
+    right: 12px;
+    bottom: 72px;
+  }
+  #vanta-switcher .vs-trigger {
+    width: 36px;
+    height: 36px;
+  }
+  #vanta-switcher .vs-panel {
+    min-width: 108px;
+    padding: 6px;
+    bottom: 46px;
+  }
+  #vanta-switcher .vs-opt {
+    padding: 7px 12px;
+  }
+  #vanta-switcher .vs-code {
+    font-size: 11.5px;
   }
 }
 
