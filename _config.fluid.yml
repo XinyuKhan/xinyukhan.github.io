@@ -91,7 +91,9 @@ fun_features:
 
     # 游标字符
     # Cursor character
-    cursorChar: "_"
+    # 留空：使用 custom.css 里的 .cyber-slogan::after 自绘霓虹竖线光标，
+    # typed.js 自带的下划线光标已经在 CSS 里 display:none 隐藏，这里清空避免 DOM 里还出现 "_"
+    cursorChar: ""
 
     # 是否循环播放效果
     # If true, loop animation

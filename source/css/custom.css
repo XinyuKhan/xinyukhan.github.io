@@ -258,10 +258,26 @@ figure.highlight .copy-btn:hover {
   line-height: 1.75;
 }
 
-/* 核心：白色字 + 青色霓虹光晕 + 品红轮廓光，典型 cyberpunk neon 字效 */
+/* 外层：留左右气息，字号由 clamp 保证装得下，不再需要 overflow: hidden
+   （overflow != visible 会改变 baseline 规则，导致 typed-cursor 对齐到顶部） */
+#subtitle {
+  max-width: 100%;
+  padding: 0 2vw;
+}
+
+/* 核心：白色字 + 青色霓虹光晕 + 品红轮廓光，典型 cyberpunk neon 字效
+   inline-block + text-align: left 让两行的"谁"严格行首对齐；
+   typed.js 自带 cursor 在 inline-block 兄弟外侧，会被推到盒子右端 → 我们隐藏掉它，
+   改用 .cyber-slogan::after 伪元素当光标，伪元素自然跟在 innerHTML 末尾，
+   每次 typed.js 改写 innerHTML，光标都精确贴着最后一个字符。 */
 #subtitle .cyber-slogan {
   display: inline-block;
+  vertical-align: baseline;
   text-align: left;
+  /* 禁止自动换行；仅 <br> 起效 */
+  white-space: nowrap;
+  /* 字号自适应：当前字号（1em）为上限，随屏宽按 4.6vw 缩小，最小 0.7rem */
+  font-size: clamp(0.7rem, 4.6vw, 1em);
   color: #f5faff;
   text-shadow:
     0 0 2px rgba(255, 255, 255, 0.95),
@@ -296,15 +312,37 @@ figure.highlight .copy-btn:hover {
   }
 }
 
-/* 打字机游标：改成霓虹青色并加发光，和主文字呼应 */
+/* 隐藏 typed.js 自带光标——它在 .cyber-slogan 外侧，无法贴着字符尾部 */
 #subtitle .typed-cursor {
+  display: none !important;
+}
+
+/* 自绘光标：用 ::after 跟在 .cyber-slogan innerHTML 末尾
+   typed.js 每次改写文本，伪元素都重新出现在新文本之后，实现"贴脸跟随" */
+#subtitle .cyber-slogan::after {
+  content: "|";
+  display: inline-block;
+  margin-left: 0.06em;
   color: #00d9ff;
+  font-weight: 300;
   text-shadow:
     0 0 6px #00d9ff,
     0 0 12px #00d9ff,
     0 0 24px rgba(0, 217, 255, 0.7);
-  font-weight: 300;
+  animation: cyber-cursor-blink 0.7s step-end infinite;
 }
+
+@keyframes cyber-cursor-blink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+
+/* 打字完成后（Fluid 给 #subtitle 加 .typed-finished 时），可保持光标继续闪
+   ——如果你不想要打字完成后还闪，把下面这段删掉即可 */
 
 /* 首页大标题 blog_title（banner 上方那句）也顺手加一层辉光，更统一 */
 .banner #site-subtitle,
@@ -312,11 +350,10 @@ figure.highlight .copy-btn:hover {
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6));
 }
 
-/* 移动端缩小字间距，避免一行挤不下 */
+/* 移动端缩小字间距，避免一行挤不下；字号交给 clamp 自适应，这里不再覆盖 */
 @media (max-width: 768px) {
   #subtitle .cyber-slogan {
     letter-spacing: 0.1em;
-    font-size: 0.95em;
   }
 }
 
@@ -412,10 +449,9 @@ figure.highlight .copy-btn:hover {
   #banner {
     min-height: 70vh !important;
   }
-  /* 首页副标题（霓虹 slogan）在窄屏缩小字间距和字号 */
+  /* 首页副标题（霓虹 slogan）：字号已由 clamp 控制，这里只收紧字间距 */
   #subtitle .cyber-slogan {
-    letter-spacing: 0.08em !important;
-    font-size: 0.92em !important;
+    letter-spacing: 0.06em !important;
     line-height: 1.7;
   }
 
