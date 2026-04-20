@@ -26,7 +26,7 @@
         var instance = window.VANTA.NET({
           el: el,
           mouseControls: true, touchControls: false, gyroControls: false,
-          minHeight: 200.0, minWidth: 200.0, scale: 1.0, scaleMobile: 1.0,
+          minHeight: 200.0, minWidth: 200.0, scale: 1.0, scaleMobile: 2.0,
           color: 0x00d9ff, backgroundColor: 0x0a1524, backgroundAlpha: 1.0,
           /* points² 决定总点数。之前 20 = 400 点太密，现在 12 = 144 点；
              spacing 是网格间距，拉大到 22 让点之间空间感更强 */
@@ -63,7 +63,7 @@
         return window.VANTA.TOPOLOGY({
           el: el,
           mouseControls: true, touchControls: false, gyroControls: false,
-          minHeight: 200.0, minWidth: 200.0, scale: 1.0, scaleMobile: 1.0,
+          minHeight: 200.0, minWidth: 200.0, scale: 1.0, scaleMobile: 2.0,
           color: 0x00d9ff, backgroundColor: 0x0a1524
         });
       }
@@ -75,7 +75,7 @@
         return window.VANTA.DOTS({
           el: el,
           mouseControls: true, touchControls: false, gyroControls: false,
-          minHeight: 200.0, minWidth: 200.0, scale: 1.0, scaleMobile: 1.0,
+          minHeight: 200.0, minWidth: 200.0, scale: 1.0, scaleMobile: 2.0,
           color: 0x00d9ff, color2: 0xff2df0, backgroundColor: 0x0a1524,
           size: 3.5, spacing: 18.0, showLines: true
         });
@@ -88,7 +88,7 @@
         return window.VANTA.GLOBE({
           el: el,
           mouseControls: true, touchControls: false, gyroControls: false,
-          minHeight: 200.0, minWidth: 200.0, scale: 1.0, scaleMobile: 1.0,
+          minHeight: 200.0, minWidth: 200.0, scale: 1.0, scaleMobile: 2.0,
           color: 0x00d9ff, color2: 0xffffff, backgroundColor: 0x0a1524,
           size: 1.0,
           /* 开启鼠标缓动，让地球旋转跟随鼠标变得滞后平滑，不再眩晕 */
@@ -121,7 +121,7 @@
   }
 
   function shouldSkip() {
-    if (window.innerWidth < 768) return true;
+    /* 移动端不再无条件跳过，VANTA 有内置 scaleMobile 降分辨率 + NET 自动减 25% 点数 */
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return true;
     var mem = navigator.deviceMemory;
     if (typeof mem === 'number' && mem > 0 && mem < 2) return true;
@@ -287,16 +287,6 @@
 
   window.addEventListener('pagehide', destroyVanta);
   window.addEventListener('beforeunload', destroyVanta);
-
-  var resizeTimer = null;
-  window.addEventListener('resize', function () {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(function () {
-      if (window.innerWidth < 768 && vantaInstance) {
-        destroyVanta();
-      } else if (window.innerWidth >= 768 && !vantaInstance) {
-        applyEffect(getStoredEffect());
-      }
-    }, 200);
-  });
+  /* VANTA 自带 window resize 监听会处理 canvas 尺寸自适应，不再需要外层的
+     "缩到 768 以下就 destroy、拉回去就 restart" 的逻辑 */
 })();
