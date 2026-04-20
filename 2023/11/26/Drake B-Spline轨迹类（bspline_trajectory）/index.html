@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=dark>
+<html lang="en" data-default-color-scheme=dark>
 
 
 
@@ -22,10 +22,10 @@
     <meta name="description" content="Drake B-Spline轨迹类（bspline_trajectory） 背景 之前我们已经详细介绍过了Drake库中的BsplineBasisB-Spline基础类，这里我们将介绍BsplineTrajectoryB-Spline轨迹类，该类继承自抽象类Trajectory。 这部分的代码位于下面两个文件中： common&#x2F;trajectories&#x2F;bspline_trajectory.h c">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Drake B-Spline轨迹类（bspline_trajectory）">
-<meta property="og:url" content="http://example.com/2023/11/26/Drake%20B-Spline%E8%BD%A8%E8%BF%B9%E7%B1%BB%EF%BC%88bspline_trajectory%EF%BC%89/index.html">
-<meta property="og:site_name" content="Xinyu&#39;s Blog">
+<meta property="og:url" content="https://xinyukhan.github.io/2023/11/26/Drake%20B-Spline%E8%BD%A8%E8%BF%B9%E7%B1%BB%EF%BC%88bspline_trajectory%EF%BC%89/index.html">
+<meta property="og:site_name" content="Xinyu Han&#39;s Blog">
 <meta property="og:description" content="Drake B-Spline轨迹类（bspline_trajectory） 背景 之前我们已经详细介绍过了Drake库中的BsplineBasisB-Spline基础类，这里我们将介绍BsplineTrajectoryB-Spline轨迹类，该类继承自抽象类Trajectory。 这部分的代码位于下面两个文件中： common&#x2F;trajectories&#x2F;bspline_trajectory.h c">
-<meta property="og:locale" content="zh_CN">
+<meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-11-25T16:00:00.000Z">
 <meta property="article:modified_time" content="2026-04-19T16:01:54.552Z">
 <meta property="article:author" content="Xinyu Han">
@@ -36,8 +36,10 @@
 <meta name="twitter:card" content="summary_large_image">
   
   
+    <meta name="referrer" content="no-referrer-when-downgrade">
   
-  <title>Drake B-Spline轨迹类（bspline_trajectory） - Xinyu&#39;s Blog</title>
+  
+  <title>Drake B-Spline轨迹类（bspline_trajectory） - Xinyu Han&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -73,11 +75,15 @@
 
 
 
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"xinyukhan.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -123,7 +129,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
-                <span>首页</span>
+                <span>Home</span>
               </a>
             </li>
           
@@ -135,7 +141,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
+                <span>Archives</span>
               </a>
             </li>
           
@@ -147,7 +153,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
+                <span>Categories</span>
               </a>
             </li>
           
@@ -159,7 +165,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
+                <span>Tags</span>
               </a>
             </li>
           
@@ -171,7 +177,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
+                <span>About</span>
               </a>
             </li>
           
@@ -210,7 +216,7 @@
               <a href="/" target="_self">
                 <div class="mobile-grid-item">
                   <i class="iconfont icon-home-fill"></i>
-                  <span>首页</span>
+                  <span>Home</span>
                 </div>
               </a>
             </div>
@@ -224,7 +230,7 @@
               <a href="/archives/" target="_self">
                 <div class="mobile-grid-item">
                   <i class="iconfont icon-archive-fill"></i>
-                  <span>归档</span>
+                  <span>Archives</span>
                 </div>
               </a>
             </div>
@@ -238,7 +244,7 @@
               <a href="/categories/" target="_self">
                 <div class="mobile-grid-item">
                   <i class="iconfont icon-category-fill"></i>
-                  <span>分类</span>
+                  <span>Categories</span>
                 </div>
               </a>
             </div>
@@ -252,7 +258,7 @@
               <a href="/tags/" target="_self">
                 <div class="mobile-grid-item">
                   <i class="iconfont icon-tags-fill"></i>
-                  <span>标签</span>
+                  <span>Tags</span>
                 </div>
               </a>
             </div>
@@ -266,7 +272,7 @@
               <a href="/about/" target="_self">
                 <div class="mobile-grid-item">
                   <i class="iconfont icon-user-fill"></i>
-                  <span>关于</span>
+                  <span>About</span>
                 </div>
               </a>
             </div>
@@ -277,19 +283,19 @@
             <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
               <div class="mobile-grid-item">
                 <i class="iconfont icon-search"></i>
-                <span>搜索</span>
+                <span>Search</span>
               </div>
             </a>
           </div>
         
         
           <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
-               data-label-light="开灯"
-               data-label-dark="关灯">
+               data-label-light="Light"
+               data-label-dark="Dark">
             <a href="javascript:;" aria-label="Color Toggle">
               <div class="mobile-grid-item">
                 <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
-                <span id="mobile-color-toggle-label">关灯</span>
+                <span id="mobile-color-toggle-label">Dark</span>
               </div>
             </a>
           </div>
@@ -316,11 +322,16 @@
           
   <div class="mt-3">
     
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Xinyu Han
+      </span>
+    
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
         <time datetime="2023-11-26 00:00" pubdate>
-          2023年11月26日 凌晨
+          November 26, 2023 am
         </time>
       </span>
     
@@ -331,7 +342,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          11k 字
+          11k words
         
       </span>
     
@@ -342,12 +353,21 @@
         
         
         
-          94 分钟
+          94 mins
         
       </span>
     
 
     
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+
+      
     
   </div>
 
@@ -382,6 +402,16 @@
         <div id="board">
           <article class="post-content mx-auto">
             <h1 id="seo-header">Drake B-Spline轨迹类（bspline_trajectory）</h1>
+            
+              <p id="updated-time" class="note note-info" style="display: none">
+                
+                  
+                    Last updated on 2026-04-20T00:01:54+08:00
+                  
+                  
+
+                
+              </p>
             
             
               <div class="markdown-body">
@@ -529,31 +559,36 @@ a&amp;=\frac{t_{bar}-t_i}{t_{i+k-1}-t_i}<br>
   <div class="license-box my-3">
     <div class="license-title">
       <div>Drake B-Spline轨迹类（bspline_trajectory）</div>
-      <div>http://example.com/2023/11/26/Drake B-Spline轨迹类（bspline_trajectory）/</div>
+      <div>https://xinyukhan.github.io/2023/11/26/Drake B-Spline轨迹类（bspline_trajectory）/</div>
     </div>
     <div class="license-meta">
       
         <div class="license-meta-item">
-          <div>作者</div>
+          <div>Author</div>
           <div>Xinyu Han</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2023年11月26日</div>
+          <div>Posted on</div>
+          <div>November 26, 2023</div>
         </div>
       
       
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>April 20, 2026</div>
+        </div>
+      
       
         <div class="license-meta-item">
-          <div>许可协议</div>
+          <div>Licensed under</div>
           <div>
             
               
               
                 <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
                     <i class="iconfont icon-cc-by"></i>
                   </span>
                 </a>
@@ -576,7 +611,7 @@ a&amp;=\frac{t_{bar}-t_i}{t_{i+k-1}-t_i}<br>
                       <a href="/2023/12/03/Drake%20%E8%BF%90%E5%8A%A8%E5%AD%A6%E8%BD%A8%E8%BF%B9%E4%BC%98%E5%8C%96%E7%B1%BB%EF%BC%88kinematic_trajectory_optimization%EF%BC%89%EF%BC%88%E4%B8%80%EF%BC%89/" title="Drake 运动学轨迹优化类（kinematic_trajectory_optimization）（一）">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">Drake 运动学轨迹优化类（kinematic_trajectory_optimization）（一）</span>
-                        <span class="visible-mobile">上一篇</span>
+                        <span class="visible-mobile">Previous</span>
                       </a>
                     
                   </article>
@@ -585,7 +620,7 @@ a&amp;=\frac{t_{bar}-t_i}{t_{i+k-1}-t_i}<br>
                     
                       <a href="/2023/11/25/Drake%20B-Spline%E5%9F%BA%E7%A1%80%E7%B1%BB%EF%BC%88bspline_basis%EF%BC%89/" title="Drake B-Spline基础类（bspline_basis）">
                         <span class="hidden-mobile">Drake B-Spline基础类（bspline_basis）</span>
-                        <span class="visible-mobile">下一篇</span>
+                        <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
                     
@@ -595,6 +630,50 @@ a&amp;=\frac{t_{bar}-t_i}{t_{i+k-1}-t_i}<br>
             </div>
 
             
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"XinyuKhan/xinyukhan.github.io","repo-id":"R_kgDOLOBRKA","category":"Comments","category-id":"DIC_kwDOLOBRKM4C7STS","theme-light":"light","theme-dark":"dark_dimmed","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark_dimmed';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
           </article>
         </div>
       </div>
@@ -606,7 +685,7 @@ a&amp;=\frac{t_{bar}-t_i}{t_{i+k-1}-t_i}<br>
     <div id="toc">
   <p class="toc-header">
     <i class="iconfont icon-list"></i>
-    <span>目录</span>
+    <span>Table of Contents</span>
   </p>
   <div class="toc-body" id="toc-body"></div>
 </div>
@@ -682,7 +761,7 @@ a&amp;=\frac{t_{bar}-t_i}{t_{i+k-1}-t_i}<br>
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -690,7 +769,7 @@ a&amp;=\frac{t_{bar}-t_i}{t_{i+k-1}-t_i}<br>
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
@@ -710,6 +789,32 @@ a&amp;=\frac{t_{bar}-t_i}{t_{i+k-1}-t_i}<br>
        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        Views: 
+        <span id="busuanzi_value_site_pv"></span>
+        
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        Visitors: 
+        <span id="busuanzi_value_site_uv"></span>
+        
+      </span>
+    
+    
+
+  
+
+</div>
+
   
   
 </div>
@@ -759,6 +864,33 @@ a&amp;=\frac{t_{bar}-t_i}{t_{i+k-1}-t_i}<br>
   
 
 
+
+
+  
+<script>
+  var relativeDate = function() {
+    var updatedTime = document.getElementById('updated-time');
+    if (updatedTime) {
+      var text = updatedTime.textContent;
+      var reg = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:Z|[+-]\d{2}:\d{2})/;
+      var matchs = text.match(reg);
+      if (matchs) {
+        var relativeTime = moment(matchs[0]).fromNow();
+        updatedTime.textContent = text.replace(reg, relativeTime);
+      }
+      updatedTime.style.display = '';
+    }
+  };
+  Fluid.utils.createScript('https://lib.baomitu.com/moment.js/2.29.4/moment.min.js', function() {
+    if (!'en'.startsWith('en')) {
+      Fluid.utils.createScript('https://lib.baomitu.com/moment.js/2.29.4/locale/en.min.js', function() {
+        relativeDate();
+      });
+    } else {
+      relativeDate();
+    }
+  });
+</script>
 
 
   
@@ -920,6 +1052,8 @@ a&amp;=\frac{t_{bar}-t_i}{t_{i+k-1}-t_i}<br>
 
   <script  src="/js/local-search.js" ></script>
 
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
 
 
 
@@ -932,7 +1066,7 @@ a&amp;=\frac{t_{bar}-t_i}{t_{i+k-1}-t_i}<br>
   
 
   <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
   </noscript>
 </body>
 </html>
