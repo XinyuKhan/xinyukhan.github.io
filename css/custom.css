@@ -350,6 +350,264 @@ figure.highlight .copy-btn:hover {
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6));
 }
 
+/* ==========================================================================
+   VANTA 全页 3D 动画背景（线网 / 拓扑 / 点阵 / 地球 / 关闭）
+   - JS 在 body 最前面插入 <div id="vanta-bg">，fixed 铺满视口 z-index:-1
+   - html 保留兜底底色（JS 未就绪 / 移动端 / 禁用时的 fallback）
+   - body 背景透明化，让 vanta 透出来
+   - 进一步把 banner / board 做成半透明毛玻璃，字在前、动画在后，互不遮挡
+   ========================================================================== */
+
+html {
+  /* fallback 底色，vanta 未初始化时仍有深色背景兜底 */
+  background-color: #0a1524;
+}
+
+body {
+  /* 把 body 背景透明化，使 vanta 能透过来 */
+  background-color: transparent !important;
+}
+
+#vanta-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* --- banner：保留背景图 + 半透明叠加，让 vanta 动画若隐若现 ---
+   Fluid 在 #banner 上用 inline style 写了 background: url('/img/default.jpg')，
+   这里先把它清掉，然后用 ::before 伪元素重现背景图，通过 opacity 让 vanta 可透。
+   banner 内部的 .mask 等直接子元素给 z-index:1，保证在 ::before 之上（不递归，
+   不会破坏 .banner-text 内部的 absolute 居中定位） */
+#banner,
+.banner {
+  background-image: none !important;
+  background-color: transparent !important;
+  position: relative;
+}
+
+#banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('/img/default.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  opacity: 0.55;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* 只给 z-index，不动 position（Fluid 的 .mask 本身是 absolute 撑满 banner，
+   一旦改成 relative 就失去撑满特性，slogan 会被挤到顶部）。
+   ::before 的 z-index:0 + 直接子元素 z-index:1，堆叠关系正确，slogan 不受影响 */
+#banner > * {
+  z-index: 1;
+}
+
+/* --- 正文板块：半透明毛玻璃，让 vanta 在文字背后若隐若现 --- */
+.board {
+  background-color: rgba(255, 255, 255, 0.78) !important;
+  backdrop-filter: blur(10px) saturate(1.1);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+/* 暗色模式下用半透明深色毛玻璃 */
+html[data-user-color-scheme="dark"] .board,
+.dark-mode .board {
+  background-color: rgba(15, 25, 40, 0.72) !important;
+  border-color: rgba(0, 217, 255, 0.12);
+}
+
+/* 底部 footer / 顶部 navbar 在透明 body 上失去对比度，补一层半透明背景 */
+#footer {
+  background-color: rgba(10, 21, 36, 0.65) !important;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* ==========================================================================
+   背景效果切换器（右下角浮动）
+   - 折叠态：圆形小按钮 + 节点图标
+   - 展开态：弹出 4 项选择（NET / TOPOLOGY / DOTS / GLOBE）
+   - 持久化：选择保存在 localStorage['vanta-effect']
+   ========================================================================== */
+#vanta-switcher {
+  position: fixed;
+  right: 18px;
+  bottom: 80px; /* 避开 Fluid 自带的 back-to-top 按钮 */
+  z-index: 9999;
+  font-family: "Noto Sans SC", "LXGW WenKai Screen", sans-serif;
+  color: #eaf6ff;
+}
+
+#vanta-switcher .vs-trigger {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 217, 255, 0.5);
+  background: rgba(10, 21, 36, 0.75);
+  color: #00d9ff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 0 0 1px rgba(0, 217, 255, 0.15),
+    0 8px 24px rgba(0, 0, 0, 0.35),
+    0 0 18px rgba(0, 217, 255, 0.25);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+
+#vanta-switcher .vs-trigger:hover {
+  transform: translateY(-2px) scale(1.05);
+  color: #ffffff;
+  box-shadow:
+    0 0 0 1px rgba(0, 217, 255, 0.35),
+    0 10px 28px rgba(0, 0, 0, 0.45),
+    0 0 28px rgba(0, 217, 255, 0.55);
+}
+
+#vanta-switcher.open .vs-trigger {
+  transform: rotate(45deg);
+  color: #ff2df0;
+  border-color: rgba(255, 45, 240, 0.6);
+  box-shadow:
+    0 0 0 1px rgba(255, 45, 240, 0.35),
+    0 0 24px rgba(255, 45, 240, 0.5);
+}
+
+#vanta-switcher .vs-panel {
+  position: absolute;
+  right: 0;
+  bottom: 52px;
+  min-width: 124px;
+  padding: 8px;
+  border-radius: 12px;
+  background: rgba(10, 21, 36, 0.85);
+  border: 1px solid rgba(0, 217, 255, 0.35);
+  box-shadow:
+    0 0 0 1px rgba(0, 217, 255, 0.12),
+    0 18px 44px rgba(0, 0, 0, 0.55),
+    0 0 32px rgba(0, 217, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  opacity: 0;
+  transform: translateY(8px) scale(0.96);
+  transform-origin: bottom right;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.22s cubic-bezier(0.2, 0.9, 0.25, 1.2);
+}
+
+#vanta-switcher.open .vs-panel {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+#vanta-switcher .vs-title {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: rgba(234, 246, 255, 0.55);
+  padding: 6px 10px 8px;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 4px;
+}
+
+#vanta-switcher .vs-opt {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 8px 14px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: #eaf6ff;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+#vanta-switcher .vs-opt + .vs-opt {
+  margin-top: 2px;
+}
+
+#vanta-switcher .vs-opt:hover {
+  background: rgba(0, 217, 255, 0.12);
+  border-color: rgba(0, 217, 255, 0.35);
+}
+
+#vanta-switcher .vs-opt.active {
+  background: linear-gradient(90deg,
+    rgba(0, 217, 255, 0.22),
+    rgba(255, 45, 240, 0.18));
+  border-color: rgba(0, 217, 255, 0.55);
+  color: #ffffff;
+  text-shadow: 0 0 6px rgba(0, 217, 255, 0.7);
+}
+
+#vanta-switcher .vs-code {
+  font-family: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+  font-size: 12.5px;
+  letter-spacing: 0.14em;
+  color: rgba(0, 217, 255, 0.9);
+  opacity: 0.9;
+}
+
+#vanta-switcher .vs-opt:hover .vs-code {
+  color: #ffffff;
+  opacity: 1;
+}
+
+#vanta-switcher .vs-opt.active .vs-code {
+  color: #ffffff;
+  opacity: 1;
+  text-shadow:
+    0 0 6px rgba(0, 217, 255, 0.85),
+    0 0 12px rgba(255, 45, 240, 0.45);
+}
+
+/* OFF 项单独标记区分 */
+#vanta-switcher .vs-opt[data-effect="OFF"] {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  margin-top: 4px;
+  padding-top: 10px;
+}
+#vanta-switcher .vs-opt[data-effect="OFF"] .vs-code {
+  color: rgba(234, 246, 255, 0.55);
+}
+#vanta-switcher .vs-opt[data-effect="OFF"].active {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+#vanta-switcher .vs-opt[data-effect="OFF"].active .vs-code {
+  color: #ffffff;
+  text-shadow: none;
+}
+
+/* 移动端不渲染 VANTA，切换器也不显示 */
+@media (max-width: 768px) {
+  #vanta-switcher {
+    display: none !important;
+  }
+}
+
 /* 移动端缩小字间距，避免一行挤不下；字号交给 clamp 自适应，这里不再覆盖 */
 @media (max-width: 768px) {
   #subtitle .cyber-slogan {
