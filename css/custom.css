@@ -444,17 +444,11 @@ figure.highlight .copy-btn:hover {
     height: auto;
   }
 
-  /* --- 17.8 Banner / Hero：不要占满整屏，降到 75vh；
-       移动端竖屏下图片被 cover 裁切，这里强制 background-position: bottom
-       让底部（城市夜景）完整露出；同时禁掉 parallax 的视差抖动：
-       parallax JS 会持续改写 background-position-y，用 !important 顶住它；
-       另外 background-attachment 强制 scroll 防止某些机型上出现 fixed 渲染 bug --- */
+  /* --- 17.8 Banner / Hero：不要占满整屏，降到 70vh
+       背景图裁切交给 Fluid 主题默认行为，不再强制 background-position --- */
   .banner,
   #banner {
-    min-height: 75vh !important;
-    background-position: center bottom !important;
-    background-attachment: scroll !important;
-    background-size: cover !important;
+    min-height: 70vh !important;
   }
   /* 首页副标题（霓虹 slogan）：字号已由 clamp 控制，这里只收紧字间距 */
   #subtitle .cyber-slogan {
