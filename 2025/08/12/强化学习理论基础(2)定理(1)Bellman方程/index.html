@@ -17,17 +17,17 @@
   
   <meta name="theme-color" content="#2f4154">
   <meta name="author" content="Xinyu Han">
-  <meta name="keywords" content="">
+  <meta name="keywords" content="强化学习,理论基础,Bellman方程">
   
-    <meta name="description" content="强化学习理论基础-定理-Bellman方程 本文将推导Bellman方程在RL中的几种形式 1. 将QπQ_\piQπ​表示成QπQ_\piQπ​的递归形式 Qπ(st,at)&#x3D;ESt+1,At+1[Rt+γQπ(St+1,At+1)∣St&#x3D;st,At&#x3D;at](1)\begin{aligned} Q_\pi(s_t, a_t) &amp; &#x3D; \mathbb{E}_{S_{t+1}, A_{t+1">
+    <meta name="description" content="强化学习理论基础-定理-Bellman方程 本文将推导Bellman方程在RL中的几种形式 将 表示成 的递归形式 证明 根据定义 其中 代入可得到 其中1.3.1中的 是在智能体以状态 作为输入应用策略 得到动作 后，环境反馈转移到状态 的时候获得的奖励。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="强化学习理论基础(2)定理(1)Bellman方程">
 <meta property="og:url" content="https://xinyukhan.github.io/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(2)%E5%AE%9A%E7%90%86(1)Bellman%E6%96%B9%E7%A8%8B/index.html">
 <meta property="og:site_name" content="Xinyu Han&#39;s Blog">
-<meta property="og:description" content="强化学习理论基础-定理-Bellman方程 本文将推导Bellman方程在RL中的几种形式 1. 将QπQ_\piQπ​表示成QπQ_\piQπ​的递归形式 Qπ(st,at)&#x3D;ESt+1,At+1[Rt+γQπ(St+1,At+1)∣St&#x3D;st,At&#x3D;at](1)\begin{aligned} Q_\pi(s_t, a_t) &amp; &#x3D; \mathbb{E}_{S_{t+1}, A_{t+1">
+<meta property="og:description" content="强化学习理论基础-定理-Bellman方程 本文将推导Bellman方程在RL中的几种形式 将 表示成 的递归形式 证明 根据定义 其中 代入可得到 其中1.3.1中的 是在智能体以状态 作为输入应用策略 得到动作 后，环境反馈转移到状态 的时候获得的奖励。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-08-11T16:01:00.000Z">
-<meta property="article:modified_time" content="2026-04-19T16:01:54.553Z">
+<meta property="article:modified_time" content="2026-04-20T15:42:43.780Z">
 <meta property="article:author" content="Xinyu Han">
 <meta property="article:tag" content="Bellman方程">
 <meta property="article:tag" content="强化学习">
@@ -404,7 +404,7 @@
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2026-04-20T00:01:54+08:00
+                    Last updated on 2026-04-20T23:42:43+08:00
                   
                   
 

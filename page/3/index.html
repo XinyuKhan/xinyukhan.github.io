@@ -17,14 +17,17 @@
   
   <meta name="theme-color" content="#2f4154">
   <meta name="author" content="Xinyu Han">
-  <meta name="keywords" content="">
+  <meta name="keywords" content="iLQR,LQR,MPC,最优控制,轨迹优化,强化学习,Drake,卡尔曼滤波,B-Spline,状态估计,机器人控制,动态规划,Bellman方程,策略梯度,Actor-Critic,optimal control,trajectory optimization,reinforcement learning,robotics">
   
-    <meta property="og:type" content="website">
+    <meta name="description" content="Xinyu Han 的技术博客，专注于最优控制、轨迹优化、强化学习、卡尔曼滤波、iLQR、LQR、MPC、Drake 等方向的理论推导与工程实现。A technical blog on optimal control, trajectory optimization, reinforcement learning, state estimation and robotics.">
+<meta property="og:type" content="website">
 <meta property="og:title" content="Xinyu Han&#39;s Blog">
 <meta property="og:url" content="https://xinyukhan.github.io/page/3/index.html">
 <meta property="og:site_name" content="Xinyu Han&#39;s Blog">
+<meta property="og:description" content="Xinyu Han 的技术博客，专注于最优控制、轨迹优化、强化学习、卡尔曼滤波、iLQR、LQR、MPC、Drake 等方向的理论推导与工程实现。A technical blog on optimal control, trajectory optimization, reinforcement learning, state estimation and robotics.">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="Xinyu Han">
+<meta property="article:tag" content="iLQR,LQR,MPC,最优控制,轨迹优化,强化学习,Drake,卡尔曼滤波,B-Spline,状态估计,机器人控制,动态规划,Bellman方程,策略梯度,Actor-Critic,optimal control,trajectory optimization,reinforcement learning,robotics">
 <meta name="twitter:card" content="summary_large_image">
   
   
@@ -298,7 +301,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="&lt;span style=&#39;text-align: left; display: inline-block;&#39;&gt;谁终将声震人间，必长久深自缄默；&lt;br&gt;谁终将点燃闪电，必长久如云漂泊。&lt;/span&gt;"></span>
+            <span id="subtitle" data-typed-text="&lt;span class=&#39;cyber-slogan&#39;&gt;谁终将声震人间，必长久深自缄默；&lt;br&gt;谁终将点燃闪电，必长久如云漂泊。&lt;/span&gt;"></span>
           
         </div>
 
@@ -347,7 +350,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/10/15/%E5%A2%9E%E5%B9%BF%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E6%96%B9%E6%B3%95%E5%9C%A8iLQR%E7%AE%97%E6%B3%95%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" target="_self">
         <div>
-          增广拉格朗日方法在iLQR算法中的应用 背景 在之前的文章《iLQR算法公式推导》中，我们推导了iLQR算法在无约束情况下的迭代公式，但是在实际应用中，我们往往需要考虑约束条件。本文将介绍如何使用增广拉格朗日法Augmented Lagrangian Methods来处理约束条件。 约束优化问题 具有约束的优化问题具有如下形式： min⁡x0:N,u0:N−1ℓN(xN)+∑k=0N−1ℓk(xk
+          增广拉格朗日方法在iLQR算法中的应用 背景 在之前的文章《iLQR算法公式推导》中，我们推导了iLQR算法在无约束情况下的迭代公式，但是在实际应用中，我们往往需要考虑约束条件。本文将介绍如何使用增广拉格朗日法Augmented Lagrangian Methods来处理约束条件。
         </div>
       </a>
 
@@ -421,7 +424,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/10/12/iLQR%E7%AE%97%E6%B3%95%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC/" target="_self">
         <div>
-          iLQR算法公式推导 背景 在之前的文章《离散系统的LQR推导》中，我们讨论了LQR在线性系统中的应用，我们讨论了该算法在线性时变系统中的一般情况，也讨论了在线性时不变系统中的特殊情况；以及**有限时域（Finite Horizon）和无限时域（Infinite Horizon）**这两种情况。不过在实际的控制系统中，大部分系统的模型都是非线性的，传统的LQR只能在系统的当前状态下对系统进行线性化
+          iLQR算法公式推导 背景 在之前的文章《离散系统的LQR推导》中，我们讨论了LQR在线性系统中的应用，我们讨论了该算法在线性时变系统中的一般情况，也讨论了在线性时不变系统中的特殊情况；以及有限时域（Finite Horizon）和无限时域（Infinite Horizon）这两种情况。
         </div>
       </a>
 
@@ -493,7 +496,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/09/30/%E8%BF%9E%E7%BB%AD%E7%B3%BB%E7%BB%9F%E7%9A%84LQR%E5%8F%98%E5%88%86%E6%B3%95%E6%8E%A8%E5%AF%BC/" target="_self">
         <div>
-          连续系统的LQR变分法推导 优化控制问题 考虑下述优化问题： J=h(x(tf),tf)+∫t0tfg(x(t),u(t),t)dtsubject tox˙(t)=a(x(t),u(t),t)t0,x(t0)fixedtffreex(tf)free or fixed(1)\begin{aligned} J=h(x(t_f),t_f)+\int_{t_0}^{t_f}g(x(t),u(t),t)dt
+          连续系统的LQR变分法推导 优化控制问题 考虑下述优化问题： 其中 可以被看作一种约束，因此我们定义拉格朗日乘子 ，同时对原有的代价函数 进行增广，得到如下增广代价函数： 对 取变分（Variation），得到如下表达式： 其中： 下面我们定义哈密顿量（Hamiltonian）： 将定义的哈密顿量代...
         </div>
       </a>
 
@@ -567,7 +570,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/09/27/%E7%A6%BB%E6%95%A3%E7%B3%BB%E7%BB%9F%E7%9A%84LQR%E6%8E%A8%E5%AF%BC/" target="_self">
         <div>
-          离散系统的LQR推导 离散的LQR优化问题一般具有如下形式： min⁡J=12xNTHxN+12∑k=0N−1[xkTQkxk+ukTRkuk]subject toxk+1=Akxk+Bkuk,x0given,H=HT≥0,Q=QT≥0,R=RT&gt;0,(1)\min{J=\frac{1}{2}x_N^THx_N+\frac{1}{2}\sum_{k=0}^{N-1}{[x_k^TQ_kx_k
+          离散系统的LQR推导 离散的LQR优化问题一般具有如下形式： 优化的目标是已知 的情况下，通过选择控制输入 使得代价 最小。我们将代价函数 分开来看，定义从状态 到 的部分代价函数为 ，除此之外部分的代价函数为 ，于是有： 显然有： 我们逐步对控制输入 进行最小化 的操作。
         </div>
       </a>
 
@@ -639,7 +642,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/09/25/%E8%BF%9E%E7%BB%AD%E7%B3%BB%E7%BB%9F%E7%9A%84LQR%E6%8E%A8%E5%AF%BC/" target="_self">
         <div>
-          连续系统的LQR推导 连续时域上的DP（Dynamic Programming） 首先考虑如下形式的优化问题： min⁡J=h(x(tf),tf)+∫t0tfg(x(t),u(t),t)dtsubject tox˙=a(x,u,t)x(t0)=x0m(x(tf),tf)=0u(t)∈U(1)\begin{aligned} &amp;&amp;\min J = h(x(t_f),t_f) + \in
+          连续系统的LQR推导 连续时域上的DP（Dynamic Programming） 首先考虑如下形式的优化问题： 其中 是终止时间， 是起始时间， 是终止条件（可能不唯一，因为 的值域是一个向量）， 表示对于 的约束。
         </div>
       </a>
 
@@ -711,7 +714,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/09/24/%E4%BB%8E%E7%BA%BF%E6%80%A7%E8%BF%9E%E7%BB%AD%E6%97%B6%E9%97%B4%E7%8A%B6%E6%80%81%E8%BD%AC%E7%A7%BB%E6%96%B9%E7%A8%8B%E6%8E%A8%E5%AF%BC%E7%A6%BB%E6%95%A3%E7%8A%B6%E6%80%81%E8%BD%AC%E7%A7%BB%E6%96%B9%E7%A8%8B/" target="_self">
         <div>
-          从线性连续时间状态转移方程推导离散状态转移方程 线性连续时间状态转移方程具有如下形式： x˙=Ax+Bu(1)\dot{x} = \mathscr{A}x + \mathscr{B}u \tag{1} x˙=Ax+Bu(1) 现在考虑在一个一个离散控制系统中的一个控制周期的时间范围 [tk,tk+1][t_k, t_{k+1}][tk​,tk+1​] ，其中 tk+1=tk+Δtt_{k+1} =
+          从线性连续时间状态转移方程推导离散状态转移方程 线性连续时间状态转移方程具有如下形式： 现在考虑在一个一个离散控制系统中的一个控制周期的时间范围 ，其中 。使用 和 来分别表示状态 在 和 时刻的值，控制输入 在这个控制周期中保持不变，使用 来表示这个值。
         </div>
       </a>
 

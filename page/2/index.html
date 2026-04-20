@@ -17,14 +17,17 @@
   
   <meta name="theme-color" content="#2f4154">
   <meta name="author" content="Xinyu Han">
-  <meta name="keywords" content="">
+  <meta name="keywords" content="iLQR,LQR,MPC,最优控制,轨迹优化,强化学习,Drake,卡尔曼滤波,B-Spline,状态估计,机器人控制,动态规划,Bellman方程,策略梯度,Actor-Critic,optimal control,trajectory optimization,reinforcement learning,robotics">
   
-    <meta property="og:type" content="website">
+    <meta name="description" content="Xinyu Han 的技术博客，专注于最优控制、轨迹优化、强化学习、卡尔曼滤波、iLQR、LQR、MPC、Drake 等方向的理论推导与工程实现。A technical blog on optimal control, trajectory optimization, reinforcement learning, state estimation and robotics.">
+<meta property="og:type" content="website">
 <meta property="og:title" content="Xinyu Han&#39;s Blog">
 <meta property="og:url" content="https://xinyukhan.github.io/page/2/index.html">
 <meta property="og:site_name" content="Xinyu Han&#39;s Blog">
+<meta property="og:description" content="Xinyu Han 的技术博客，专注于最优控制、轨迹优化、强化学习、卡尔曼滤波、iLQR、LQR、MPC、Drake 等方向的理论推导与工程实现。A technical blog on optimal control, trajectory optimization, reinforcement learning, state estimation and robotics.">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="Xinyu Han">
+<meta property="article:tag" content="iLQR,LQR,MPC,最优控制,轨迹优化,强化学习,Drake,卡尔曼滤波,B-Spline,状态估计,机器人控制,动态规划,Bellman方程,策略梯度,Actor-Critic,optimal control,trajectory optimization,reinforcement learning,robotics">
 <meta name="twitter:card" content="summary_large_image">
   
   
@@ -298,7 +301,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="&lt;span style=&#39;text-align: left; display: inline-block;&#39;&gt;谁终将声震人间，必长久深自缄默；&lt;br&gt;谁终将点燃闪电，必长久如云漂泊。&lt;/span&gt;"></span>
+            <span id="subtitle" data-typed-text="&lt;span class=&#39;cyber-slogan&#39;&gt;谁终将声震人间，必长久深自缄默；&lt;br&gt;谁终将点燃闪电，必长久如云漂泊。&lt;/span&gt;"></span>
           
         </div>
 
@@ -347,7 +350,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(2)%E5%AE%9A%E7%90%86(2)%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE%E7%9A%84%E7%A8%B3%E6%80%81%E5%88%86%E5%B8%83/" target="_self">
         <div>
-          强化学习理论基础-定理-马尔可夫链的稳态分布 假设有如下随机状态SSS, 满足如下分布： S∼d(⋅),S∈S(1)\begin{aligned}   S \sim d(\cdot), S \in \mathcal{S} \end{aligned} \tag{1} S∼d(⋅),S∈S​(1) 同时有如下随机策略π\piπ： π(a∣s),a∈A,s∈S(2)\begin{aligned}   \
+          强化学习理论基础-定理-马尔可夫链的稳态分布 假设有如下随机状态 , 满足如下分布： 同时有如下随机策略 ： 和状态转移概率密度函数： 根据条件概率密度公式随机变量 的分布为： 如果 和 是相同的分布，即 则意味着马尔可夫链达到了稳态， 为稳态分布。 未经允许，禁止转载。
         </div>
       </a>
 
@@ -417,7 +420,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(2)%E5%AE%9A%E7%90%86(1)Bellman%E6%96%B9%E7%A8%8B/" target="_self">
         <div>
-          强化学习理论基础-定理-Bellman方程 本文将推导Bellman方程在RL中的几种形式 1. 将QπQ_\piQπ​表示成QπQ_\piQπ​的递归形式 Qπ(st,at)=ESt+1,At+1[Rt+γQπ(St+1,At+1)∣St=st,At=at](1)\begin{aligned} Q_\pi(s_t, a_t) &amp; = \mathbb{E}_{S_{t+1}, A_{t+1
+          强化学习理论基础-定理-Bellman方程 本文将推导Bellman方程在RL中的几种形式 将 表示成 的递归形式 证明 根据定义 其中 代入可得到 其中1.3.1中的 是在智能体以状态 作为输入应用策略 得到动作 后，环境反馈转移到状态 的时候获得的奖励。
         </div>
       </a>
 
@@ -487,7 +490,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(1)%E9%A6%96%E9%A1%B5/" target="_self">
         <div>
-          强化学习理论基础 接下来介绍强化学习的理论基础，本文的主要内容是明确强化学习算法中的一些背景和基本概念。 符号 S:状态空间A:动作空间S:随机状态s:状态A:随机动作a:动作R:随机奖励r:奖励U:随机回报u:回报γ:折扣因子π(a∣s):随机性策略μ(s):确定性策略Qπ(s,a):状态-动作值函数Q∗(s,a):最优状态-动作值函数Vπ(s):状态值函数V∗(s):最优状态值函数Aπ(s,a
+          强化学习理论基础 接下来介绍强化学习的理论基础，本文的主要内容是明确强化学习算法中的一些背景和基本概念。 符号 定义 finite-horizon 回报: infinite-horizon 回报: 状态-动作值函数: 最优状态-动作值函数: 状态值函数: 最优状态值函数: 定理 Bellman方程定...
         </div>
       </a>
 
@@ -555,7 +558,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2024/02/10/%E8%BF%9E%E7%BB%AD%E7%B3%BB%E7%BB%9F%E7%9A%84LQR%E8%BD%A8%E8%BF%B9%E8%B7%9F%E8%B8%AA%E9%97%AE%E9%A2%98/" target="_self">
         <div>
-          连续系统的LQR轨迹跟踪问题 背景 在前边的文章《连续系统的LQR推导》以及《连续系统的LQR变分法推导》中，我们已经推导出了连续系统的LQR控制器。不过在上述推导中，我们都假定控制目标是 000（这从其中代价函数的形式中就可以看出来）。但是在实际应用中，我们往往需要系统能够跟踪某个给定的轨迹。因此，本文将讨论连续系统的LQR轨迹跟踪问题。 问题描述 连续系统的LQR轨迹跟踪问题可以用如下方式描述
+          连续系统的LQR轨迹跟踪问题 背景 在前边的文章《连续系统的LQR推导》以及《连续系统的LQR变分法推导》中，我们已经推导出了连续系统的LQR控制器。不过在上述推导中，我们都假定控制目标是 （这从其中代价函数的形式中就可以看出来）。但是在实际应用中，我们往往需要系统能够跟踪某个给定的轨迹。
         </div>
       </a>
 
@@ -629,7 +632,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2024/01/27/%E5%8D%A1%E5%B0%94%E6%9B%BC%E7%8A%B6%E6%80%81%E4%BC%B0%E8%AE%A1%E9%97%AE%E9%A2%98%E5%92%8CLQR%E9%97%AE%E9%A2%98%E7%9A%84%E5%AF%B9%E5%81%B6%E6%80%A7%E8%AE%A8%E8%AE%BA/" target="_self">
         <div>
-          卡尔曼状态估计问题和LQR问题的对偶性讨论 背景 我们在讨论连续时间的LQR问题时，引入了一个代价函数，然后利用变分法，求解出了最优控制输入，以及引入了Riccati方程。 J=h(x(tf),tf)+∫t0tfg(x(t),u(t),t)dt−P˙(t)=ATP(t)+P(t)A+CzTRzzCz−P(t)BuRuu−1BuTP(t)u^(t)=−Ruu−1BuTp(t)=−Ruu−1BuTP(
+          卡尔曼状态估计问题和LQR问题的对偶性讨论 背景 我们在讨论连续时间的LQR问题时，引入了一个代价函数，然后利用变分法，求解出了最优控制输入，以及引入了Riccati方程。
         </div>
       </a>
 
@@ -703,7 +706,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2024/01/22/Drake%20%E8%BF%90%E5%8A%A8%E5%AD%A6%E8%BD%A8%E8%BF%B9%E4%BC%98%E5%8C%96%E7%B1%BB%EF%BC%88kinematic_trajectory_optimization%EF%BC%89%EF%BC%88%E4%BA%8C%EF%BC%89/" target="_self">
         <div>
-          Drake 运动学轨迹优化类（kinematic_trajectory_optimization）（二） 1. 背景 本文继续上文的话题，继续分析kinematic_trajectory_optimization类的具体代码实现。 这部分的代码位于下面两个文件中： 12planning\trajectory_optimization\kinematic_trajectory_optimizatio
+          Drake 运动学轨迹优化类（kinematictrajectoryoptimization）（二） 背景 本文继续上文的话题，继续分析kinematictrajectoryoptimization类的具体代码实现。
         </div>
       </a>
 
@@ -775,7 +778,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/12/03/Drake%20%E8%BF%90%E5%8A%A8%E5%AD%A6%E8%BD%A8%E8%BF%B9%E4%BC%98%E5%8C%96%E7%B1%BB%EF%BC%88kinematic_trajectory_optimization%EF%BC%89%EF%BC%88%E4%B8%80%EF%BC%89/" target="_self">
         <div>
-          Drake 运动学轨迹优化类（kinematic_trajectory_optimization）（一） 背景 本文主要讨论运动学轨迹优化类（KinematicTrajectoryOptimization），该类用于解决运动学轨迹优化问题。这次先讨论理论，后续再讨论具体的实现。 这部分的代码位于下面两个文件中： planning\trajectory_optimization\kinematic_
+          Drake 运动学轨迹优化类（kinematictrajectoryoptimization）（一） 背景 本文主要讨论运动学轨迹优化类（KinematicTrajectoryOptimization），该类用于解决运动学轨迹优化问题。这次先讨论理论，后续再讨论具体的实现。
         </div>
       </a>
 
@@ -847,7 +850,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/11/26/Drake%20B-Spline%E8%BD%A8%E8%BF%B9%E7%B1%BB%EF%BC%88bspline_trajectory%EF%BC%89/" target="_self">
         <div>
-          Drake B-Spline轨迹类（bspline_trajectory） 背景 之前我们已经详细介绍过了Drake库中的BsplineBasisB-Spline基础类，这里我们将介绍BsplineTrajectoryB-Spline轨迹类，该类继承自抽象类Trajectory。 这部分的代码位于下面两个文件中： common/trajectories/bspline_trajectory.h c
+          Drake B-Spline轨迹类（bsplinetrajectory） 背景 之前我们已经详细介绍过了Drake库中的BsplineBasisB-Spline基础类，这里我们将介绍BsplineTrajectoryB-Spline轨迹类，该类继承自抽象类Trajectory。
         </div>
       </a>
 
@@ -921,7 +924,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/11/25/Drake%20B-Spline%E5%9F%BA%E7%A1%80%E7%B1%BB%EF%BC%88bspline_basis%EF%BC%89/" target="_self">
         <div>
-          Drake B-Spline基础类（bspline_basis） 背景 最近在研究Drake算法库运动轨迹优化部分的代码（kinematic_trajectory_optimization），其中用到了B-Spline曲线，其中有一个类BspineBasis，该类提供一个B-Spine曲线的基底，用于建立参数和曲线空间的映射。 给定一组非递减的断点 t₀ ≤ t₁ ≤ ⋅⋅⋅ ≤ tₘ，阶数为 k
+          Drake B-Spline基础类（bsplinebasis） 背景 最近在研究Drake算法库运动轨迹优化部分的代码（kinematictrajectoryoptimization），其中用到了B-Spline曲线，其中有一个类BspineBasis，该类提供一个B-Spine曲线的基底，用于建立...
         </div>
       </a>
 
@@ -995,7 +998,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/11/15/%E8%AE%A8%E8%AE%BA%E4%B8%80%E7%A7%8DIMU%E5%8A%A0%E9%80%9F%E5%BA%A6%E6%95%B0%E6%8D%AE%E6%88%96%E8%80%85%E7%A3%81%E7%BD%97%E7%9B%98%E6%95%B0%E6%8D%AE%E7%9A%84%E6%A0%87%E5%AE%9A%E6%96%B9%E5%BC%8F/" target="_self">
         <div>
-          讨论一种IMU加速度数据或者磁罗盘数据的标定方式 现在讨论一种IMU加速度数据或者磁罗盘数据的标定方法。 问题描述 由于IMU传感器的制造工艺和精度的限制，IMU的加速度计和磁罗盘的输出值会存在一定的误差，这些误差会对姿态解算的精度造成影响。IMU数据的误差来源主要有以下几个方面：  零偏误差 比例误差 非正交误差 随机误差 温度漂移误差  其中，零偏误差、比例误差和非正交误差都可以通过标定得到，
+          讨论一种IMU加速度数据或者磁罗盘数据的标定方式 现在讨论一种IMU加速度数据或者磁罗盘数据的标定方法。 问题描述 由于IMU传感器的制造工艺和精度的限制，IMU的加速度计和磁罗盘的输出值会存在一定的误差，这些误差会对姿态解算的精度造成影响。
         </div>
       </a>
 

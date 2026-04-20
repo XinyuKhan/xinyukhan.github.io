@@ -17,17 +17,17 @@
   
   <meta name="theme-color" content="#2f4154">
   <meta name="author" content="Xinyu Han">
-  <meta name="keywords" content="">
+  <meta name="keywords" content="控制理论,最优控制,LQR,离散系统">
   
-    <meta name="description" content="离散系统的LQR推导 离散的LQR优化问题一般具有如下形式： min⁡J&#x3D;12xNTHxN+12∑k&#x3D;0N−1[xkTQkxk+ukTRkuk]subject toxk+1&#x3D;Akxk+Bkuk,x0given,H&#x3D;HT≥0,Q&#x3D;QT≥0,R&#x3D;RT&gt;0,(1)\min{J&#x3D;\frac{1}{2}x_N^THx_N+\frac{1}{2}\sum_{k&#x3D;0}^{N-1}{[x_k^TQ_kx_k">
+    <meta name="description" content="离散系统的LQR推导 离散的LQR优化问题一般具有如下形式： 优化的目标是已知 的情况下，通过选择控制输入 使得代价 最小。我们将代价函数 分开来看，定义从状态 到 的部分代价函数为 ，除此之外部分的代价函数为 ，于是有： 显然有： 我们逐步对控制输入 进行最小化 的操作。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="离散系统的LQR推导">
 <meta property="og:url" content="https://xinyukhan.github.io/2023/09/27/%E7%A6%BB%E6%95%A3%E7%B3%BB%E7%BB%9F%E7%9A%84LQR%E6%8E%A8%E5%AF%BC/index.html">
 <meta property="og:site_name" content="Xinyu Han&#39;s Blog">
-<meta property="og:description" content="离散系统的LQR推导 离散的LQR优化问题一般具有如下形式： min⁡J&#x3D;12xNTHxN+12∑k&#x3D;0N−1[xkTQkxk+ukTRkuk]subject toxk+1&#x3D;Akxk+Bkuk,x0given,H&#x3D;HT≥0,Q&#x3D;QT≥0,R&#x3D;RT&gt;0,(1)\min{J&#x3D;\frac{1}{2}x_N^THx_N+\frac{1}{2}\sum_{k&#x3D;0}^{N-1}{[x_k^TQ_kx_k">
+<meta property="og:description" content="离散系统的LQR推导 离散的LQR优化问题一般具有如下形式： 优化的目标是已知 的情况下，通过选择控制输入 使得代价 最小。我们将代价函数 分开来看，定义从状态 到 的部分代价函数为 ，除此之外部分的代价函数为 ，于是有： 显然有： 我们逐步对控制输入 进行最小化 的操作。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-09-26T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-04-19T16:01:54.552Z">
+<meta property="article:modified_time" content="2026-04-20T15:42:43.781Z">
 <meta property="article:author" content="Xinyu Han">
 <meta property="article:tag" content="LQR">
 <meta property="article:tag" content="最优控制">
@@ -405,7 +405,7 @@
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2026-04-20T00:01:54+08:00
+                    Last updated on 2026-04-20T23:42:43+08:00
                   
                   
 

@@ -17,17 +17,17 @@
   
   <meta name="theme-color" content="#2f4154">
   <meta name="author" content="Xinyu Han">
-  <meta name="keywords" content="">
+  <meta name="keywords" content="控制理论,最优控制,iLQR,增广拉格朗日,轨迹优化">
   
-    <meta name="description" content="增广拉格朗日方法在iLQR算法中的应用 背景 在之前的文章《iLQR算法公式推导》中，我们推导了iLQR算法在无约束情况下的迭代公式，但是在实际应用中，我们往往需要考虑约束条件。本文将介绍如何使用增广拉格朗日法Augmented Lagrangian Methods来处理约束条件。 约束优化问题 具有约束的优化问题具有如下形式： min⁡x0:N,u0:N−1ℓN(xN)+∑k&#x3D;0N−1ℓk(xk">
+    <meta name="description" content="增广拉格朗日方法在iLQR算法中的应用 背景 在之前的文章《iLQR算法公式推导》中，我们推导了iLQR算法在无约束情况下的迭代公式，但是在实际应用中，我们往往需要考虑约束条件。本文将介绍如何使用增广拉格朗日法Augmented Lagrangian Methods来处理约束条件。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="增广拉格朗日方法在iLQR算法中的应用">
 <meta property="og:url" content="https://xinyukhan.github.io/2023/10/15/%E5%A2%9E%E5%B9%BF%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E6%96%B9%E6%B3%95%E5%9C%A8iLQR%E7%AE%97%E6%B3%95%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/index.html">
 <meta property="og:site_name" content="Xinyu Han&#39;s Blog">
-<meta property="og:description" content="增广拉格朗日方法在iLQR算法中的应用 背景 在之前的文章《iLQR算法公式推导》中，我们推导了iLQR算法在无约束情况下的迭代公式，但是在实际应用中，我们往往需要考虑约束条件。本文将介绍如何使用增广拉格朗日法Augmented Lagrangian Methods来处理约束条件。 约束优化问题 具有约束的优化问题具有如下形式： min⁡x0:N,u0:N−1ℓN(xN)+∑k&#x3D;0N−1ℓk(xk">
+<meta property="og:description" content="增广拉格朗日方法在iLQR算法中的应用 背景 在之前的文章《iLQR算法公式推导》中，我们推导了iLQR算法在无约束情况下的迭代公式，但是在实际应用中，我们往往需要考虑约束条件。本文将介绍如何使用增广拉格朗日法Augmented Lagrangian Methods来处理约束条件。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-10-14T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-04-19T16:01:54.551Z">
+<meta property="article:modified_time" content="2026-04-20T15:42:43.773Z">
 <meta property="article:author" content="Xinyu Han">
 <meta property="article:tag" content="iLQR">
 <meta property="article:tag" content="增广拉格朗日">
@@ -406,7 +406,7 @@
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2026-04-20T00:01:54+08:00
+                    Last updated on 2026-04-20T23:42:43+08:00
                   
                   
 

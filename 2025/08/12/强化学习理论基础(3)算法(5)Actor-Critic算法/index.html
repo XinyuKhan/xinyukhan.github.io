@@ -17,17 +17,17 @@
   
   <meta name="theme-color" content="#2f4154">
   <meta name="author" content="Xinyu Han">
-  <meta name="keywords" content="">
+  <meta name="keywords" content="强化学习,理论基础,A2C,Actor-Critic">
   
-    <meta name="description" content="强化学习理论基础-算法-Actor-Critic算法 在《策略梯度定理》一文中我们证明推导了策略梯度定理，现在把它抄到下边以供回忆 ∂J(θ)∂θ&#x3D;1−γn1−γES∼d(⋅)[EA∼π(⋅∣S;θ)[∂ln⁡π(A∣S;θ)∂θ⋅Qπ(S,A)]](0.1)\begin{aligned}   \frac{\partial J(\boldsymbol{\theta})}{\partial \bol">
+    <meta name="description" content="强化学习理论基础-算法-Actor-Critic算法 在《策略梯度定理》定理(3)策略梯度定理&#x2F;)一文中我们证明推导了策略梯度定理，现在把它抄到下边以供回忆 同时我们介绍了近似策略梯度，即使用蒙特卡洛近似表示上述期望，得到一个随机策略梯度函数 接下来我们使用上述方法来推导Actor-Critic算法...">
 <meta property="og:type" content="article">
 <meta property="og:title" content="强化学习理论基础(3)算法(5)Actor-Critic算法">
 <meta property="og:url" content="https://xinyukhan.github.io/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(3)%E7%AE%97%E6%B3%95(5)Actor-Critic%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="Xinyu Han&#39;s Blog">
-<meta property="og:description" content="强化学习理论基础-算法-Actor-Critic算法 在《策略梯度定理》一文中我们证明推导了策略梯度定理，现在把它抄到下边以供回忆 ∂J(θ)∂θ&#x3D;1−γn1−γES∼d(⋅)[EA∼π(⋅∣S;θ)[∂ln⁡π(A∣S;θ)∂θ⋅Qπ(S,A)]](0.1)\begin{aligned}   \frac{\partial J(\boldsymbol{\theta})}{\partial \bol">
+<meta property="og:description" content="强化学习理论基础-算法-Actor-Critic算法 在《策略梯度定理》定理(3)策略梯度定理&#x2F;)一文中我们证明推导了策略梯度定理，现在把它抄到下边以供回忆 同时我们介绍了近似策略梯度，即使用蒙特卡洛近似表示上述期望，得到一个随机策略梯度函数 接下来我们使用上述方法来推导Actor-Critic算法...">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-08-11T16:09:00.000Z">
-<meta property="article:modified_time" content="2026-04-19T16:01:54.551Z">
+<meta property="article:modified_time" content="2026-04-20T15:42:43.781Z">
 <meta property="article:author" content="Xinyu Han">
 <meta property="article:tag" content="A2C">
 <meta property="article:tag" content="Actor-Critic">
@@ -405,7 +405,7 @@
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    Last updated on 2026-04-20T00:01:54+08:00
+                    Last updated on 2026-04-20T23:42:43+08:00
                   
                   
 

@@ -17,14 +17,17 @@
   
   <meta name="theme-color" content="#2f4154">
   <meta name="author" content="Xinyu Han">
-  <meta name="keywords" content="">
+  <meta name="keywords" content="iLQR,LQR,MPC,最优控制,轨迹优化,强化学习,Drake,卡尔曼滤波,B-Spline,状态估计,机器人控制,动态规划,Bellman方程,策略梯度,Actor-Critic,optimal control,trajectory optimization,reinforcement learning,robotics">
   
-    <meta property="og:type" content="website">
+    <meta name="description" content="Xinyu Han 的技术博客，专注于最优控制、轨迹优化、强化学习、卡尔曼滤波、iLQR、LQR、MPC、Drake 等方向的理论推导与工程实现。A technical blog on optimal control, trajectory optimization, reinforcement learning, state estimation and robotics.">
+<meta property="og:type" content="website">
 <meta property="og:title" content="Xinyu Han&#39;s Blog">
 <meta property="og:url" content="https://xinyukhan.github.io/index.html">
 <meta property="og:site_name" content="Xinyu Han&#39;s Blog">
+<meta property="og:description" content="Xinyu Han 的技术博客，专注于最优控制、轨迹优化、强化学习、卡尔曼滤波、iLQR、LQR、MPC、Drake 等方向的理论推导与工程实现。A technical blog on optimal control, trajectory optimization, reinforcement learning, state estimation and robotics.">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="Xinyu Han">
+<meta property="article:tag" content="iLQR,LQR,MPC,最优控制,轨迹优化,强化学习,Drake,卡尔曼滤波,B-Spline,状态估计,机器人控制,动态规划,Bellman方程,策略梯度,Actor-Critic,optimal control,trajectory optimization,reinforcement learning,robotics">
 <meta name="twitter:card" content="summary_large_image">
   
   
@@ -298,7 +301,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="&lt;span style=&#39;text-align: left; display: inline-block;&#39;&gt;谁终将声震人间，必长久深自缄默；&lt;br&gt;谁终将点燃闪电，必长久如云漂泊。&lt;/span&gt;"></span>
+            <span id="subtitle" data-typed-text="&lt;span class=&#39;cyber-slogan&#39;&gt;谁终将声震人间，必长久深自缄默；&lt;br&gt;谁终将点燃闪电，必长久如云漂泊。&lt;/span&gt;"></span>
           
         </div>
 
@@ -347,7 +350,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(3)%E7%AE%97%E6%B3%95(8)%E6%B3%9B%E5%8C%96%E4%BC%98%E5%8A%BF%E4%BC%B0%E8%AE%A1%EF%BC%88GAE%EF%BC%89/" target="_self">
         <div>
-          强化学习理论基础-算法-泛化优势估计（GAE） 在之前的文章《带基线的Actor-Critic算法（A2C算法）》中，我们引入了优势函数（Advantage Function） Aπ(s,a)A_{\pi}(s, a)Aπ​(s,a)，并得出单步 TD 误差 δt\delta_tδt​ 可以作为优势函数的一个无偏估计： A^t(1)=δt=rt+γVπ(st+1)−Vπ(st)(1.1)\begi
+          强化学习理论基础-算法-泛化优势估计（GAE） 在之前的文章《带基线的Actor-Critic算法（A2C算法）》算法(7)带基线的Actor-Critic算法（A2C算法）/)中，我们引入了优势函数（Advantage Function） ，并得出单步 TD 误差 可以作为优势函数的一个无偏估计：...
         </div>
       </a>
 
@@ -417,7 +420,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(3)%E7%AE%97%E6%B3%95(7)%E5%B8%A6%E5%9F%BA%E7%BA%BF%E7%9A%84Actor-Critic%E7%AE%97%E6%B3%95%EF%BC%88A2C%E7%AE%97%E6%B3%95%EF%BC%89/" target="_self">
         <div>
-          强化学习理论基础-算法-带基线的Actor-Critic算法（A2C算法） 在之前的文章中，我们介绍了《Actor-Critic算法》和《带基线的REINFORCE算法》。我们知道在策略梯度定理中引入基线（Baseline）可以有效降低方差。 如果在Actor-Critic算法中引入状态价值函数 Vπ(s)V_{\pi}(s)Vπ​(s) 作为基线，我们会得到什么样的算法呢？这就是我们要介绍的带基
+          强化学习理论基础-算法-带基线的Actor-Critic算法（A2C算法） 在之前的文章中，我们介绍了《Actor-Critic算法》算法(5)Actor-Critic算法/)和《带基线的REINFORCE算法》算法(6)带基线的REINFORCE算法/)。
         </div>
       </a>
 
@@ -491,7 +494,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(3)%E7%AE%97%E6%B3%95(6)%E5%B8%A6%E5%9F%BA%E7%BA%BF%E7%9A%84REINFORCE%E7%AE%97%E6%B3%95/" target="_self">
         <div>
-          强化学习理论基础-算法-带基线的REINFORCE算法 我们在文章《带基线的策略梯度定理》中已经讨论和证明了如下带基线的策略梯度定理： ∂J(θ)∂θ=1−γn1−γES∼d(⋅)[EA∼π(⋅∣S;θ)[∂ln⁡π(A∣S;θ)∂θ⋅(Qπ(S,A)−b)]](0.1)\begin{aligned}   \frac{\partial J(\boldsymbol{\theta})}{\partia
+          强化学习理论基础-算法-带基线的REINFORCE算法 我们在文章《带基线的策略梯度定理》定理(4)带基线的策略梯度定理/)中已经讨论和证明了如下带基线的策略梯度定理： 其中 是基线（baseline），可以是任意一个和动作 无关的函数。
         </div>
       </a>
 
@@ -563,7 +566,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(3)%E7%AE%97%E6%B3%95(5)Actor-Critic%E7%AE%97%E6%B3%95/" target="_self">
         <div>
-          强化学习理论基础-算法-Actor-Critic算法 在《策略梯度定理》一文中我们证明推导了策略梯度定理，现在把它抄到下边以供回忆 ∂J(θ)∂θ=1−γn1−γES∼d(⋅)[EA∼π(⋅∣S;θ)[∂ln⁡π(A∣S;θ)∂θ⋅Qπ(S,A)]](0.1)\begin{aligned}   \frac{\partial J(\boldsymbol{\theta})}{\partial \bol
+          强化学习理论基础-算法-Actor-Critic算法 在《策略梯度定理》定理(3)策略梯度定理/)一文中我们证明推导了策略梯度定理，现在把它抄到下边以供回忆 同时我们介绍了近似策略梯度，即使用蒙特卡洛近似表示上述期望，得到一个随机策略梯度函数 接下来我们使用上述方法来推导Actor-Critic算法...
         </div>
       </a>
 
@@ -635,7 +638,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(3)%E7%AE%97%E6%B3%95(4)REINFORCE%E7%AE%97%E6%B3%95/" target="_self">
         <div>
-          强化学习理论基础-算法-REINFORCE算法 在《策略梯度定理》一文中我们证明推导了策略梯度定理，现在把它抄到下边以供回忆 ∂J(θ)∂θ=1−γn1−γES∼d(⋅)[EA∼π(⋅∣S;θ)[∂ln⁡π(A∣S;θ)∂θ⋅Qπ(S,A)]](0.1)\begin{aligned}   \frac{\partial J(\boldsymbol{\theta})}{\partial \boldsy
+          强化学习理论基础-算法-REINFORCE算法 在《策略梯度定理》定理(3)策略梯度定理/)一文中我们证明推导了策略梯度定理，现在把它抄到下边以供回忆 同时我们介绍了近似策略梯度，即使用蒙特卡洛近似表示上述期望，得到一个随机策略梯度函数 接下来我们使用上述方法来推导REINFORCE算法。
         </div>
       </a>
 
@@ -705,7 +708,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(3)%E7%AE%97%E6%B3%95(3)SARSA%E7%AE%97%E6%B3%95/" target="_self">
         <div>
-          强化学习理论基础-算法-SARSA算法 前面我们介绍了如何用TD算法训练DQN，具体内容参见《使用TD算法训练DQN》和《使用TD算法训练DQN方法改进》，该方法被称为Q学习算法，根据介绍我们不难发现，Q学习算法的目标是去近似一个最优动作价值函数 Q∗(s,a)Q^{\ast}(s, a)Q∗(s,a) ，其训练过程通常是利用一个四元组 st,at,rt,st+1s_t, a_t, r_t, s_
+          强化学习理论基础-算法-SARSA算法 前面我们介绍了如何用TD算法训练DQN，具体内容参见《使用TD算法训练DQN》算法(1)使用TD算法训练DQN/)和《使用TD算法训练DQN方法改进》算法(2)使用TD算法训练DQN方法/)，该方法被称为Q学习算法，根据介绍我们不难发现，Q学习算法的目标是去近...
         </div>
       </a>
 
@@ -775,7 +778,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(3)%E7%AE%97%E6%B3%95(2)%E4%BD%BF%E7%94%A8TD%E7%AE%97%E6%B3%95%E8%AE%AD%E7%BB%83DQN%E6%96%B9%E6%B3%95%E6%94%B9%E8%BF%9B/" target="_self">
         <div>
-          强化学习理论基础-算法-使用TD算法训练DQN方法改进 1. 改进 1.1. 多步TD 单步TD算法通过当前状态和动作与下一个状态的价值进行比较来更新Q值，而多步TD算法则考虑多个时间步的奖励和价值，从而更全面地评估动作的价值。这种方法可以加速学习过程，提高策略的稳定性。 训练过程如下  假设智能体和环境交互得到如下轨迹  (s1,a1,r1,s2,a2,r2,…,sn,an,rn)(1.1.1)
+          强化学习理论基础-算法-使用TD算法训练DQN方法改进 改进 1.1. 多步TD 单步TD算法通过当前状态和动作与下一个状态的价值进行比较来更新Q值，而多步TD算法则考虑多个时间步的奖励和价值，从而更全面地评估动作的价值。这种方法可以加速学习过程，提高策略的稳定性。
         </div>
       </a>
 
@@ -847,7 +850,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(3)%E7%AE%97%E6%B3%95(1)%E4%BD%BF%E7%94%A8TD%E7%AE%97%E6%B3%95%E8%AE%AD%E7%BB%83DQN/" target="_self">
         <div>
-          强化学习理论基础-算法-使用TD算法训练DQN 1. 算法概述 最优动作价值函数Q∗Q_*Q∗​定义如下 Q∗(s,a)=max⁡πQπ(s,a),∀s∈S,a∈A=E[Ut∣St=s,At=a]=E[Rt+γUt+1∣St=s,At=a](1.1)\begin{aligned}   Q_*(s, a) &amp; = \max_\pi Q_\pi(s, a), \forall s \in \ma
+          强化学习理论基础-算法-使用TD算法训练DQN 算法概述 最优动作价值函数 定义如下 假如知道最优动作-价值函数 的表达式，就可以获得如下策略 Q学习就是通过一个参数方法 近似最优动作-价值函数 ，如果这个参数方法使用的是一个深度神经网络，那就称之为DQN（Deep Q-Network）。
         </div>
       </a>
 
@@ -919,7 +922,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(2)%E5%AE%9A%E7%90%86(4)%E5%B8%A6%E5%9F%BA%E7%BA%BF%E7%9A%84%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E5%AE%9A%E7%90%86/" target="_self">
         <div>
-          强化学习理论基础-定理-带基线的策略梯度定理 在《策略梯度定理》一文中我们证明推导了策略梯度定理，现在把它抄到下边以供回忆 ∂J(θ)∂θ=1−γn1−γES∼d(⋅)[EA∼π(⋅∣S;θ)[∂ln⁡π(A∣S;θ)∂θ⋅Qπ(S,A)]](0.1)\begin{aligned}   \frac{\partial J(\boldsymbol{\theta})}{\partial \boldsym
+          强化学习理论基础-定理-带基线的策略梯度定理 在《策略梯度定理》定理(3)策略梯度定理/)一文中我们证明推导了策略梯度定理，现在把它抄到下边以供回忆 原始版本的策略梯度算法在实际应用中的效果并不好，不过在引入基线之后，可以有效降低学习过程中的方差，从而提高算法的稳定性和收敛速度。
         </div>
       </a>
 
@@ -967,9 +970,9 @@
             
               <a href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/">#强化学习</a>
             
-              <a href="/tags/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6/">#策略梯度</a>
-            
               <a href="/tags/Baseline/">#Baseline</a>
+            
+              <a href="/tags/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6/">#策略梯度</a>
             
           </div>
         
@@ -991,7 +994,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2025/08/12/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80(2)%E5%AE%9A%E7%90%86(3)%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E5%AE%9A%E7%90%86/" target="_self">
         <div>
-          强化学习理论基础-定理-策略梯度定理 1. 定理 ∂J(θ)∂θ=1−γn1−γES∼d(⋅)[EA∼π(⋅∣S;θ)[∂ln⁡π(A∣S;θ)∂θ⋅Qπ(S,A)]](1)\begin{aligned}   \frac{\partial J(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} &amp;= \frac{1 - \gamma^n}
+          强化学习理论基础-定理-策略梯度定理 定理 其中 是代价函数，上述定理成立的前提是随机状态 服从分布马尔可夫链的稳态分布 ，可以通过上述定理求得代价函数的梯度,然后利用梯度法求解如下问题： 其中 是状态值函数的期望 求解过程为 证明 2.1.
         </div>
       </a>
 

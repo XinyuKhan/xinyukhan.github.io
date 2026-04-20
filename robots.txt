@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+Allow: /archives/
+Allow: /categories/
+Allow: /tags/
+Allow: /about/
+Allow: /posts/
+Allow: /2023/
+Allow: /2024/
+Allow: /2025/
+
+Disallow: /js/
+Disallow: /css/
+Disallow: /fonts/
+Disallow: /vendors/
+Disallow: /img/loading.gif
+
+Sitemap: https://xinyukhan.github.io/sitemap.xml
+Sitemap: https://xinyukhan.github.io/atom.xml
