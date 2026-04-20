@@ -189,11 +189,36 @@ html[data-user-color-scheme="dark"] ::selection {
   background: rgba(48, 169, 222, 0.45);
 }
 
-/* ---------- 14. KaTeX 公式滚动体验优化（长公式横向滚动） ---------- */
+/* ---------- 14. KaTeX 公式：只允许横向滚动，禁止纵向 ---------- */
 .katex-display {
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 4px 0;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  padding: 0.6em 0 !important;
+  margin: 1em 0 !important;
+  max-width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+/* 让超长公式能伸展出容器（触发横向滚动而不是被压缩裁剪） */
+.katex-display > .katex {
+  max-width: none !important;
+  white-space: nowrap;
+}
+/* 公式下方的横向滚动条细一点，不抢视觉焦点 */
+.katex-display::-webkit-scrollbar {
+  height: 4px;
+}
+.katex-display::-webkit-scrollbar-thumb {
+  background: rgba(48, 169, 222, 0.4);
+  border-radius: 2px;
+}
+.katex-display::-webkit-scrollbar-thumb:hover {
+  background: rgba(48, 169, 222, 0.7);
+}
+/* 兼容 MathJax 渲染时用的容器（如果未来切回 MathJax） */
+mjx-container[display="true"] {
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  padding: 0.4em 0;
 }
 
 /* ---------- 15. 代码语言标签 & 复制按钮：更精致 ---------- */
@@ -299,5 +324,150 @@ figure.highlight .copy-btn:hover {
 @media (prefers-reduced-motion: reduce) {
   #subtitle .cyber-slogan {
     animation: none;
+  }
+}
+
+/* ==========================================================================
+   17. 移动端竖屏优化（<= 768px，典型手机竖屏）
+   目标：更好的正文阅读体验、代码/公式/表格的横向滚动、紧凑布局
+   ========================================================================== */
+
+@media (max-width: 768px) {
+
+  /* --- 17.1 板块：消除左右大 margin，铺满屏幕 --- */
+  .board {
+    border-radius: 10px !important;
+    margin-left: 8px !important;
+    margin-right: 8px !important;
+  }
+  #board {
+    padding: 16px 14px !important;
+  }
+
+  /* --- 17.2 正文：字号、行高、段距按阅读习惯优化 --- */
+  .markdown-body {
+    font-size: 15.5px;
+    line-height: 1.8;
+    word-break: break-word;          /* 长英文单词自动换行 */
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+  .markdown-body p {
+    margin: 0.9em 0;
+  }
+
+  /* --- 17.3 标题阶梯：手机上缩小一档，视觉层级更紧凑 --- */
+  .markdown-body h1 { font-size: 1.55em !important; }
+  .markdown-body h2 { font-size: 1.35em !important; }
+  .markdown-body h3 { font-size: 1.18em !important; }
+  .markdown-body h4 { font-size: 1.05em !important; }
+
+  /* --- 17.4 代码块：字号调整 + 紧凑 padding + 横向滚动 --- */
+  .markdown-body pre,
+  figure.highlight {
+    font-size: 13px !important;
+    padding: 12px 14px !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    line-height: 1.55;
+  }
+  .markdown-body pre code,
+  figure.highlight code {
+    white-space: pre !important;      /* 不自动换行，长代码行横向滚动 */
+  }
+  /* 行内 code 在窄屏也要能换行，避免撑破屏幕 */
+  .markdown-body :not(pre) > code {
+    word-break: break-all;
+  }
+
+  /* --- 17.5 表格：整体横向滚动（避免列被挤扁） --- */
+  .markdown-body table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    font-size: 14px;
+  }
+
+  /* --- 17.6 KaTeX 公式：更紧凑的行距 + 确保横向滚动 --- */
+  .katex-display {
+    font-size: 0.95em !important;
+    padding: 0.4em 0 !important;
+    margin: 0.8em 0 !important;
+  }
+  /* 行内公式在手机上被挤出屏幕时优雅降级 */
+  .katex {
+    max-width: 100%;
+  }
+
+  /* --- 17.7 图片：永远撑不破容器 --- */
+  .markdown-body img:not(.emoji):not(.avatar) {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* --- 17.8 Banner / Hero：不要占满整屏，降到 70vh --- */
+  .banner,
+  #banner {
+    min-height: 70vh !important;
+  }
+  /* 首页副标题（霓虹 slogan）在窄屏缩小字间距和字号 */
+  #subtitle .cyber-slogan {
+    letter-spacing: 0.08em !important;
+    font-size: 0.92em !important;
+    line-height: 1.7;
+  }
+
+  /* --- 17.9 TOC 侧边栏：移动端自动隐藏（Fluid 默认行为，保险强制一次） --- */
+  #toc,
+  .side-col {
+    display: none !important;
+  }
+
+  /* --- 17.10 引用块：收紧左右空间 --- */
+  .markdown-body blockquote {
+    padding: 6px 12px !important;
+    margin: 0.8em 0 !important;
+  }
+
+  /* --- 17.11 导航栏：毛玻璃在移动端掉帧的话，自动降级为半透明纯色 --- */
+  @supports not (backdrop-filter: blur(8px)) {
+    #navbar.ground-glass {
+      backdrop-filter: none !important;
+      background-color: rgba(31, 49, 68, 0.92) !important;
+    }
+  }
+
+  /* --- 17.12 Giscus 评论区：避免边距过大 --- */
+  #giscus,
+  .giscus {
+    margin: 0 !important;
+  }
+
+  /* --- 17.13 Mermaid 流程图：超宽时也能横向滚动 --- */
+  .mermaid,
+  div.mermaid {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* 超窄屏（小屏手机，<= 400px）的补充微调 */
+@media (max-width: 400px) {
+  .markdown-body {
+    font-size: 15px;
+  }
+  .markdown-body pre,
+  figure.highlight {
+    font-size: 12.5px !important;
+    padding: 10px 12px !important;
+  }
+  .katex-display {
+    font-size: 0.88em !important;
+  }
+  .board {
+    margin-left: 4px !important;
+    margin-right: 4px !important;
   }
 }
