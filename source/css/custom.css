@@ -444,10 +444,13 @@ figure.highlight .copy-btn:hover {
     height: auto;
   }
 
-  /* --- 17.8 Banner / Hero：不要占满整屏，降到 70vh --- */
+  /* --- 17.8 Banner / Hero：不要占满整屏，降到 75vh；
+       同时把 background-position 往下偏，露出夜景图底部的城市建筑群
+       （默认 center center 会把底部裁掉） --- */
   .banner,
   #banner {
-    min-height: 70vh !important;
+    min-height: 75vh !important;
+    background-position: center 78% !important;
   }
   /* 首页副标题（霓虹 slogan）：字号已由 clamp 控制，这里只收紧字间距 */
   #subtitle .cyber-slogan {
