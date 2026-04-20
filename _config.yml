@@ -32,7 +32,7 @@ index_generator:
   path: ''
   per_page: 10
 keywords: null
-language: zh-CN
+language: en
 
 
 mathjax:
@@ -44,8 +44,8 @@ mathjax:
   every_page: true
 
 # Settings recovered safely
-title: "Xinyu's Blog"
-url: http://example.com
+title: "Xinyu Han's Blog"
+url: https://xinyukhan.github.io
 permalink: :year/:month/:day/:title/
 theme: fluid
 

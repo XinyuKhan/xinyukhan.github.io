@@ -1,0 +1,214 @@
+/* ==========================================================================
+   Xinyu Han's Blog - Custom Stylesheet
+   在 Fluid 主题之上做渐进式美化，不破坏原有暗色 / 响应式逻辑
+   ========================================================================== */
+
+/* ---------- 1. 中文字体：霞鹜文楷 ---------- */
+@import url('https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.7.0/style.css');
+@import url('https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css');
+
+/* 代码块仍然走等宽字体，避免中文字体影响代码可读性 */
+code, pre, kbd, samp, .hljs, .markdown-body code, .markdown-body pre {
+  font-family: "JetBrains Mono", "Fira Code", "SF Mono", Menlo, Consolas,
+               "Liberation Mono", "Courier New", monospace !important;
+}
+
+/* ---------- 2. 首页卡片 / 主板块：圆角 + 悬浮立体感 ---------- */
+.board {
+  border-radius: 14px !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+  transition: transform .35s cubic-bezier(.25,.8,.25,1),
+              box-shadow .35s cubic-bezier(.25,.8,.25,1);
+}
+.board:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.12);
+}
+html[data-user-color-scheme="dark"] .board {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+}
+html[data-user-color-scheme="dark"] .board:hover {
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55);
+}
+
+/* ---------- 3. 首页文章标题：柔和渐变 ---------- */
+.index-info .index-header a,
+.index-info a.index-header,
+.index-btn {
+  background-image: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: filter .3s ease;
+}
+.index-info .index-header a:hover {
+  filter: brightness(1.15) saturate(1.1);
+}
+
+/* ---------- 4. 正文超链接：丝滑下划线动画 ---------- */
+.markdown-body a:not(.anchorjs-link):not(.no-underline) {
+  background-image: linear-gradient(transparent 92%, #30a9de 92%);
+  background-size: 0% 100%;
+  background-repeat: no-repeat;
+  transition: background-size .35s ease, color .2s ease;
+  text-decoration: none !important;
+}
+.markdown-body a:not(.anchorjs-link):not(.no-underline):hover {
+  background-size: 100% 100%;
+}
+
+/* ---------- 5. 引用块 blockquote：左侧渐变条 + 柔和底色 ---------- */
+.markdown-body blockquote {
+  border-left: 4px solid transparent !important;
+  border-image: linear-gradient(180deg, #667eea, #764ba2) 1;
+  background: linear-gradient(90deg,
+              rgba(102, 126, 234, 0.06) 0%,
+              rgba(102, 126, 234, 0) 100%);
+  border-radius: 0 6px 6px 0;
+  padding: 8px 16px;
+}
+html[data-user-color-scheme="dark"] .markdown-body blockquote {
+  background: linear-gradient(90deg,
+              rgba(102, 126, 234, 0.12) 0%,
+              rgba(102, 126, 234, 0) 100%);
+}
+
+/* ---------- 6. 代码块：圆角 + 轻阴影 + 悬浮微动画 ---------- */
+.markdown-body pre,
+figure.highlight {
+  border-radius: 10px !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  transition: box-shadow .3s ease;
+}
+.markdown-body pre:hover,
+figure.highlight:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+html[data-user-color-scheme="dark"] .markdown-body pre,
+html[data-user-color-scheme="dark"] figure.highlight {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+/* 行内 code：像 GitHub 那样加个淡背景 */
+.markdown-body :not(pre) > code {
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(175, 184, 193, 0.2);
+  font-size: 88%;
+}
+
+/* ---------- 7. 表格：条纹 + 悬浮高亮 ---------- */
+.markdown-body table {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+.markdown-body table tr:nth-child(2n) {
+  background-color: rgba(175, 184, 193, 0.08);
+}
+.markdown-body table tr:hover {
+  background-color: rgba(48, 169, 222, 0.08);
+}
+
+/* ---------- 8. 文章标题层级：h2 底部渐变分隔线 ---------- */
+.markdown-body h2 {
+  padding-bottom: .35em;
+  border-bottom: none !important;
+  position: relative;
+}
+.markdown-body h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 30%, transparent 100%);
+  border-radius: 2px;
+}
+
+/* ---------- 9. 滚动条：细一点更克制 ---------- */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: linear-gradient(180deg, #c4c6c9, #a6a6a6);
+}
+html[data-user-color-scheme="dark"] ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #687582, #9da8b3);
+}
+
+/* ---------- 10. 图片：圆角 + 微阴影（仅正文内图片） ---------- */
+.markdown-body img:not(.emoji):not(.avatar) {
+  border-radius: 8px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+.markdown-body img:not(.emoji):not(.avatar):hover {
+  transform: scale(1.01);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.15);
+}
+
+/* ---------- 11. About 页头像：轻微旋转光环效果 ---------- */
+#about-avatar-img {
+  transition: transform .6s cubic-bezier(.25,.8,.25,1), box-shadow .6s ease;
+}
+#about-avatar-img:hover {
+  transform: rotate(360deg) scale(1.05);
+  box-shadow: 0 0 30px rgba(102, 126, 234, 0.5);
+}
+
+/* ---------- 12. 导航栏菜单项：悬浮下划线动画 ---------- */
+#navbar .navbar-nav .nav-item .nav-link {
+  position: relative;
+}
+#navbar .navbar-nav .nav-item .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #30a9de, #f093fb);
+  transition: width .3s ease, left .3s ease;
+  border-radius: 2px;
+}
+#navbar .navbar-nav .nav-item .nav-link:hover::after {
+  width: 70%;
+  left: 15%;
+}
+
+/* ---------- 13. 选中文字颜色 ---------- */
+::selection {
+  background: rgba(48, 169, 222, 0.35);
+  color: inherit;
+}
+html[data-user-color-scheme="dark"] ::selection {
+  background: rgba(48, 169, 222, 0.45);
+}
+
+/* ---------- 14. KaTeX 公式滚动体验优化（长公式横向滚动） ---------- */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 4px 0;
+}
+
+/* ---------- 15. 代码语言标签 & 复制按钮：更精致 ---------- */
+.markdown-body pre .code-lang,
+figure.highlight .code-lang {
+  font-family: "JetBrains Mono", monospace !important;
+  letter-spacing: .05em;
+  opacity: .75;
+}
+.markdown-body pre .copy-btn,
+figure.highlight .copy-btn {
+  border-radius: 6px !important;
+  transition: background-color .2s ease, transform .2s ease;
+}
+.markdown-body pre .copy-btn:hover,
+figure.highlight .copy-btn:hover {
+  transform: translateY(-1px);
+}
