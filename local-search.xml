@@ -303,9 +303,9 @@
       
       <tag>强化学习</tag>
       
-      <tag>Baseline</tag>
-      
       <tag>策略梯度</tag>
+      
+      <tag>Baseline</tag>
       
     </tags>
     
@@ -574,11 +574,11 @@
     
     <tags>
       
-      <tag>B-Spline</tag>
-      
       <tag>Drake</tag>
       
       <tag>规划算法</tag>
+      
+      <tag>B-Spline</tag>
       
       <tag>轨迹优化</tag>
       
@@ -607,11 +607,11 @@
     
     <tags>
       
-      <tag>B-Spline</tag>
-      
       <tag>Drake</tag>
       
       <tag>规划算法</tag>
+      
+      <tag>B-Spline</tag>
       
       <tag>轨迹优化</tag>
       
