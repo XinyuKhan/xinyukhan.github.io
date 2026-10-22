@@ -1,0 +1,58 @@
+# push 到 hexo-source 分支 → 在 GitHub 上构建 Hexo → 把 public/ 提交到 main
+# main 一更新，GitHub Pages 自带的 pages-build-deployment 会自动发布
+name: Build & Deploy Blog
+
+on:
+  push:
+    branches: [hexo-source]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# 同一时间只跑一个部署，新的 push 会取消还在排队的旧任务
+concurrency:
+  group: deploy-blog
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Shanghai
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # 需要完整历史来恢复文件修改时间
+
+      # Hexo 的“最后更新时间”取自文件 mtime，CI 里 checkout 后全是当前时间，
+      # 这里按每个文件最后一次提交的时间恢复 mtime
+      - name: Restore file mtimes from git history
+        run: |
+          git ls-files -z source | while IFS= read -r -d '' f; do
+            t=$(git log -1 --format=%ct -- "$f")
+            [ -n "$t" ] && touch -d "@$t" "$f"
+          done
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build
+        run: |
+          npx hexo clean
+          npx hexo generate
+
+      # 在 main 现有历史上追加一个提交（不是强推），提交信息沿用 hexo-deployer-git 的格式
+      - name: Deploy to main
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: main
+          publish_dir: ./public
+          user_name: github-actions[bot]
+          user_email: 41898283+github-actions[bot]@users.noreply.github.com
+          full_commit_message: "Site updated: ${{ github.event.head_commit.timestamp || github.run_id }}"
